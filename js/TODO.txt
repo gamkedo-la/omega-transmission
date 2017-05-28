@@ -1,0 +1,5 @@
+
+2 - Basic player/enemy visuals
+3 - Power-up basic shot to laser
+4 - Basic enemy AI - ramming attack
+5 - First pass at background visuals
