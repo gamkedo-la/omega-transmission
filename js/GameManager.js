@@ -10,7 +10,8 @@ function GameManager() {
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].initialize(UFOImage);
         }
-        initializeInput(); 
+        //initializeInput(); 
+        inputManager.initializeInput();
     }
 
     this.moveEverything = function () {
@@ -39,7 +40,7 @@ function GameManager() {
         if (this.player.health <= 0) {
             this.player = new Ship();
             this.player.initialize(playerImage);
-            initializeInput();
+            inputManager.initializeInput();
         }
     }
 

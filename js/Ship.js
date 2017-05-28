@@ -103,8 +103,8 @@ function Ship() {
             this.yv += Math.sin(this.ang) * THRUST_POWER;
         }
 
-        var dx = mouse[0] - this.x;
-        var dy = mouse[1] - this.y;
+        var dx = inputManager.mouse.x - this.x;
+        var dy = inputManager.mouse.y - this.y;
         this.ang = Math.atan2(dy, dx);
         this.wrapComponent.move();
 

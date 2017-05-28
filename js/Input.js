@@ -9,66 +9,69 @@ const KEY_LETTER_S = 83;
 const KEY_LETTER_D = 68;
 const KEY_SPACEBAR = 32;
 
-mouse = [0, 0];
+function inputManager() {
+    this.mouse = { x: 0, y: 0 };
 
-function initializeInput() {
-    document.addEventListener("keydown", keyPressed);
-    document.addEventListener("keyup", keyReleased);
-    document.addEventListener('mousemove', getMousePosition);
-    document.addEventListener('mousedown', mousePressed);
-    document.addEventListener('mouseup', mouseReleased);
+    this.initializeInput = function() {
+        document.addEventListener("keydown", this.keyPressed);
+        document.addEventListener("keyup", this.keyReleased);
+        document.addEventListener('mousemove', this.getMousePosition);
+        document.addEventListener('mousedown', this.mousePressed);
+        document.addEventListener('mouseup', this.mouseReleased);
 
-    canvas.addEventListener('contextmenu', event => event.preventDefault());
+        canvas.addEventListener('contextmenu', event => event.preventDefault());
 
-    gameManager.player.setupControls(KEY_LETTER_W, KEY_LETTER_S, KEY_LETTER_A, KEY_LETTER_D, KEY_SPACEBAR, KEY_UP_ARROW);
-}
-
-function setKeyHoldState(thisKey, thisShip, setTo) {
-    if (thisKey == thisShip.controlKeyForLeft) {
-        thisShip.keyHeld_Left = setTo;
+        gameManager.player.setupControls(KEY_LETTER_W, KEY_LETTER_S, KEY_LETTER_A, KEY_LETTER_D, KEY_SPACEBAR, KEY_UP_ARROW);
     }
-    if (thisKey == thisShip.controlKeyForRight) {
-        thisShip.keyHeld_Right = setTo;
-    }
-    if (thisKey == thisShip.controlKeyForUp) {
-        thisShip.keyHeld_Up = setTo;
-    }
-    if (thisKey == thisShip.controlKeyForDown) {
-        thisShip.keyHeld_Down = setTo;
-    }
-    if (thisKey == thisShip.controlKeyForForwardThrust) {        
-        thisShip.keyHeld_ForwardThrust = setTo;
-    }
-}
 
-function keyPressed(evt) {
-    setKeyHoldState(evt.keyCode, gameManager.player, true);
-    if (evt.keyCode == gameManager.player.controlKeyForShotFire) {
-        gameManager.player.cannonFire();
+    this.setKeyHoldState = function(thisKey, thisShip, setTo) {
+        if (thisKey == thisShip.controlKeyForLeft) {
+            thisShip.keyHeld_Left = setTo;
+        }
+        if (thisKey == thisShip.controlKeyForRight) {
+            thisShip.keyHeld_Right = setTo;
+        }
+        if (thisKey == thisShip.controlKeyForUp) {
+            thisShip.keyHeld_Up = setTo;
+        }
+        if (thisKey == thisShip.controlKeyForDown) {
+            thisShip.keyHeld_Down = setTo;
+        }
+        if (thisKey == thisShip.controlKeyForForwardThrust) {
+            thisShip.keyHeld_ForwardThrust = setTo;
+        }
     }
-    evt.preventDefault(); // without this, arrow keys scroll the browser!
-}
 
-function keyReleased(evt) {
-    setKeyHoldState(evt.keyCode, gameManager.player, false);
-}
-
-function getMousePosition(evt) {
-    mouse[0] = evt.clientX;
-    mouse[1] = evt.clientY;
-}
-
-function mousePressed(evt) {
-    if (evt.button == 0) {
-        gameManager.player.keyHeld_RapidFire = true;
+    this.keyPressed = function (evt) {
+        //needed to use inputManager instead of this due to scope with event
+        inputManager.setKeyHoldState(evt.keyCode, gameManager.player, true);
+        if (evt.keyCode == gameManager.player.controlKeyForShotFire) {
+            gameManager.player.cannonFire();
+        }
+        evt.preventDefault(); // without this, arrow keys scroll the browser!
     }
-}
 
-function mouseReleased(evt) {
-    if (evt.button == 0) {
-        gameManager.player.keyHeld_RapidFire = false;
+    this.keyReleased = function(evt) {
+        inputManager.setKeyHoldState(evt.keyCode, gameManager.player, false);
     }
-    if (evt.button == 2) {
-        gameManager.player.dash();
+
+    this.getMousePosition = function(evt) {
+        inputManager.mouse.x = evt.clientX;
+        inputManager.mouse.y = evt.clientY;
+    }
+
+    this.mousePressed = function(evt) {
+        if (evt.button == 0) {
+            gameManager.player.keyHeld_RapidFire = true;
+        }
+    }
+
+    this.mouseReleased = function(evt) {
+        if (evt.button == 0) {
+            gameManager.player.keyHeld_RapidFire = false;
+        }
+        if (evt.button == 2) {
+            gameManager.player.dash();
+        }
     }
 }

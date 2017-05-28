@@ -3,6 +3,7 @@ var canvas;
 var canvasContext;
 
 var gameManager = new GameManager();
+var inputManager = new inputManager();
 
 
 
