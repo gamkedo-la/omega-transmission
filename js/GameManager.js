@@ -101,5 +101,11 @@ function GameManager() {
             this.moveEverything();
             this.drawEverything();
         }
+		
+		// optional: 100x the rendering performance! =)
+		if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
+			webGL.flush(); // render all sprites in one draw call
+		}
+		
     }
 }
