@@ -1,7 +1,7 @@
 // Christer McFunkypants Kaitila's Gamepad Keyboard Emulator
 // upgraded for game-specific functionality in Omega Transmission
 
-var joystick = new GamepadSupport();
+window.joystick = new GamepadSupport();
 
 function GamepadSupport()
 {
@@ -18,6 +18,10 @@ function GamepadSupport()
     var prev_gamepad_down = false;
     var prev_gamepad_fire = false;
     var prev_gamepad_jump = false;
+
+    // twin stick shooter style aiming mode
+    var aim_angle = 0; // right thumbstick to look around twin stick shooter style
+    this.getAimAngle = function() { return aim_angle; };
 
     var SIMULATED_KEY_UP = 87;
     var SIMULATED_KEY_DOWN = 83;
@@ -72,6 +76,18 @@ function GamepadSupport()
             gamepad_jump = (butt>0);
             butt = applyDeadzone(gamepad.buttons[1].value, 0.25);
             gamepad_fire = (butt>0);
+
+            // analog: aim exactly using the right thumbstick
+            aim_angle = Math.atan2(gamepad.axes[3], gamepad.axes[2]);
+            //if (aim_angle!=0) console.log("aim_angle="+aim_angle)
+
+            // apply a deadzone so it is ignored if gamepad is not being used
+            if ((applyDeadzone(gamepad.axes[2], 0.25)==0) && (applyDeadzone(gamepad.axes[2], 0.25)==0))
+            {
+                //console.log('deadzone aim_angle!')
+                aim_angle = 0;
+            }
+            
         }
         else
         {

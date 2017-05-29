@@ -103,9 +103,25 @@ function Ship() {
             this.yv += Math.sin(this.ang) * THRUST_POWER;
         }
 
+        // rotate the ship to face the mouse cursor
         var dx = inputManager.mouse.x - this.x;
         var dy = inputManager.mouse.y - this.y;
         this.ang = Math.atan2(dy, dx);
+
+        // detect gamepad aiming (if any) and override mouse cursor ang
+        if (window.joystick) // created in GamepadSupport.js
+        {
+            var maybeAng = joystick.getAimAngle();
+            //console.log("gamepad aiming mode: " + maybeAng);
+            if (maybeAng != 0) { //special edge case so we ignore idle gamepads
+                this.ang = maybeAng;
+                // always fire if the gamepad is aiming! 
+                this.cannonFire(); // TODO: maybe use R2/R1 for fire button?
+            }
+        }
+
+        //console.log("this.ang: " + this.ang);
+
         this.wrapComponent.move();
 
         this.xv *= SPACESPEED_DECAY_MULT;
