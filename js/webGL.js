@@ -58,6 +58,13 @@ function webGL_renderer(canvas) {
         locRotation, locTranslation, locScale,
         locPosition, locUV, locColor;
 
+        if (!gl)
+        {
+            console.log("No webGL found. Falling back to 2d canvas rendering.")
+            window.webGL = null;
+            return;
+        }
+
     gl.blendFunc(770, 771);
     gl.enable(3042);
     gl.useProgram(shader);
@@ -239,6 +246,21 @@ function CreateBuffer(gl, bufferType, size, usage) {
     return buffer;
 }
 
+function Create1x1WHITETexture(gl) {
+    var texture = gl.createTexture();
+    gl.bindTexture(3553, texture);
+    gl.texParameteri(3553, 10242, 33071);
+    gl.texParameteri(3553, 10243, 33071);
+    gl.texParameteri(3553, 10240, 9728);
+    gl.texParameteri(3553, 10241, 9728);
+    // a simple 1x1 pure opque white texture is HANDY!
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
+    gl.bindTexture(3553, null);
+    texture.width = 1;
+    texture.height = 1;
+    return texture;
+}
+
 function CreateTexture(gl, image, width, height) {
     var texture = gl.createTexture();
     gl.bindTexture(3553, texture);
@@ -258,5 +280,8 @@ function init_webGL() {
 	console.log("init_webGL...");
 	// FIXME TODO handle errors and browser detect webGL support
 	window.webGL = new webGL_renderer(document.getElementById('gameCanvas')); // init immediately using first known canvas
+	webGL.bkg(0,0,0); // give welGL a pure black background
+    console.log("webGL creating a new 1x1 pure white texture...");
+	webGL.pureWhiteTexture = Create1x1WHITETexture(webGL.g);
 }
 

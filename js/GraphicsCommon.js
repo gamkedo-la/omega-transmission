@@ -1,23 +1,16 @@
 const USE_WEBGL_IF_SUPPORTED = false; // experimental and unfinished!
 
+
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
     
 	if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
-		// lazy-init a reference to a pure white blank texture and
-		// make it a property in webGL for reuse
-		if (!webGL.pureWhiteTexture) {
-			console.log("webGL creating a new 1x1 pure white image...");
-			var whiteImage = new Image();
-			// 1x1 white gif see http://proger.i-forge.net/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80/[20121112]%20The%20smallest%20transparent%20pixel.html
-			whiteImage.src = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs="; 
-			whiteImage.onload = function() { 
-				console.log("Creating 1x1 white texture...");
-				webGL.pureWhiteTexture = CreateTexture(webGL.g, whiteImage, whiteImage.width, whiteImage.height);
-			}
-		}
-		
-		// todo: fillcolor
-		webGL.img(webGL.pureWhiteTexture, topLeftX, topLeftY, boxWidth, boxHeight, 0, 0, 0, 1, 1, 0, 0, 1, 1);
+
+		// TODO: we need to parse "any": css color string like "violet"
+		//if (fillColor=='black') webGL.col = 0x000000FF; // etc
+
+		if (webGL.pureWhiteTexture)
+			webGL.img(webGL.pureWhiteTexture, topLeftX, topLeftY, boxWidth, boxHeight, 0, 0, 0, 1, 1, 0, 0, 1, 1);
+
 		}
 	else // normal 2d rendering
 	{
@@ -28,6 +21,11 @@ function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
 
 function colorCircle(centerX, centerY, radius, fillColor) {
 	if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
+
+		// TODO: currently draws a square not a circle: use an image please
+		if (webGL.pureWhiteTexture)
+			webGL.img(webGL.pureWhiteTexture, centerX-(radius/2), centerY-(radius/2), radius, radius, 0, 0, 0, 1, 1, 0, 0, 1, 1);
+		
 	}
 	else // normal 2d rendering
 	{
@@ -42,16 +40,14 @@ function drawCenteredBitmapWithRotation(graphic, atX, atY, withAngle) {
     
 	if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
 		
-		// lazy-init a reference to a gl texture and
-		// make it a property in the graphic for reuse
-		if (!graphic.Texture) {
-			console.log("webGL creating a new texture...");
-			//graphic.Texture = webGL.TCTex(gl : WebGLRenderingContext, image : (Image | ArrayBuffer), width : Number, height: Number)
+		// maybe lazy-init a reference to a gl texture and remember it as a property of the graphic
+		if (!graphic.Texture && graphic) {
+			console.log("webGL creating a new texture of size: " +graphic.width+","+graphic.height);
 			graphic.Texture = CreateTexture(webGL.g, graphic, graphic.width, graphic.height); // TODO: force power-of-two size
 		}
 		
 		//webGL.img( texture : WebGLTexture, x : Number, y : Number, width : Number, height : Number, rotation: Number, translateX: Number, translateY: Number, scaleX: Number, scaleY: Number, u0 : Number, v0 : Number, u1 : Number, v1 : Number)
-		webGL.img(graphic.Texture, atX, atY, graphic.width, graphic.height, withAngle, 0, 0, 1, 1, 0, 0, 1, 1);
+		webGL.img(graphic.Texture, -graphic.width/2, -graphic.height/2, graphic.width, graphic.height, withAngle, atX, atY, 1, 1, 0, 0, 1, 1);
 	}
 	else // fallback to slow but compatible rendering mode
 	{
