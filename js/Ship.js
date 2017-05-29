@@ -118,7 +118,6 @@ function Ship() {
             } else {
                 this.shieldCooldown--;
             }
-
         }
     }
   

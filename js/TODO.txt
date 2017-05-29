@@ -1,5 +1,6 @@
-
-2 - Basic player/enemy visuals
-3 - Power-up basic shot to laser
-4 - Basic enemy AI - ramming attack
-5 - First pass at background visuals
+1 - Add MoveComponent.js based on WrapComponent.js, attach it to Ship, Shot, and UFO in place of the current wrapComponent
+2 - Add DestructableComponent.js to handle stats related to health and shield and to give a common handle to deal damage to units
+3 - Basic player/enemy visuals
+4 - Power-up basic shot to laser
+5 - Basic enemy AI - ramming attack
+6 - First pass at background visuals

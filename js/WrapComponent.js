@@ -1,5 +1,7 @@
 function WrapComponent(parent) {
 
+    //Screen wrap will probably become a special feature of specific ships/power-ups
+    //Will replace this component with a standard movement component for all basic units
     this.handleScreenWrap = function () {
         if (parent.x < 0) {
             parent.x += canvas.width;

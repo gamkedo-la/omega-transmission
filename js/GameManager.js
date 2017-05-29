@@ -10,7 +10,6 @@ function GameManager() {
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].initialize(UFOImage);
         }
-        //initializeInput(); 
         inputManager.initializeInput();
     }
 
