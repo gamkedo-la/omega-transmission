@@ -87,6 +87,11 @@ function GamepadSupport()
                 //console.log('deadzone aim_angle!')
                 aim_angle = 0;
             }
+
+            if (aim_angle != 0) {
+                inputManager.mouseMoved = false;
+                inputManager.gamepadMoved = true;
+            }
             
         }
         else

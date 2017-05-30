@@ -35,7 +35,7 @@ window.onload = function() {
 
 function onResize() { // full screen
     if (!canvas) return;
-    console.log("resizing canvas to "+window.innerWidth+","+window.innerHeight);
+    console.log("resizing canvas to " + window.innerWidth + ", " + window.innerHeight);
     canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 }
@@ -45,6 +45,7 @@ function loadingDoneSoStartGame() {
     var framesPerSecond = 60;
     
     // FIXME: for performance (and battery saving) we should use requestAnimationFrame(gameManager.update);
+
     setInterval(function() {
         gameManager.update();
         }, 1000/framesPerSecond);

@@ -22,18 +22,10 @@ function Ship() {
     this.shield = 0;
     this.shieldCooldown = SHIELD_COOLDOWN;
 
-    this.keyHeld_Up = false;
-    this.keyHeld_Down = false;
-    this.keyHeld_Left = false;
-    this.keyHeld_Right = false;
     this.keyHeld_RapidFire = false;
     this.keyHeld_ForwardThrust = false;
 
-    this.setupControls = function (upKey, downKey, leftKey, rightKey, shotKey, forwardKey) {
-        this.controlKeyForUp = upKey;
-        this.controlKeyForDown = downKey;
-        this.controlKeyForLeft = leftKey;
-        this.controlKeyForRight = rightKey;
+    this.setupControls = function (forwardKey, shotKey) {
         this.controlKeyForShotFire = shotKey;
         this.controlKeyForForwardThrust = forwardKey;
     }
@@ -86,37 +78,28 @@ function Ship() {
             this.cannonFire();
         }
 
-        if (this.keyHeld_Up == true) {
-            this.yv -= THRUST_POWER;
-        } else if (this.keyHeld_Down == true) {
-            this.yv += THRUST_POWER;
-        }
-
-        if (this.keyHeld_Left == true) {
-            this.xv -= THRUST_POWER;
-        } else if (this.keyHeld_Right == true) {
-            this.xv += THRUST_POWER;
-        }
-
         if (this.keyHeld_ForwardThrust == true) {
             this.xv += Math.cos(this.ang) * THRUST_POWER;
             this.yv += Math.sin(this.ang) * THRUST_POWER;
         }
 
-        // rotate the ship to face the mouse cursor
-        var dx = inputManager.mouse.x - this.x;
-        var dy = inputManager.mouse.y - this.y;
-        this.ang = Math.atan2(dy, dx);
-
-        // detect gamepad aiming (if any) and override mouse cursor ang
-        if (window.joystick) // created in GamepadSupport.js
-        {
-            var maybeAng = joystick.getAimAngle();
-            //console.log("gamepad aiming mode: " + maybeAng);
-            if (maybeAng != 0) { //special edge case so we ignore idle gamepads
-                this.ang = maybeAng;
-                // always fire if the gamepad is aiming! 
-                this.cannonFire(); // TODO: maybe use R2/R1 for fire button?
+        //prevent mouse position from causing a fight with the gamepad if it is in use
+        if (inputManager.mouseMoved == true) {
+            // rotate the ship to face the mouse cursor
+            var dx = inputManager.mouse.x - this.x;
+            var dy = inputManager.mouse.y - this.y;
+            this.ang = Math.atan2(dy, dx);
+        } else if (inputManager.gamepadMoved == true) {
+            // detect gamepad aiming (if any) and override mouse cursor ang
+            if (window.joystick) // created in GamepadSupport.js
+            {
+                var maybeAng = joystick.getAimAngle();
+                //console.log("gamepad aiming mode: " + maybeAng);
+                if (maybeAng != 0) { //special edge case so we ignore idle gamepads
+                    this.ang = maybeAng;
+                    // always fire if the gamepad is aiming! 
+                    this.cannonFire(); // TODO: maybe use R2/R1 for fire button?
+                }
             }
         }
 

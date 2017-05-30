@@ -11,17 +11,20 @@ const KEY_SPACEBAR = 32;
 
 function inputManager() {
     this.mouse = { x: 0, y: 0 };
+    this.mouseMoved = false;
+    this.gamepadMoved = false;
 
     this.initializeInput = function() {
         document.addEventListener("keydown", this.keyPressed);
         document.addEventListener("keyup", this.keyReleased);
         document.addEventListener('mousemove', this.getMousePosition);
-        document.addEventListener('mousedown', this.mousePressed);
-        document.addEventListener('mouseup', this.mouseReleased);
+        canvas.addEventListener('mousedown', this.mousePressed);
+        canvas.addEventListener('mouseup', this.mouseReleased);
 
-        canvas.addEventListener('contextmenu', event => event.preventDefault());
+        canvas.addEventListener('contextmenu', event => event.preventDefault()); //blocks right click menu
+        canvas.addEventListener('wheel', event => event.preventDefault());
 
-        gameManager.player.setupControls(KEY_LETTER_W, KEY_LETTER_S, KEY_LETTER_A, KEY_LETTER_D, KEY_SPACEBAR, KEY_UP_ARROW);
+        gameManager.player.setupControls(KEY_LETTER_W, KEY_SPACEBAR);
     }
 
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
@@ -58,12 +61,15 @@ function inputManager() {
     this.getMousePosition = function(evt) {
         inputManager.mouse.x = evt.clientX;
         inputManager.mouse.y = evt.clientY;
+        inputManager.mouseMoved = true;
+        inputManager.gamepadMoved = false;
     }
 
     this.mousePressed = function(evt) {
         if (evt.button == 0) {
             gameManager.player.keyHeld_RapidFire = true;
         }
+        evt.preventDefault(); // to block default middle mouse scroll interaction
     }
 
     this.mouseReleased = function(evt) {
@@ -73,5 +79,6 @@ function inputManager() {
         if (evt.button == 2) {
             gameManager.player.dash();
         }
+        evt.preventDefault(); // to block default middle mouse scroll interaction
     }
 }

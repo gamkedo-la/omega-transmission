@@ -13,7 +13,7 @@ function GameManager() {
         inputManager.initializeInput();
     }
 
-    this.moveEverything = function () {
+    this.moveEverything = function() {
         this.player.update();
         for (var i = this.playerShots.length - 1; i >= 0; i--) {
             if (this.playerShots[i].shotLife <= 0) {
@@ -43,7 +43,7 @@ function GameManager() {
         }
     }
 
-    this.checkForCollisions = function () {
+    this.checkForCollisions = function() {
         for (var i = 0; i < this.enemyShots.length; i++) {
             if (this.isOverlapping(this.player, this.enemyShots[i]) == true) {
                 this.player.health--;
@@ -69,7 +69,7 @@ function GameManager() {
         }
     }
 
-    this.isOverlapping = function (objectA, objectB) {
+    this.isOverlapping = function(objectA, objectB) {
         var deltaX = objectA.x - objectB.x;
         var deltaY = objectA.y - objectB.y;
         var dist = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
@@ -77,7 +77,7 @@ function GameManager() {
     }
 
     this.drawEverything = function() {
-        
+
         if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
             webGL.cls();
         }
@@ -101,16 +101,15 @@ function GameManager() {
         drawText("Dash Cooldown", 1, 30, "white");
     }
 
-    this.update = function () {
+    this.update = function() {
         if (this.player != null) {
             this.moveEverything();
             this.drawEverything();
         }
-		
-		// optional: 100x the rendering performance! =)
-		if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
-			webGL.flush(); // render all sprites in one draw call
-		}
-		
+
+        // optional: 100x the rendering performance! =)
+        if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
+            webGL.flush(); // render all sprites in one draw call
+        }
     }
 }
