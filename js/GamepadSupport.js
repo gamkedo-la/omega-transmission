@@ -82,7 +82,7 @@ function GamepadSupport()
             //if (aim_angle!=0) console.log("aim_angle="+aim_angle)
 
             // apply a deadzone so it is ignored if gamepad is not being used
-            if ((applyDeadzone(gamepad.axes[2], 0.25)==0) && (applyDeadzone(gamepad.axes[2], 0.25)==0))
+            if ((applyDeadzone(gamepad.axes[2], 0.25)==0) && (applyDeadzone(gamepad.axes[3], 0.25)==0))
             {
                 //console.log('deadzone aim_angle!')
                 aim_angle = 0;

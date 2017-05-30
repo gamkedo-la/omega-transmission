@@ -60,8 +60,23 @@ function drawCenteredBitmapWithRotation(graphic, atX, atY, withAngle) {
 }
 
 function drawText(text, x, y, fillColor) {
+
 	if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
-		// fixme: text in webGL?
+
+		// fixme: webGL has no font rendering
+		// this is a game-specific hack: dots instead of numbers!
+		var numDots = parseInt(text);
+
+		if (isNaN(numDots)) numDots = 1; // turn text into a single dot for now lol
+		//console.log("drawText: " + text + " = " + numDots);
+
+		if (!numDots || (numDots < 0)) numDots = 0;
+		if (numDots > 10) numDots = 10;
+		for (var loop=0; loop<numDots; loop++)
+		{
+			colorCircle(x+4+(loop*8),y,6,fillColor);
+		}
+		
 	}
 	else
 	{
