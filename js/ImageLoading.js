@@ -1,5 +1,6 @@
 var playerImage = document.createElement("img");
 var UFOImage = document.createElement("img");
+var backgroundImage = document.createElement("img");
 
 var imagesToLoad = 0;
 
@@ -17,8 +18,9 @@ function beginLoadingImage(image, fileName) {
 
 function loadImages() {
     var imageList = [
-        {varName:playerImage, fileName:"player1.png"},
-        {varName:UFOImage, fileName:"ufo.png"}
+        {varName: playerImage, fileName: "player1.png"},
+        {varName: UFOImage, fileName: "ufo.png"},
+        {varName: backgroundImage, fileName: "nebulae test.png"}
     ];
 
     imagesToLoad = imageList.length;

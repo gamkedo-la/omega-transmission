@@ -76,14 +76,15 @@ function GameManager() {
         return ((dist <= UFO_COLLISION_RADIUS) || (dist <= SHOT_DISPLAY_RADIUS));
     }
 
-    this.drawEverything = function() {
-
+    this.drawEverything = function () {
         if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
             webGL.cls();
         }
         else {
             colorRect(0, 0, canvas.width, canvas.height, 'black');
         }
+
+        drawCenteredBitmapWithRotation(backgroundImage, canvas.width / 2, canvas.height / 2, 0);
 
         this.player.draw();
         for (var i = 0; i < this.enemies.length; i++) {
