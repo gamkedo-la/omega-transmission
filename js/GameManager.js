@@ -11,6 +11,9 @@ function GameManager() {
             this.enemies[i].initialize(UFOImage);
         }
         inputManager.initializeInput();
+
+        this.update(); // start animating now
+        
     }
 
     this.moveEverything = function() {
@@ -112,5 +115,8 @@ function GameManager() {
         if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
             webGL.flush(); // render all sprites in one draw call
         }
+
+        // the bind() function ensures when it gets called again the "THIS" is set
+        requestAnimationFrame(this.update.bind(this));
     }
 }

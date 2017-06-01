@@ -42,13 +42,5 @@ function onResize() { // full screen
 
 
 function loadingDoneSoStartGame() {
-    var framesPerSecond = 60;
-    
-    // FIXME: for performance (and battery saving) we should use requestAnimationFrame(gameManager.update);
-
-    setInterval(function() {
-        gameManager.update();
-        }, 1000/framesPerSecond);
-
     gameManager.initialize();
 }
