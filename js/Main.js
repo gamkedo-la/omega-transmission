@@ -31,6 +31,8 @@ window.onload = function() {
     }
 
     loadImages();
+
+	init_particles();
 }
 
 function onResize() { // full screen

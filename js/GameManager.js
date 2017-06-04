@@ -51,6 +51,8 @@ function GameManager() {
             if (this.isOverlapping(this.player, this.enemyShots[i]) == true) {
                 this.player.health--;
                 this.enemyShots[i].reset();
+                screenshake(4);
+                party(this.player.x,this.player.y);
             }
         }
         for (var i = 0; i < this.enemies.length; i++) {
@@ -58,15 +60,20 @@ function GameManager() {
                 this.player.reset();
                 this.player.health--;
                 document.getElementById("debugText").innerHTML = "Player Crashed!";
+                screenshake(20);
+                party(this.player.x,this.player.y);
             }
             for (var j = 0; j < this.playerShots.length; j++) {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i]) == true) {
                     this.enemies[i].health--;
                     if (this.enemies[i].health <= 0) {
                         this.enemies[i].reset();
+                        screenshake(2);
+                        party(this.enemies[i].x,this.enemies[i].y);
                     }
                     this.playerShots[j].reset();
                     document.getElementById("debugText").innerHTML = "Enemy Blasted!";
+                    party(this.enemies[i].x,this.enemies[i].y);
                 }
             }
         }
@@ -107,8 +114,11 @@ function GameManager() {
 
     this.update = function() {
         if (this.player != null) {
+			updateScreenshake(); // "juice it...
+			updateParticles(); // ...or lose it!" =)
             this.moveEverything();
             this.drawEverything();
+            draw_particles(0,0);
         }
 
         // optional: 100x the rendering performance! =)
