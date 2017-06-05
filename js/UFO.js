@@ -55,7 +55,7 @@ function UFO() {
   
     this.draw = function() {
         //colorCircle(this.x, this.y + 3, UFO_COLLISION_RADIUS, 'grey'); //uncomment to visualize collision radius
-        drawCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, 0);
+        drawScaledCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, 45, 60, 0);
         drawText(this.health, this.x + 15, this.y + 15, 'tomato');
     }
 }

@@ -59,6 +59,29 @@ function drawCenteredBitmapWithRotation(graphic, atX, atY, withAngle) {
 	}
 }
 
+function drawScaledCenteredBitmapWithRotation(graphic, atX, atY, targetWidth, targetHeight, withAngle) {
+
+    if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
+
+        // maybe lazy-init a reference to a gl texture and remember it as a property of the graphic
+        if (!graphic.Texture && graphic) {
+            console.log("webGL creating a new texture of size: " + graphic.width + "," + graphic.height);
+            graphic.Texture = CreateTexture(webGL.g, graphic, graphic.width, graphic.height); // TODO: force power-of-two size
+        }
+
+        //webGL.img( texture : WebGLTexture, x : Number, y : Number, width : Number, height : Number, rotation: Number, translateX: Number, translateY: Number, scaleX: Number, scaleY: Number, u0 : Number, v0 : Number, u1 : Number, v1 : Number)
+        webGL.img(graphic.Texture, -graphic.width / 2, -graphic.height / 2, graphic.width, graphic.height, withAngle, atX, atY, 1, 1, 0, 0, 1, 1);
+    }
+    else // fallback to slow but compatible rendering mode
+    {
+        canvasContext.save();
+        canvasContext.translate(atX, atY);
+        canvasContext.rotate(withAngle);
+        canvasContext.drawImage(graphic, -targetWidth / 2, -targetHeight / 2, targetWidth, targetHeight);
+        canvasContext.restore();
+    }
+}
+
 function drawText(text, x, y, fillColor) {
 
 	if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
