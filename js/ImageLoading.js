@@ -19,8 +19,14 @@ function beginLoadingImage(image, fileName) {
 function loadImages() {
     var imageList = [
         {varName: playerImage, fileName: "player1.png"},
-        {varName: UFOImage, fileName: "ufo.png"},
-        {varName: backgroundImage, fileName: "nebulae test.png"}
+        //{ varName: UFOImage, fileName: "ufo.png" },
+        { varName: UFOImage, fileName: "Cannondrone.png" },
+        //{varName: backgroundImage, fileName: "nebulae test.png" }
+        //{varName: backgroundImage, fileName: "nebulae_abstract.png" }
+        {varName: backgroundImage, fileName: "nebulae_abstract_2.png" }
+        //{varName: backgroundImage, fileName: "nebulae_lowbrightness_nostars.png" }
+        //{varName: backgroundImage, fileName: "nebulae_lowbrightness_stars.png" }
+        //{varName: backgroundImage, fileName: "nebulae_nostars.png" }
     ];
 
     imagesToLoad = imageList.length;

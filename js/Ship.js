@@ -12,7 +12,8 @@ const SHIELD_COOLDOWN = 200;
 function Ship() {
 
     // Component List
-    this.wrapComponent = new WrapComponent(this);
+    this.wrappingMovementComponent = new WrapComponent(this);
+    //this.movementComponent = new movementComponent(this);
 
     this.shotCooldown = 0;
     this.readyToFire = true;
@@ -36,7 +37,7 @@ function Ship() {
     }
 
     this.reset = function() { 
-        this.wrapComponent.reset();
+        this.wrappingMovementComponent.reset();
         this.x = canvas.width / 2;
         this.y = canvas.height / 2;
         this.ang = -0.5 * Math.PI;
@@ -105,7 +106,7 @@ function Ship() {
 
         //console.log("this.ang: " + this.ang);
 
-        this.wrapComponent.move();
+        this.wrappingMovementComponent.move();
 
         this.xv *= SPACESPEED_DECAY_MULT;
         this.yv *= SPACESPEED_DECAY_MULT;
