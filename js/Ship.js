@@ -26,10 +26,6 @@ function Ship() {
     this.keyHeld_RapidFire = false;
     this.keyHeld_ForwardThrust = false;
 
-    this.setupControls = function (forwardKey, shotKey) {
-        this.controlKeyForShotFire = shotKey;
-        this.controlKeyForForwardThrust = forwardKey;
-    }
 
     this.initialize = function(whichGraphic) {
         this.myBitmap = whichGraphic;

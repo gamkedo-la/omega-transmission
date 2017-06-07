@@ -14,6 +14,11 @@ function inputManager() {
     this.mouseMoved = false;
     this.gamepadMoved = false;
 
+    this.setupControls = function (forwardKey, shotKey) {
+        this.controlKeyForShotFire = shotKey;
+        this.controlKeyForForwardThrust = forwardKey;
+    }
+    
     this.initializeInput = function() {
         document.addEventListener("keydown", this.keyPressed);
         document.addEventListener("keyup", this.keyReleased);
@@ -24,23 +29,23 @@ function inputManager() {
         canvas.addEventListener('contextmenu', event => event.preventDefault()); //blocks right click menu
         canvas.addEventListener('wheel', event => event.preventDefault());
 
-        gameManager.player.setupControls(KEY_LETTER_W, KEY_SPACEBAR);
+        this.setupControls(KEY_LETTER_W, KEY_SPACEBAR);
     }
 
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
-        if (thisKey == thisShip.controlKeyForLeft) {
+        if (thisKey == this.controlKeyForLeft) {
             thisShip.keyHeld_Left = setTo;
         }
-        if (thisKey == thisShip.controlKeyForRight) {
+        if (thisKey == this.controlKeyForRight) {
             thisShip.keyHeld_Right = setTo;
         }
-        if (thisKey == thisShip.controlKeyForUp) {
+        if (thisKey == this.controlKeyForUp) {
             thisShip.keyHeld_Up = setTo;
         }
-        if (thisKey == thisShip.controlKeyForDown) {
+        if (thisKey == this.controlKeyForDown) {
             thisShip.keyHeld_Down = setTo;
         }
-        if (thisKey == thisShip.controlKeyForForwardThrust) {
+        if (thisKey == this.controlKeyForForwardThrust) {
             thisShip.keyHeld_ForwardThrust = setTo;
         }
     }
@@ -48,7 +53,7 @@ function inputManager() {
     this.keyPressed = function (evt) {
         //needed to use inputManager instead of this due to scope with event
         inputManager.setKeyHoldState(evt.keyCode, gameManager.player, true);
-        if (evt.keyCode == gameManager.player.controlKeyForShotFire) {
+        if (evt.keyCode == inputManager.controlKeyForShotFire) {
             gameManager.player.cannonFire();
         }
         evt.preventDefault(); // without this, arrow keys scroll the browser!
