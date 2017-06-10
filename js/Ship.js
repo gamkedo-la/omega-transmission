@@ -3,7 +3,7 @@ const SPACESPEED_DECAY_MULT = 0.99;
 const THRUST_POWER = 0.1;
 const DASH_DISTANCE = 250;
 const TURN_RATE = 0.015;
-const FIRE_RATE = 30;
+const FIRE_RATE = 10; // was a calm 30;
 const DASH_RATE = 300;
 const PLAYER_MAX_HEALTH = 5;
 const PLAYER_MAX_SHIELD = 5;
@@ -26,10 +26,6 @@ function Ship() {
     this.keyHeld_RapidFire = false;
     this.keyHeld_ForwardThrust = false;
 
-    this.setupControls = function (forwardKey, shotKey) {
-        this.controlKeyForShotFire = shotKey;
-        this.controlKeyForForwardThrust = forwardKey;
-    }
 
     this.initialize = function(whichGraphic) {
         this.myBitmap = whichGraphic;
@@ -50,6 +46,10 @@ function Ship() {
             gameManager.playerShots.push(tempShot);
             this.readyToFire = false;
             this.shotCooldown = FIRE_RATE;
+            // muzzle flash at gun position:
+            var shootx = this.x + (Math.cos(this.ang) * 30);
+            var shooty = this.y + (Math.sin(this.ang) * 30);
+            party(shootx,shooty);
         }
     }
 
@@ -82,6 +82,11 @@ function Ship() {
         if (this.keyHeld_ForwardThrust == true) {
             this.xv += Math.cos(this.ang) * THRUST_POWER;
             this.yv += Math.sin(this.ang) * THRUST_POWER;
+            // thruster flames at engine position:
+            var shootx = this.x + (Math.cos(this.ang) * -20);
+            var shooty = this.y + (Math.sin(this.ang) * -20);
+            party(shootx,shooty);
+            
         }
 
         //prevent mouse position from causing a fight with the gamepad if it is in use

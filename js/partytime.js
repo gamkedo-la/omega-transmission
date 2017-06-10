@@ -12,7 +12,7 @@ var particle_timestamp = (new Date()).getTime();
 var particles = []; // a SpriteList containing all of them
 var particle_w = 64;
 var particle_h = 64;
-var particle_scale = 2; // double the pixels?
+var particle_scale = 1; 
 var particle_offsetx = -1 * Math.round(particle_w/2) * particle_scale;
 var particle_offsety = -1 * Math.round(particle_h/2) * particle_scale;
 var particle_spritesheet_framecount = 16; // spritesheet frames per anim
@@ -30,7 +30,7 @@ var spritesheet_image_finished_loading = false;
  */
 function party(x, y, particleType, destX, destY, delayFrames) {
 
-	console.log('party ' + x + ',' + y);
+	//console.log('party ' + x + ',' + y);
 
 	if (!particles_enabled) return;
 	if (!spritesheet_image_finished_loading) return;
@@ -52,8 +52,7 @@ function party(x, y, particleType, destX, destY, delayFrames) {
 	// we need a new particle!
 	if (!p || !p.inactive)
 	{
-		console.log('No inactive particles. Adding particle #' + pcount);
-
+		//console.log('No inactive particles. Adding particle #' + pcount);
 		var particle = { x : FAR_AWAY, y : FAR_AWAY, inactive : true };
 		// remember this new particle in our system and reuse
 		particles.push(particle);
@@ -149,12 +148,14 @@ function updateParticles()
 			}
 		}
 	});
+	
 	if ((active_particle_count >0)
 		&& (prev_active_particle_count != active_particle_count))
 	{
-		console.log('Active particles: ' + active_particle_count);
+		// console.log('Active particles: ' + active_particle_count);
 		prev_active_particle_count = active_particle_count;
 	}
+
 }
 var prev_active_particle_count = 0;
 
