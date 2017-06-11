@@ -127,7 +127,7 @@ function Ship() {
     }
   
     this.draw = function () {
-        drawCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, this.ang);
+        drawScaledCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, 32, 64, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
         drawText(this.dashCooldown, this.x + 20, this.y + 15, 'white');
         drawText(this.health, this.x + 20, this.y + 5, 'tomato');
         drawText(this.shield, this.x + 20, this.y - 5, 'cyan');

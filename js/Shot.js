@@ -22,6 +22,9 @@ function Shot() {
         this.xv = Math.cos(firingAngle) * SHOT_SPEED;
         this.yv = Math.sin(firingAngle) * SHOT_SPEED;
 
+        // used to orient the sprite
+        this.ang = firingAngle;
+
         this.color = color;
         this.shotLife = SHOT_LIFE;
     }
@@ -35,7 +38,8 @@ function Shot() {
   
     this.draw = function() {
         if (this.shotLife > 0) {
-            colorCircle( this.x, this.y, SHOT_DISPLAY_RADIUS, this.color );
+            //colorCircle( this.x, this.y, SHOT_DISPLAY_RADIUS, this.color );
+            drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 16, 35, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
         }
     }
 }

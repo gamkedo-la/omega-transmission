@@ -1,4 +1,6 @@
 var playerImage = document.createElement("img");
+var bulletImage = document.createElement("img");
+var plasmaImage = document.createElement("img");
 var UFOImage = document.createElement("img");
 var backgroundImage = document.createElement("img");
 
@@ -18,7 +20,9 @@ function beginLoadingImage(image, fileName) {
 
 function loadImages() {
     var imageList = [
-        {varName: playerImage, fileName: "player1.png"},
+        {varName: playerImage, fileName: "Player.png"},
+        {varName: bulletImage, fileName: "Bullet.png"},
+        {varName: plasmaImage, fileName: "Plasma.png"},
         //{ varName: UFOImage, fileName: "ufo.png" },
         { varName: UFOImage, fileName: "Cannondrone.png" },
         //{varName: backgroundImage, fileName: "nebulae test.png" }
