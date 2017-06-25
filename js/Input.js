@@ -26,8 +26,9 @@ function inputManager() {
         canvas.addEventListener('mousedown', this.mousePressed);
         canvas.addEventListener('mouseup', this.mouseReleased);
 
-        canvas.addEventListener('contextmenu', event => event.preventDefault()); //blocks right click menu
-        canvas.addEventListener('wheel', event => event.preventDefault());
+        // commented out, broke Safari, can find another workaround -cdeleon
+        //canvas.addEventListener('contextmenu', event => event.preventDefault()); //blocks right click menu
+        //canvas.addEventListener('wheel', event => event.preventDefault());
 
         this.setupControls(KEY_LETTER_W, KEY_SPACEBAR);
     }
@@ -64,8 +65,13 @@ function inputManager() {
     }
 
     this.getMousePosition = function(evt) {
-        inputManager.mouse.x = evt.clientX;
-        inputManager.mouse.y = evt.clientY;
+        var rect = canvas.getBoundingClientRect();
+        var root = document.documentElement;
+        var canvasX = evt.clientX - rect.left - root.scrollLeft;
+        var canvasY = evt.clientY - rect.top - root.scrollTop;
+
+        inputManager.mouse.x = canvasX/gameManager.gameScale;
+        inputManager.mouse.y = canvasY/gameManager.gameScale;
         inputManager.mouseMoved = true;
         inputManager.gamepadMoved = false;
     }

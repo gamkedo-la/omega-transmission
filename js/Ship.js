@@ -34,8 +34,8 @@ function Ship() {
 
     this.reset = function() { 
         this.wrappingMovementComponent.reset();
-        this.x = canvas.width / 2;
-        this.y = canvas.height / 2;
+        this.x = virtualWidth / 2;
+        this.y = virtualHeight / 2;
         this.ang = -0.5 * Math.PI;
     }
   

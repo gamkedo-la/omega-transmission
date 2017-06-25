@@ -13,8 +13,8 @@ function webGL_renderer(canvas) {
         VERTEX_DATA_SIZE = VERTEX_SIZE * MAX_BATCH * 4,
         VERTICES_PER_QUAD = 6, 
         INDEX_DATA_SIZE = MAX_BATCH * (2 * VERTICES_PER_QUAD),
-        width = canvas.width,
-        height = canvas.height,
+        width = virtualWidth,// was canvas.width
+        height = virtualHeight,// was canvas.height,
         shader = CreateShaderProgram(
             gl, [
                 'precision lowp float;',

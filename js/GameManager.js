@@ -5,6 +5,8 @@ function GameManager() {
     this.enemies = [new UFO(), new UFO(), new UFO(), new UFO()];
     this.enemyShots = [];
 
+    this.gameScale = 1.0;
+
     this.initialize = function() {
         this.player.initialize(playerImage);
         for (var i = 0; i < this.enemies.length; i++) {
@@ -60,7 +62,7 @@ function GameManager() {
                 this.player.reset();
                 this.player.health--;
                 document.getElementById("debugText").innerHTML = "Player Crashed!";
-                screenshake(20);
+                screenshake(10);
                 party(this.player.x,this.player.y);
             }
             for (var j = 0; j < this.playerShots.length; j++) {
@@ -91,10 +93,13 @@ function GameManager() {
             webGL.cls();
         }
         else {
-            colorRect(0, 0, canvas.width, canvas.height, 'black');
+            canvasContext.save(); 
+            canvasContext.scale(this.gameScale, this.gameScale); 
+
+            colorRect(0, 0, virtualWidth, virtualHeight, 'black');
         }
 
-        drawCenteredBitmapWithRotation(backgroundImage, canvas.width / 2, canvas.height / 2, 0);
+        drawCenteredBitmapWithRotation(backgroundImage, virtualWidth / 2, virtualHeight / 2, 0);
 
         for (var i = 0; i < this.playerShots.length; i++) {
             this.playerShots[i].draw();
@@ -110,6 +115,12 @@ function GameManager() {
         drawText("Shield", 1, 10, "cyan");
         drawText("Health", 1, 20, "tomato");
         drawText("Dash Cooldown", 1, 30, "white");
+
+        draw_particles(0,0);
+
+        if ((USE_WEBGL_IF_SUPPORTED && window.webGL)==false) {
+            canvasContext.restore(); 
+        }
     }
 
     this.update = function() {
@@ -118,7 +129,6 @@ function GameManager() {
 			updateParticles(); // ...or lose it!" =)
             this.moveEverything();
             this.drawEverything();
-            draw_particles(0,0);
         }
 
         // optional: 100x the rendering performance! =)

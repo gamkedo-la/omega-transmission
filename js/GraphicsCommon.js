@@ -1,5 +1,5 @@
 const USE_WEBGL_IF_SUPPORTED = false; // experimental and unfinished!
-
+// note by cdeleon: I haven't properly handled gameManager.gameScale in webGL :/
 
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
     
@@ -9,7 +9,8 @@ function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
 		//if (fillColor=='black') webGL.col = 0x000000FF; // etc
 
 		if (webGL.pureWhiteTexture)
-			webGL.img(webGL.pureWhiteTexture, topLeftX, topLeftY, boxWidth, boxHeight, 0, 0, 0, 1, 1, 0, 0, 1, 1);
+			webGL.img(webGL.pureWhiteTexture, topLeftX, topLeftY, boxWidth, boxHeight, 0,
+								0, 0, gameManager.gameScale, gameManager.gameScale, 0, 0, 1, 1);
 
 		}
 	else // normal 2d rendering
@@ -24,7 +25,8 @@ function colorCircle(centerX, centerY, radius, fillColor) {
 
 		// TODO: currently draws a square not a circle: use an image please
 		if (webGL.pureWhiteTexture)
-			webGL.img(webGL.pureWhiteTexture, centerX-(radius/2), centerY-(radius/2), radius, radius, 0, 0, 0, 1, 1, 0, 0, 1, 1);
+			webGL.img(webGL.pureWhiteTexture, centerX-(radius/2), centerY-(radius/2), radius, radius, 0,
+						0, 0, gameManager.gameScale, gameManager.gameScale, 0, 0, 1, 1);
 		
 	}
 	else // normal 2d rendering
@@ -47,7 +49,7 @@ function drawCenteredBitmapWithRotation(graphic, atX, atY, withAngle) {
 		}
 		
 		//webGL.img( texture : WebGLTexture, x : Number, y : Number, width : Number, height : Number, rotation: Number, translateX: Number, translateY: Number, scaleX: Number, scaleY: Number, u0 : Number, v0 : Number, u1 : Number, v1 : Number)
-		webGL.img(graphic.Texture, -graphic.width/2, -graphic.height/2, graphic.width, graphic.height, withAngle, atX, atY, 1, 1, 0, 0, 1, 1);
+		webGL.img(graphic.Texture, -graphic.width/2, -graphic.height/2, graphic.width, graphic.height, withAngle, atX, atY, gameManager.gameScale, gameManager.gameScale, 0, 0, 1, 1);
 	}
 	else // fallback to slow but compatible rendering mode
 	{
@@ -70,7 +72,7 @@ function drawScaledCenteredBitmapWithRotation(graphic, atX, atY, targetWidth, ta
         }
 
         //webGL.img( texture : WebGLTexture, x : Number, y : Number, width : Number, height : Number, rotation: Number, translateX: Number, translateY: Number, scaleX: Number, scaleY: Number, u0 : Number, v0 : Number, u1 : Number, v1 : Number)
-        webGL.img(graphic.Texture, -graphic.width / 2, -graphic.height / 2, graphic.width, graphic.height, withAngle, atX, atY, 1, 1, 0, 0, 1, 1);
+        webGL.img(graphic.Texture, -graphic.width / 2, -graphic.height / 2, graphic.width, graphic.height, withAngle, atX, atY, gameManager.gameScale, gameManager.gameScale, 0, 0, 1, 1);
     }
     else // fallback to slow but compatible rendering mode
     {

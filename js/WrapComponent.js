@@ -4,23 +4,23 @@ function WrapComponent(parent) {
     //Will replace this component with a standard movement component for all basic units
     this.handleScreenWrap = function () {
         if (parent.x < 0) {
-            parent.x += canvas.width;
-        } else if (parent.x >= canvas.width) {
-            parent.x -= canvas.width;
+            parent.x += virtualWidth;
+        } else if (parent.x >= virtualWidth) {
+            parent.x -= virtualWidth;
         }
 
         if (parent.y < 0) {
-            parent.y += canvas.height;
-        } else if (parent.y >= canvas.height) {
-            parent.y -= canvas.height;
+            parent.y += virtualHeight;
+        } else if (parent.y >= virtualHeight) {
+            parent.y -= virtualHeight;
         }
     }
 
     this.reset = function () {
         parent.xv = 0.0;
         parent.yv = 0.0;
-        parent.x = canvas.width / 2;
-        parent.y = canvas.height / 2;
+        parent.x = virtualWidth / 2;
+        parent.y = virtualHeight / 2;
     }
 
     this.move = function () {

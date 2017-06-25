@@ -21,8 +21,8 @@ function UFO() {
 
     this.reset = function() { 
         this.wrapComponent.reset();
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * virtualWidth;
+        this.y = Math.random() * virtualHeight;
         this.cyclesTilDirectionChange = 0;
         this.health = MAX_HEALTH;
     }

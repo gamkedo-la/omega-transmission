@@ -7,7 +7,8 @@ const FULL_SIZE_CANVAS = true; // responsive resizing?
 var gameManager = new GameManager();
 var inputManager = new inputManager();
 
-
+var virtualHeight = 720.0;
+var virtualWidth = 1280.0;
 
 window.onload = function() {
 
@@ -35,11 +36,20 @@ window.onload = function() {
 	init_particles();
 }
 
-function onResize() { // full screen
+function onResize() { // changing window dimensions
     if (!canvas) return;
-    console.log("resizing canvas to " + window.innerWidth + ", " + window.innerHeight);
-    canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+    var gameRatio = virtualHeight/virtualWidth;
+    var widthIfHeightScaled = window.innerHeight / gameRatio;
+    if(widthIfHeightScaled <= window.innerWidth) {
+        canvas.width = widthIfHeightScaled;
+        canvas.height = window.innerHeight;
+        gameManager.gameScale = window.innerHeight/virtualHeight;
+    } else { 
+        var heightIfWidthScaled = window.innerWidth * gameRatio;
+        canvas.width = window.innerWidth;
+        canvas.height = heightIfWidthScaled;
+        gameManager.gameScale = window.innerWidth/virtualWidth;
+    }
 }
 
 
