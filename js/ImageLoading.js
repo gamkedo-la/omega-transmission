@@ -1,7 +1,8 @@
 var playerImage = document.createElement("img");
 var bulletImage = document.createElement("img");
 var plasmaImage = document.createElement("img");
-var UFOImage = document.createElement("img");
+var UFOShooterImage = document.createElement("img");
+var UFORammerImage = document.createElement("img");
 var backgroundImage = document.createElement("img");
 
 var imagesToLoad = 0;
@@ -23,8 +24,8 @@ function loadImages() {
         {varName: playerImage, fileName: "Player.png"},
         {varName: bulletImage, fileName: "Bullet.png"},
         {varName: plasmaImage, fileName: "Plasma.png"},
-        //{ varName: UFOImage, fileName: "ufo.png" },
-        { varName: UFOImage, fileName: "Cannondrone.png" },
+        { varName: UFOShooterImage, fileName: "Cannondrone.png" },
+        { varName: UFORammerImage, fileName: "Speardrone.png" },
         //{varName: backgroundImage, fileName: "nebulae test.png" }
         //{varName: backgroundImage, fileName: "nebulae_abstract.png" }
         {varName: backgroundImage, fileName: "nebulae_abstract_2.png" }
