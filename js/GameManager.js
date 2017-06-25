@@ -2,7 +2,7 @@ function GameManager() {
 
     this.player = new Ship();
     this.playerShots = [];
-    this.enemies = [new UFO(), new UFO(), new UFO(), new UFO()];
+    this.enemies = [];
     this.enemyShots = [];
 
     this.score = 0;
@@ -11,8 +11,14 @@ function GameManager() {
 
     this.initialize = function() {
         this.player.initialize(playerImage);
+        for(var shooterEnemies=0; shooterEnemies < 1; shooterEnemies++) {
+            this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
+        }
+        for(var rammerEnemies=0; rammerEnemies < 2; rammerEnemies++) {
+            this.enemies.push(new UFO(ENEMY_KIND_RAMMER));
+        }
         for (var i = 0; i < this.enemies.length; i++) {
-            this.enemies[i].initialize(UFOImage);
+            this.enemies[i].reset();
         }
         inputManager.initializeInput();
 
