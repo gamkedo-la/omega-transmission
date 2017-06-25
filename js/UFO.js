@@ -12,7 +12,7 @@ function UFO() {
 
     this.health = MAX_HEALTH;
     this.shotCooldown = ENEMY_FIRE_RATE;
-    this.randAng = 0;
+    this.randAng = Math.PI*2.0*Math.random();
 
     this.initialize = function(whichGraphic) {
         this.myBitmap = whichGraphic;
@@ -55,7 +55,8 @@ function UFO() {
   
     this.draw = function() {
         //colorCircle(this.x, this.y + 3, UFO_COLLISION_RADIUS, 'grey'); //uncomment to visualize collision radius
-        drawScaledCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, 45, 60, 0);
+        var angToPlayer = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
+        drawScaledCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, 60, 45, angToPlayer);
         drawText(this.health, this.x + 15, this.y + 15, 'tomato');
     }
 }

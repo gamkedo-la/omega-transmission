@@ -96,15 +96,15 @@ function GameManager() {
 
         drawCenteredBitmapWithRotation(backgroundImage, canvas.width / 2, canvas.height / 2, 0);
 
-        this.player.draw();
-        for (var i = 0; i < this.enemies.length; i++) {
-            this.enemies[i].draw();
-        }
         for (var i = 0; i < this.playerShots.length; i++) {
             this.playerShots[i].draw();
         }
         for (var i = 0; i < this.enemyShots.length; i++) {
             this.enemyShots[i].draw();
+        }
+        this.player.draw();
+        for (var i = 0; i < this.enemies.length; i++) {
+            this.enemies[i].draw();
         }
 
         drawText("Shield", 1, 10, "cyan");

@@ -39,7 +39,7 @@ function Shot() {
     this.draw = function() {
         if (this.shotLife > 0) {
             //colorCircle( this.x, this.y, SHOT_DISPLAY_RADIUS, this.color );
-            drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 16, 35, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
+            drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
         }
     }
 }
