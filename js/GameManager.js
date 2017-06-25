@@ -5,6 +5,8 @@ function GameManager() {
     this.enemies = [new UFO(), new UFO(), new UFO(), new UFO()];
     this.enemyShots = [];
 
+    this.score = 0;
+
     this.gameScale = 1.0;
 
     this.initialize = function() {
@@ -14,9 +16,15 @@ function GameManager() {
         }
         inputManager.initializeInput();
 
+        // TODO This should eventually be abstracted
+        scoreStr = "Score: " + this.score;
+        canvasContext.textAlign = "right";
+        drawText(scoreStr,virtualWidth - 1, 10,'white');
+        canvasContext.textAlign = "left";
+
         this.update(); // start animating now
-        
-    }
+
+    };
 
     this.moveEverything = function() {
         this.player.update();
@@ -46,7 +54,7 @@ function GameManager() {
             this.player.initialize(playerImage);
             inputManager.initializeInput();
         }
-    }
+    };
 
     this.checkForCollisions = function() {
         for (var i = 0; i < this.enemyShots.length; i++) {
@@ -69,6 +77,7 @@ function GameManager() {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i]) == true) {
                     this.enemies[i].health--;
                     if (this.enemies[i].health <= 0) {
+                        this.score += 10;
                         this.enemies[i].reset();
                         screenshake(2);
                         party(this.enemies[i].x,this.enemies[i].y);
@@ -79,22 +88,22 @@ function GameManager() {
                 }
             }
         }
-    }
+    };
 
     this.isOverlapping = function(objectA, objectB) {
         var deltaX = objectA.x - objectB.x;
         var deltaY = objectA.y - objectB.y;
         var dist = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
         return ((dist <= UFO_COLLISION_RADIUS) || (dist <= SHOT_DISPLAY_RADIUS));
-    }
+    };
 
     this.drawEverything = function () {
         if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
             webGL.cls();
         }
         else {
-            canvasContext.save(); 
-            canvasContext.scale(this.gameScale, this.gameScale); 
+            canvasContext.save();
+            canvasContext.scale(this.gameScale, this.gameScale);
 
             colorRect(0, 0, virtualWidth, virtualHeight, 'black');
         }
@@ -116,17 +125,23 @@ function GameManager() {
         drawText("Health", 1, 20, "tomato");
         drawText("Dash Cooldown", 1, 30, "white");
 
+        // TODO Should be abstracted into updateScoreDisplay function
+        scoreStr = "Score: " + this.score;
+        canvasContext.textAlign = "right";
+        drawText(scoreStr,virtualWidth - 1, 10,'white');
+        canvasContext.textAlign = "left";
+
         draw_particles(0,0);
 
         if ((USE_WEBGL_IF_SUPPORTED && window.webGL)==false) {
-            canvasContext.restore(); 
+            canvasContext.restore();
         }
-    }
+    };
 
     this.update = function() {
         if (this.player != null) {
-			updateScreenshake(); // "juice it...
-			updateParticles(); // ...or lose it!" =)
+            updateScreenshake(); // "juice it...
+            updateParticles(); // ...or lose it!" =)
             this.moveEverything();
             this.drawEverything();
         }
@@ -138,5 +153,6 @@ function GameManager() {
 
         // the bind() function ensures when it gets called again the "THIS" is set
         requestAnimationFrame(this.update.bind(this));
-    }
+    };
 }
+
