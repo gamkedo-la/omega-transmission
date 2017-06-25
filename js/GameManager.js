@@ -56,6 +56,7 @@ function GameManager() {
         this.checkForCollisions();
 
         if (this.player.health <= 0) {
+            this.score = 0;
             this.player = new Ship();
             this.player.initialize(playerImage);
             inputManager.initializeInput();

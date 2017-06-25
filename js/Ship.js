@@ -30,15 +30,15 @@ function Ship() {
     this.initialize = function(whichGraphic) {
         this.myBitmap = whichGraphic;
         this.reset();
-    }
+    };
 
-    this.reset = function() { 
+    this.reset = function() {
         this.wrappingMovementComponent.reset();
         this.x = virtualWidth / 2;
         this.y = virtualHeight / 2;
         this.ang = -0.5 * Math.PI;
-    }
-  
+    };
+
     this.cannonFire = function() {
         if (this.readyToFire == true) {
             var tempShot = new Shot();
@@ -51,7 +51,7 @@ function Ship() {
             var shooty = this.y + (Math.sin(this.ang) * 30);
             party(shootx,shooty);
         }
-    }
+    };
 
     this.dash = function () {
         if (this.readyToDash == true) {
@@ -60,8 +60,8 @@ function Ship() {
             this.readyToDash = false;
             this.dashCooldown = DASH_DISTANCE;
         }
-    }
-  
+    };
+
     this.update = function () {
         if (this.shotCooldown > 0) {
             this.shotCooldown--;
@@ -86,7 +86,7 @@ function Ship() {
             var shootx = this.x + (Math.cos(this.ang) * -20);
             var shooty = this.y + (Math.sin(this.ang) * -20);
             party(shootx,shooty);
-            
+
         }
 
         //prevent mouse position from causing a fight with the gamepad if it is in use
@@ -103,7 +103,7 @@ function Ship() {
                 //console.log("gamepad aiming mode: " + maybeAng);
                 if (maybeAng != 0) { //special edge case so we ignore idle gamepads
                     this.ang = maybeAng;
-                    // always fire if the gamepad is aiming! 
+                    // always fire if the gamepad is aiming!
                     this.cannonFire(); // TODO: maybe use R2/R1 for fire button?
                 }
             }
@@ -124,12 +124,13 @@ function Ship() {
                 this.shieldCooldown--;
             }
         }
-    }
-  
+    };
+
     this.draw = function () {
         drawScaledCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, 32, 64, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
         drawText(this.dashCooldown, this.x + 20, this.y + 15, 'white');
         drawText(this.health, this.x + 20, this.y + 5, 'tomato');
         drawText(this.shield, this.x + 20, this.y - 5, 'cyan');
-    }
+    };
 }
+
