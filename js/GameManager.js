@@ -21,38 +21,19 @@ function GameManager() {
             this.enemies[i].reset();
         }
         inputManager.initializeInput();
-
-        // TODO This should eventually be abstracted
-        scoreStr = "Score: " + this.score;
-        canvasContext.textAlign = "right";
-        drawText(scoreStr,virtualWidth - 1, 10,'white');
-        canvasContext.textAlign = "left";
-
+        this.renderScore();
         this.update(); // start animating now
-
     };
 
     this.moveEverything = function() {
         this.player.update();
-        for (var i = this.playerShots.length - 1; i >= 0; i--) {
-            if (this.playerShots[i].shotLife <= 0) {
-                this.playerShots.splice(i, 1);
-            }
-            else {
-                this.playerShots[i].move();
-            }
-        }
+        this.updateShots(this.playerShots);
+
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].update();
         }
-        for (var i = this.enemyShots.length - 1; i >= 0; i--) {
-            if (this.enemyShots[i].shotLife <= 0) {
-                this.enemyShots.splice(i, 1);
-            }
-            else {
-                this.enemyShots[i].move();
-            }
-        }
+
+        this.updateShots(this.enemyShots);
         this.checkForCollisions();
 
         if (this.player.health <= 0) {
@@ -61,6 +42,24 @@ function GameManager() {
             this.player.initialize(playerImage);
             inputManager.initializeInput();
         }
+    };
+
+    this.updateShots = function(shotArr) {
+        for (var i = shotArr.length - 1; i >= 0; i--) {
+            if (shotArr[i].shotLife <= 0) {
+                shotArr.splice(i, 1);
+            }
+            else {
+                shotArr[i].move();
+            }
+        }
+    };
+
+    this.renderScore = function(){
+        scoreStr = "Score: " + this.score;
+        canvasContext.textAlign = "right";
+        drawText(scoreStr,virtualWidth - 1, 10,'white');
+        canvasContext.textAlign = "left";
     };
 
     this.checkForCollisions = function() {
@@ -132,11 +131,7 @@ function GameManager() {
         drawText("Health", 1, 20, "tomato");
         drawText("Dash Cooldown", 1, 30, "white");
 
-        // TODO Should be abstracted into updateScoreDisplay function
-        scoreStr = "Score: " + this.score;
-        canvasContext.textAlign = "right";
-        drawText(scoreStr,virtualWidth - 1, 10,'white');
-        canvasContext.textAlign = "left";
+        this.renderScore();
 
         draw_particles(0,0);
 
