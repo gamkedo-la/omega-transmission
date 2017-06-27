@@ -4,12 +4,12 @@ function GameManager() {
     this.playerShots = [];
     this.enemies = [];
     this.enemyShots = [];
-
-    this.score = 0;
+    this.powerups = [];
 
     this.gameScale = 1.0;
 
     this.initialize = function() {
+        this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.player.initialize(playerImage);
         for(var shooterEnemies=0; shooterEnemies < 1; shooterEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
@@ -26,6 +26,7 @@ function GameManager() {
     };
 
     this.moveEverything = function() {
+        console.log(this.shotsTillPowerup);
         this.player.update();
         this.updateShots(this.playerShots);
 
@@ -35,12 +36,22 @@ function GameManager() {
 
         this.updateShots(this.enemyShots);
         this.checkForCollisions();
+        this.updatePowerups();
 
         if (this.player.health <= 0) {
             this.score = 0;
             this.player = new Ship();
             this.player.initialize(playerImage);
             inputManager.initializeInput();
+        }
+    };
+
+    this.updatePowerups = function(){
+        for (var i = 0; i < this.powerups.length; i++){
+            this.powerups[i].step();
+            if(this.powerups.remainingLife === 0){
+                this.powerups.splice(i, 1);
+            }
         }
     };
 
@@ -84,6 +95,12 @@ function GameManager() {
                     this.enemies[i].health--;
                     if (this.enemies[i].health <= 0) {
                         this.score += 10;
+
+                        if(--this.shotsTillPowerup === 0){
+                            this.dropPowerup(this.enemies[i]);
+                            this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
+                        }
+
                         this.enemies[i].reset();
                         screenshake(2);
                         party(this.enemies[i].x,this.enemies[i].y);
@@ -94,6 +111,11 @@ function GameManager() {
                 }
             }
         }
+    };
+
+    this.dropPowerup = function(enemy) {
+        newPowerup = new Powerup(enemy.x,enemy.y);
+        this.powerups.push(newPowerup);
     };
 
     this.isOverlapping = function(objectA, objectB) {
@@ -121,6 +143,9 @@ function GameManager() {
         }
         for (var i = 0; i < this.enemyShots.length; i++) {
             this.enemyShots[i].draw();
+        }
+        for (var i = 0; i < this.powerups.length; i++) {
+            this.powerups[i].draw();
         }
         this.player.draw();
         for (var i = 0; i < this.enemies.length; i++) {

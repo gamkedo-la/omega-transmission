@@ -109,3 +109,4 @@ function drawText(text, x, y, fillColor) {
 		canvasContext.fillText(text, x, y);
 	}
 }
+
