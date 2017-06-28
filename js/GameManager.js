@@ -34,6 +34,13 @@ function GameManager() {
             this.enemies[i].update();
         }
 
+        for (var i = 0; i < NUM_POWERUP_TYPES; i++){
+            if(this.player.powerupLife[i] > 0){
+                this.player.powerupLife[i]--;
+                console.log("Player holding powerup type " + i + " , holding for", this.player.powerupLife[i]);
+            }
+        }
+
         this.updateShots(this.enemyShots);
         this.checkForCollisions();
         this.updatePowerups();
@@ -74,8 +81,8 @@ function GameManager() {
     };
 
     this.checkForCollisions = function() {
-        for (var i = 0; i < this.enemyShots.length; i++) {
-            if (this.isOverlapping(this.player, this.enemyShots[i]) == true) {
+        for (var i = 0, len = this.enemyShots.length; i < len; i++) {
+            if (this.isOverlapping(this.player, this.enemyShots[i], SHOT_COLLISION_RADIUS) == true) {
                 this.player.health--;
                 this.enemyShots[i].reset();
                 screenshake(4);
@@ -83,15 +90,15 @@ function GameManager() {
             }
         }
         for (var i = 0; i < this.enemies.length; i++) {
-            if (this.isOverlapping(this.player, this.enemies[i]) == true) {
+            if (this.isOverlapping(this.player, this.enemies[i], UFO_COLLISION_RADIUS) == true) {
                 this.player.reset();
                 this.player.health--;
                 document.getElementById("debugText").innerHTML = "Player Crashed!";
                 screenshake(10);
                 party(this.player.x,this.player.y);
             }
-            for (var j = 0; j < this.playerShots.length; j++) {
-                if (this.isOverlapping(this.playerShots[j], this.enemies[i]) == true) {
+            for (var j = 0, len = this.playerShots.length; j < len; j++) {
+                if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
                     this.enemies[i].health--;
                     if (this.enemies[i].health <= 0) {
                         this.score += 10;
@@ -111,18 +118,24 @@ function GameManager() {
                 }
             }
         }
+        for (var i = this.powerups.length - 1; i >= 0; i--) {
+            if(this.isOverlapping(this.player, this.powerups[i], POWERUP_COLLISION_RADIUS)){
+                this.player.setPowerup(this.powerups[i]);
+                this.powerups.splice(i, 1);
+            }
+        }
     };
 
-    this.dropPowerup = function(enemy) {
-        newPowerup = new Powerup(enemy.x,enemy.y);
-        this.powerups.push(newPowerup);
-    };
-
-    this.isOverlapping = function(objectA, objectB) {
+    this.isOverlapping = function(objectA, objectB, collisionRadius) {
         var deltaX = objectA.x - objectB.x;
         var deltaY = objectA.y - objectB.y;
         var dist = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
-        return ((dist <= UFO_COLLISION_RADIUS) || (dist <= SHOT_DISPLAY_RADIUS));
+        return dist <= collisionRadius;
+    };
+
+    this.dropPowerup = function(enemy) {
+        var type = Math.floor(Math.random() * 2);
+        this.powerups.push(new Powerup(enemy.x,enemy.y,type));
     };
 
     this.drawEverything = function () {

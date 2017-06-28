@@ -13,7 +13,7 @@ var virtualWidth = 1280.0;
 window.onload = function() {
 
     console.log("Initializing game engine...");
-    
+
     canvas = document.getElementById('gameCanvas');
 
     if (FULL_SIZE_CANVAS) {
@@ -21,7 +21,7 @@ window.onload = function() {
         onResize();
     }
 
-    if (USE_WEBGL_IF_SUPPORTED)	{
+    if (USE_WEBGL_IF_SUPPORTED)    {
         init_webGL();
     }
 
@@ -33,8 +33,8 @@ window.onload = function() {
 
     loadImages();
 
-	init_particles();
-}
+    init_particles();
+};
 
 function onResize() { // changing window dimensions
     if (!canvas) return;
@@ -44,7 +44,7 @@ function onResize() { // changing window dimensions
         canvas.width = widthIfHeightScaled;
         canvas.height = window.innerHeight;
         gameManager.gameScale = window.innerHeight/virtualHeight;
-    } else { 
+    } else {
         var heightIfWidthScaled = window.innerWidth * gameRatio;
         canvas.width = window.innerWidth;
         canvas.height = heightIfWidthScaled;
@@ -56,3 +56,4 @@ function onResize() { // changing window dimensions
 function loadingDoneSoStartGame() {
     gameManager.initialize();
 }
+

@@ -22,6 +22,7 @@ function Ship() {
     this.health = PLAYER_MAX_HEALTH;
     this.shield = 0;
     this.shieldCooldown = SHIELD_COOLDOWN;
+    this.powerupLife = [ 0, 0, 0 ];
 
     this.keyHeld_RapidFire = false;
     this.keyHeld_ForwardThrust = false;
@@ -51,6 +52,11 @@ function Ship() {
             var shooty = this.y + (Math.sin(this.ang) * 30);
             party(shootx,shooty);
         }
+    };
+
+    this.setPowerup = function(powerup){
+        this.powerupLife[powerup.type] += 1000;
+        console.log("picked up powerup! ", + this.powerupLife[powerup.type]);
     };
 
     this.dash = function () {
