@@ -38,8 +38,10 @@ function Shot() {
 
     this.draw = function() {
         if (this.shotLife > 0) {
-            //colorCircle( this.x, this.y, SHOT_DISPLAY_RADIUS, this.color );
-            drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
+            if(gameManager.player.powerupLife[TYPE_LASER] != 0)
+                drawScaledCenteredBitmapWithRotation(plasmaImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME (outdated note?)
+            else
+                drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
         }
     };
 }

@@ -46,7 +46,12 @@ function Ship() {
             tempShot.shootFrom(this, this.ang, "white");
             gameManager.playerShots.push(tempShot);
             this.readyToFire = false;
-            this.shotCooldown = FIRE_RATE;
+
+            if(this.powerupLife[0] > 0)
+                this.shotCooldown = FIRE_RATE/2;
+            else
+                this.shotCooldown = FIRE_RATE;
+
             // muzzle flash at gun position:
             var shootx = this.x + (Math.cos(this.ang) * 30);
             var shooty = this.y + (Math.sin(this.ang) * 30);

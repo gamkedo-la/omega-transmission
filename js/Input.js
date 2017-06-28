@@ -1,4 +1,4 @@
-// keyboard keycode constants, determined by printing out evt.keyCode from a key handler  
+// keyboard keycode constants, determined by printing out evt.keyCode from a key handler
 const KEY_LEFT_ARROW = 37;
 const KEY_UP_ARROW = 38;
 const KEY_RIGHT_ARROW = 39;
@@ -17,8 +17,8 @@ function inputManager() {
     this.setupControls = function (forwardKey, shotKey) {
         this.controlKeyForShotFire = shotKey;
         this.controlKeyForForwardThrust = forwardKey;
-    }
-    
+    };
+
     this.initializeInput = function() {
         document.addEventListener("keydown", this.keyPressed);
         document.addEventListener("keyup", this.keyReleased);
@@ -31,7 +31,7 @@ function inputManager() {
         //canvas.addEventListener('wheel', event => event.preventDefault());
 
         this.setupControls(KEY_LETTER_W, KEY_SPACEBAR);
-    }
+    };
 
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
         if (thisKey == this.controlKeyForLeft) {
@@ -49,7 +49,7 @@ function inputManager() {
         if (thisKey == this.controlKeyForForwardThrust) {
             thisShip.keyHeld_ForwardThrust = setTo;
         }
-    }
+    };
 
     this.keyPressed = function (evt) {
         //needed to use inputManager instead of this due to scope with event
@@ -58,11 +58,11 @@ function inputManager() {
             gameManager.player.cannonFire();
         }
         evt.preventDefault(); // without this, arrow keys scroll the browser!
-    }
+    };
 
     this.keyReleased = function(evt) {
         inputManager.setKeyHoldState(evt.keyCode, gameManager.player, false);
-    }
+    };
 
     this.getMousePosition = function(evt) {
         var rect = canvas.getBoundingClientRect();
@@ -74,14 +74,14 @@ function inputManager() {
         inputManager.mouse.y = canvasY/gameManager.gameScale;
         inputManager.mouseMoved = true;
         inputManager.gamepadMoved = false;
-    }
+    };
 
     this.mousePressed = function(evt) {
         if (evt.button == 0) {
             gameManager.player.keyHeld_RapidFire = true;
         }
         evt.preventDefault(); // to block default middle mouse scroll interaction
-    }
+    };
 
     this.mouseReleased = function(evt) {
         if (evt.button == 0) {
@@ -91,5 +91,6 @@ function inputManager() {
             gameManager.player.dash();
         }
         evt.preventDefault(); // to block default middle mouse scroll interaction
-    }
+    };
 }
+
