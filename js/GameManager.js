@@ -83,34 +83,36 @@ function GameManager() {
     this.checkForCollisions = function() {
         for (var i = 0, len = this.enemyShots.length; i < len; i++) {
             if (this.isOverlapping(this.player, this.enemyShots[i], SHOT_COLLISION_RADIUS) == true) {
+                // ENEMY SHOT HITS PLAYER
                 this.player.health--;
                 this.enemyShots[i].reset();
                 screenshake(4);
-                party(this.player.x,this.player.y);
+                party(this.player.x,this.player.y,null,null,null,null,1,2);
             }
         }
         for (var i = 0; i < this.enemies.length; i++) {
             if (this.isOverlapping(this.player, this.enemies[i], UFO_COLLISION_RADIUS) == true) {
+                // PLAYER SHIP HITS ENEMY
                 this.player.reset();
                 this.player.health--;
                 document.getElementById("debugText").innerHTML = "Player Crashed!";
                 screenshake(10);
-                party(this.player.x,this.player.y);
+                party(this.player.x,this.player.y,null,null,null,null,1,2);
             }
             for (var j = 0, len = this.playerShots.length; j < len; j++) {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
+                    // PLAYER SHOT HITS ENEMY
                     this.enemies[i].health--;
                     if (this.enemies[i].health <= 0) {
+                        // ENEMY DESTROYED
                         this.score += 10;
-
                         if(--this.shotsTillPowerup === 0){
                             this.dropPowerup(this.enemies[i]);
                             this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
                         }
-
+                        party(this.enemies[i].x,this.enemies[i].y,null,null,null,null,1,2);
                         this.enemies[i].reset();
                         screenshake(2);
-                        party(this.enemies[i].x,this.enemies[i].y);
                     }
                     this.playerShots[j].reset();
                     document.getElementById("debugText").innerHTML = "Enemy Blasted!";
@@ -120,6 +122,7 @@ function GameManager() {
         }
         for (var i = this.powerups.length - 1; i >= 0; i--) {
             if(this.isOverlapping(this.player, this.powerups[i], POWERUP_COLLISION_RADIUS)){
+                // PLAYER HITS POWERUP
                 this.player.setPowerup(this.powerups[i]);
                 this.powerups.splice(i, 1);
             }

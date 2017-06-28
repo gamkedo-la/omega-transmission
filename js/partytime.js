@@ -1,6 +1,6 @@
 /**
  *
- * PARTYTIME!
+ * PARTYTIME v2.1
  *
  * a simple particle system 
  * made for gamkedo by mcfunkypants
@@ -12,9 +12,6 @@ var particle_timestamp = (new Date()).getTime();
 var particles = []; // a SpriteList containing all of them
 var particle_w = 64;
 var particle_h = 64;
-var particle_scale = 1; 
-var particle_offsetx = -1 * Math.round(particle_w/2) * particle_scale;
-var particle_offsety = -1 * Math.round(particle_h/2) * particle_scale;
 var particle_spritesheet_framecount = 16; // spritesheet frames per anim
 var PARTICLE_FPS = 24;
 var PARTICLE_FRAME_MS = 1000/PARTICLE_FPS; // 15 = 60fps - looks fine much slower too
@@ -28,7 +25,7 @@ var spritesheet_image_finished_loading = false;
  * spawns a spritesheet-based particle animation at these coordinates
  * implements a reuse POOL and only makes new objects when required
  */
-function party(x, y, particleType, destX, destY, delayFrames) {
+function party(x, y, particleType, destX, destY, delayFrames, startScale, endScale) {
 
 	//console.log('party ' + x + ',' + y);
 
@@ -36,6 +33,9 @@ function party(x, y, particleType, destX, destY, delayFrames) {
 	if (!spritesheet_image_finished_loading) return;
 
 	if (!delayFrames) delayFrames = 0; // deal with undefined
+
+	if (startScale==undefined) startScale = 1;
+	if (endScale==undefined) endScale = 1;
 
 	var p, pnum, pcount;
 	if (!particleType) particleType = 0;
@@ -60,8 +60,8 @@ function party(x, y, particleType, destX, destY, delayFrames) {
 	}
 
 	if (p && p.inactive) {
-		p.x = x + particle_offsetx; // FIXME: account for scale (eg x4)
-		p.y = y + particle_offsety;
+		p.x = x;// + particle_offsetx; // FIXME: account for scale (eg x4)
+		p.y = y;// + particle_offsety;
 		p.particle_type = particleType;
 		p.delayFrames = delayFrames; // MS3 - can be delayed by a number of frames
 		p.inactive = false;
@@ -71,7 +71,9 @@ function party(x, y, particleType, destX, destY, delayFrames) {
 		p.anim_last_tick = particle_timestamp;
 		p.next_frame_timestamp = particle_timestamp + PARTICLE_FRAME_MS;
 		p.anim_sum_tick = 0;
-		p.scale = particle_scale;
+		p.scale = startScale;
+		p.endscale = endScale;
+		p.scaleSpeed = (endScale - startScale) / particle_spritesheet_framecount;
 
 		// optionally moving particles
 		if (destX && destY) {
@@ -126,6 +128,8 @@ function updateParticles()
 			{
 				//p.anim_last_tick = particle_timestamp; // not actually used OPTI
 
+				p.scale += p.scaleSpeed;
+
 				// moving particles
 				if (p.moving) {
 					p.x += p.speedX;
@@ -172,11 +176,10 @@ function draw_particles(camerax,cameray)
 				if (window.canvasContext) // sanity check
 				{
 					canvasContext.drawImage(spritesheet_image,
-					// FIXME: account for spritesheet ROWS
 					p.anim_frame * particle_w,
 					p.particle_type * particle_h,
 					particle_w, particle_h,
-					p.x - camerax, p.y - cameray,
+					p.x - camerax + (-1 * Math.round(particle_w/2) * p.scale), p.y - cameray + (-1 * Math.round(particle_h/2) * p.scale),
 					particle_w * p.scale, particle_h * p.scale);
 				}
 			}
