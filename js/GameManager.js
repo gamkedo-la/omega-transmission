@@ -93,11 +93,13 @@ function GameManager() {
         for (var i = 0; i < this.enemies.length; i++) {
             if (this.isOverlapping(this.player, this.enemies[i], UFO_COLLISION_RADIUS) == true) {
                 // PLAYER SHIP HITS ENEMY
+                // FIXME: this gets called MANY times in a row if we die and respawn in same spot (need to reset enemies too)
                 this.player.reset();
                 this.player.health--;
                 document.getElementById("debugText").innerHTML = "Player Crashed!";
                 screenshake(10);
-                party(this.player.x,this.player.y,null,null,null,null,1,2);
+                party(this.player.x,this.player.y,PARTICLE_EXPLOSION,null,null,null,2,2);
+                party(this.player.x,this.player.y,PARTICLE_SHOCKWAVE,null,null,null,0,1);
             }
             for (var j = 0, len = this.playerShots.length; j < len; j++) {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
@@ -110,7 +112,8 @@ function GameManager() {
                             this.dropPowerup(this.enemies[i]);
                             this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
                         }
-                        party(this.enemies[i].x,this.enemies[i].y,null,null,null,null,1,2);
+                        party(this.enemies[i].x,this.enemies[i].y,PARTICLE_EXPLOSION,null,null,null,2,2);
+                        party(this.enemies[i].x,this.enemies[i].y,PARTICLE_SHOCKWAVE,null,null,null,0,1);
                         this.enemies[i].reset();
                         screenshake(2);
                     }

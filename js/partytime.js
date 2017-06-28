@@ -6,7 +6,10 @@
  * made for gamkedo by mcfunkypants
  *
  */
- 
+
+const PARTICLE_EXPLOSION = 0;
+const PARTICLE_SHOCKWAVE = 1;
+
 var particles_enabled = true;
 var particle_timestamp = (new Date()).getTime();
 var particles = []; // a SpriteList containing all of them
@@ -65,9 +68,9 @@ function party(x, y, particleType, destX, destY, delayFrames, startScale, endSca
 		p.particle_type = particleType;
 		p.delayFrames = delayFrames; // MS3 - can be delayed by a number of frames
 		p.inactive = false;
-		p.anim_frame = particleType * particle_spritesheet_framecount;
-		p.anim_start_frame = particleType * particle_spritesheet_framecount;
-		p.anim_end_frame = p.anim_start_frame + particle_spritesheet_framecount;
+		p.anim_frame = 0; 
+		p.anim_start_frame = 0;
+		p.anim_end_frame = particle_spritesheet_framecount;
 		p.anim_last_tick = particle_timestamp;
 		p.next_frame_timestamp = particle_timestamp + PARTICLE_FRAME_MS;
 		p.anim_sum_tick = 0;
