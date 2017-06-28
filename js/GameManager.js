@@ -6,6 +6,8 @@ function GameManager() {
     this.enemyShots = [];
     this.powerups = [];
 
+    this.score = 0;
+
     this.gameScale = 1.0;
 
     this.initialize = function() {
@@ -100,7 +102,7 @@ function GameManager() {
                 party(this.player.x,this.player.y,PARTICLE_EXPLOSION,null,null,null,2,2);
                 party(this.player.x,this.player.y,PARTICLE_SHOCKWAVE,null,null,null,0,1);
                 // BUGFIX: the enemy gets destroyed too (to avoid a hundred deaths if you respawn in same place)
-				this.enemies[i].reset();
+                this.enemies[i].reset();
             }
             for (var j = 0, len = this.playerShots.length; j < len; j++) {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
