@@ -26,6 +26,8 @@ function Ship() {
 
     this.keyHeld_RapidFire = false;
     this.keyHeld_ForwardThrust = false;
+    this.keyHeld_StrafeLeft = false;
+    this.keyHeld_StrafeRight = false;
 
 
     this.initialize = function(whichGraphic) {

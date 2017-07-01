@@ -14,9 +14,11 @@ function inputManager() {
     this.mouseMoved = false;
     this.gamepadMoved = false;
 
-    this.setupControls = function (forwardKey, shotKey) {
+    this.setupControls = function (forwardKey, shotKey, strafeLeftKey, strafeRightKey) {
         this.controlKeyForShotFire = shotKey;
         this.controlKeyForForwardThrust = forwardKey;
+        this.controlKeyForStrafeLeft = strafeLeftKey;
+        this.controlKeyForStrafeRight = strafeRightKey;
     };
 
     this.initializeInput = function() {
@@ -30,15 +32,15 @@ function inputManager() {
         //canvas.addEventListener('contextmenu', event => event.preventDefault()); //blocks right click menu
         //canvas.addEventListener('wheel', event => event.preventDefault());
 
-        this.setupControls(KEY_LETTER_W, KEY_SPACEBAR);
+        this.setupControls(KEY_LETTER_W, KEY_SPACEBAR, KEY_LETTER_A, KEY_LETTER_D);
     };
 
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
-        if (thisKey == this.controlKeyForLeft) {
-            thisShip.keyHeld_Left = setTo;
+        if (thisKey == this.controlKeyForStrafeLeft) {
+            thisShip.keyHeld_StrafeLeft = setTo;
         }
-        if (thisKey == this.controlKeyForRight) {
-            thisShip.keyHeld_Right = setTo;
+        if (thisKey == this.controlKeyForStrafeRight) {
+            thisShip.keyHeld_StrafeRight = setTo;
         }
         if (thisKey == this.controlKeyForUp) {
             thisShip.keyHeld_Up = setTo;
@@ -56,6 +58,14 @@ function inputManager() {
         inputManager.setKeyHoldState(evt.keyCode, gameManager.player, true);
         if (evt.keyCode == inputManager.controlKeyForShotFire) {
             gameManager.player.cannonFire();
+        }
+        if (evt.keyCode == inputManager.controlKeyForStrafeLeft) {
+            //Put strafe left code in here.
+            console.log("Strafe Left");
+        }
+        if (evt.keyCode == inputManager.controlKeyForStrafeRight) {
+            //Put strafe right code in here.
+            console.log("Strafe Right");
         }
         evt.preventDefault(); // without this, arrow keys scroll the browser!
     };
