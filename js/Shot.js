@@ -1,7 +1,7 @@
 // shot tuning constants
 const SHOT_SPEED = 8.0;
 const SHOT_LIFE = 120;
-const SHOT_COLLISION_RADIUS = 8.0;
+const SHOT_COLLISION_RADIUS = 16.0;
 
 
 function Shot() {
