@@ -2,7 +2,7 @@ function GameManager() {
 
     this.player = new Ship();
     this.playerShots = [];
-    this.enemies = [];
+    this.enemies = [ new UFO(ENEMY_KIND_FLEET) ];
     this.enemyShots = [];
     this.powerups = [];
 
