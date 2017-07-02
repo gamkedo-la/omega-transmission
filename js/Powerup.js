@@ -12,25 +12,25 @@ function Powerup(x,y,type) {
     this.y = y;
     this.type = type;
     this.remainingLife = POWERUP_LIFE;
-
-    this.step = function(){
-        this.remainingLife--;
-    };
-
-    this.draw = function(){
-        if(this.remainingLife > 0){
-            switch(type){
-                case TYPE_LASER:
-                    colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'yellow');
-                    break;
-                case TYPE_SHIELD:
-                    colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'red');
-                    break;
-                case TYPE_HEALTH:
-                    colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'blue');
-                    break;
-            }
-        }
-    };
 }
+
+Powerup.prototype.step = function(){
+    this.remainingLife--;
+};
+
+Powerup.prototype.draw = function(){
+    if(this.remainingLife > 0){
+        switch(type){
+            case TYPE_LASER:
+                colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'yellow');
+                break;
+            case TYPE_SHIELD:
+                colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'red');
+                break;
+            case TYPE_HEALTH:
+                colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'blue');
+                break;
+        }
+    }
+};
 
