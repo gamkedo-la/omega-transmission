@@ -170,7 +170,8 @@ function GameManager() {
     };
 
     this.dropPowerup = function(enemy) {
-        var type = Math.floor(Math.random() * 2);
+        // var type = Math.floor(Math.random() * 3);
+        var type = TYPE_HEALTH;
         this.powerups.push(new Powerup(enemy.x,enemy.y,type));
     };
 

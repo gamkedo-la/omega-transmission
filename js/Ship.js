@@ -63,6 +63,9 @@ function Ship() {
 
     this.setPowerup = function(powerup){
         this.powerupLife[powerup.type] += 1000;
+        if(powerup.type === TYPE_HEALTH) {
+            this.health += POWERUP_HEALTH_INCREASE;
+        }
         console.log("picked up powerup! ", + this.powerupLife[powerup.type]);
     };
 
