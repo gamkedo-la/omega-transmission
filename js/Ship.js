@@ -102,6 +102,26 @@ function Ship() {
 
         }
 
+        if (this.keyHeld_StrafeLeft == true) {
+            this.xv += Math.cos(this.ang - Math.PI / 2) * THRUST_POWER;
+            this.yv += Math.sin(this.ang - Math.PI / 2) * THRUST_POWER;
+            // thruster flames at engine position:
+            var shootx = this.x + (Math.cos(this.ang + Math.PI / 2) * +20);
+            var shooty = this.y + (Math.sin(this.ang + Math.PI / 2) * +20);
+            party(shootx,shooty);
+
+        }
+
+        if (this.keyHeld_StrafeRight == true) {
+            this.xv += Math.cos(this.ang + Math.PI / 2) * THRUST_POWER;
+            this.yv += Math.sin(this.ang + Math.PI / 2) * THRUST_POWER;
+            // thruster flames at engine position:
+            var shootx = this.x + (Math.cos(this.ang - Math.PI / 2) * +20);
+            var shooty = this.y + (Math.sin(this.ang - Math.PI / 2) * +20);
+            party(shootx,shooty);
+
+        }
+
         //prevent mouse position from causing a fight with the gamepad if it is in use
         if (inputManager.mouseMoved == true) {
             // rotate the ship to face the mouse cursor
