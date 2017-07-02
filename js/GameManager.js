@@ -28,7 +28,7 @@ function GameManager() {
     };
 
     this.moveEverything = function() {
-        console.log(this.shotsTillPowerup);
+        // console.log(this.shotsTillPowerup);
         this.player.update();
         this.updateShots(this.playerShots);
 

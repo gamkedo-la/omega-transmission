@@ -20,7 +20,7 @@ Powerup.prototype.step = function(){
 
 Powerup.prototype.draw = function(){
     if(this.remainingLife > 0){
-        switch(type){
+        switch(this.type){
             case TYPE_LASER:
                 colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'yellow');
                 break;

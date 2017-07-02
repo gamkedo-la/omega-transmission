@@ -59,14 +59,6 @@ function inputManager() {
         if (evt.keyCode == inputManager.controlKeyForShotFire) {
             gameManager.player.cannonFire();
         }
-        if (evt.keyCode == inputManager.controlKeyForStrafeLeft) {
-            //Put strafe left code in here.
-            console.log("Strafe Left");
-        }
-        if (evt.keyCode == inputManager.controlKeyForStrafeRight) {
-            //Put strafe right code in here.
-            console.log("Strafe Right");
-        }
         evt.preventDefault(); // without this, arrow keys scroll the browser!
     };
 
