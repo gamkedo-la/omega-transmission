@@ -1,8 +1,14 @@
 function GameManager() {
+    this.levelNow = -1; // will increment to 0 on start
+    this.stages = [
+        {waveName:"Intro",spearNum:0,shooterNum:1,fleetNum:1},
+        {waveName:"Recon",spearNum:3,shooterNum:0,fleetNum:0},
+        {waveName:"Guards",spearNum:1,shooterNum:3,fleetNum:0}
+        ];
 
     this.player = new Ship();
     this.playerShots = [];
-    this.enemies = [ new UFO(ENEMY_KIND_FLEET) ];
+    this.enemies = [ ];
     this.enemyShots = [];
     this.powerups = [];
 
@@ -13,19 +19,31 @@ function GameManager() {
     this.initialize = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.player.initialize(playerImage);
-        for(var shooterEnemies=0; shooterEnemies < 1; shooterEnemies++) {
-            this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
-        }
-        for(var rammerEnemies=0; rammerEnemies < 2; rammerEnemies++) {
-            this.enemies.push(new UFO(ENEMY_KIND_RAMMER));
-        }
-        for (var i = 0; i < this.enemies.length; i++) {
-            this.enemies[i].reset();
-        }
+        this.nextWave();
         inputManager.initializeInput();
         this.renderScore();
         this.update(); // start animating now
     };
+
+    this.nextWave = function () {
+        this.levelNow++;
+        this.levelNow %= this.stages.length;
+
+        console.log("Starting wave: " + this.stages[this.levelNow].waveName);
+        for(var shooterEnemies=0; shooterEnemies < this.stages[this.levelNow].shooterNum; shooterEnemies++) {
+            this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
+        }
+        for(var rammerEnemies=0; rammerEnemies < this.stages[this.levelNow].spearNum; rammerEnemies++) {
+            this.enemies.push(new UFO(ENEMY_KIND_RAMMER));
+        }
+        for(var fleetEnemies=0; fleetEnemies < this.stages[this.levelNow].fleetNum; fleetEnemies++) {
+            this.enemies.push(new UFO(ENEMY_KIND_FLEET));
+        }
+        
+        for (var i = 0; i < this.enemies.length; i++) {
+            this.enemies[i].reset();
+        }
+    }
 
     this.moveEverything = function() {
         // console.log(this.shotsTillPowerup);
@@ -39,7 +57,7 @@ function GameManager() {
         for (var i = 0; i < NUM_POWERUP_TYPES; i++){
             if(this.player.powerupLife[i] > 0){
                 this.player.powerupLife[i]--;
-                console.log("Player holding powerup type " + i + " , holding for", this.player.powerupLife[i]);
+                // console.log("Player holding powerup type " + i + " , holding for", this.player.powerupLife[i]);
             }
         }
 
@@ -117,7 +135,7 @@ function GameManager() {
                         }
                         party(this.enemies[i].x,this.enemies[i].y,PARTICLE_EXPLOSION,null,null,null,2,2);
                         party(this.enemies[i].x,this.enemies[i].y,PARTICLE_SHOCKWAVE,null,null,null,0,1);
-                        this.enemies[i].reset();
+                        this.enemies[i].readyToRemove=true;
                         screenshake(2);
                     }
                     this.playerShots[j].reset();
@@ -125,6 +143,15 @@ function GameManager() {
                     party(this.enemies[i].x,this.enemies[i].y);
                 }
             }
+        }
+        // remove shot enemies
+        for (var i = this.enemies.length - 1; i >= 0; i--) {
+            if (this.enemies[i].readyToRemove) {
+                this.enemies.splice(i, 1);
+            }
+        }
+        if(this.enemies.length==0) {
+            this.nextWave();
         }
         for (var i = this.powerups.length - 1; i >= 0; i--) {
             if(this.isOverlapping(this.player, this.powerups[i], POWERUP_COLLISION_RADIUS)){

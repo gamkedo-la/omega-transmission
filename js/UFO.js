@@ -38,6 +38,7 @@ function UFO(enemyType) {
     this.ang = Math.PI*2.0*Math.random();
 
     this.rammingTime = 0;
+    this.readyToRemove = false;
 }
 
 UFO.prototype.reset = function() {
