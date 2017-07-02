@@ -1,5 +1,6 @@
 // tuning constants
 const UFO_SPEED = 1;
+const FLEET_SPEED = 2;
 const RAM_ATTACK_SPEED = 3;
 
 const UFO_TIME_BETWEEN_CHANGE_DIR = 145;
@@ -14,6 +15,11 @@ const ENEMY_KIND_SHOOTER = 0;
 const ENEMY_KIND_RAMMER = 1;
 const ENEMY_KIND_FLEET = 2;
 const MAX_HEALTH = [ 5, 5, 2 ];
+
+const DIR_UP = 0;
+const DIR_RIGHT = 1;
+const DIR_LEFT = 2;
+const DIR_DOWN = 3;
 
 function UFO(enemyType) {
 
@@ -33,9 +39,7 @@ function UFO(enemyType) {
     //Component List
     this.wrapComponent = new WrapComponent(this);
 
-    this.health = MAX_HEALTH[this.enemyType];
-    this.shotCooldown = ENEMY_FIRE_RATE;
-    this.ang = Math.PI*2.0*Math.random();
+    this.health = MAX_HEALTH[this.enemyType]; this.shotCooldown = ENEMY_FIRE_RATE; this.ang = Math.PI*2.0*Math.random();
 
     this.rammingTime = 0;
     this.readyToRemove = false;
@@ -43,8 +47,44 @@ function UFO(enemyType) {
 
 UFO.prototype.reset = function() {
     this.wrapComponent.reset();
-    this.x = Math.random() * virtualWidth;
-    this.y = Math.random() * virtualHeight;
+
+    if(this.enemyType === ENEMY_KIND_FLEET) {
+        var dir = Math.floor(Math.random() * 4);
+        switch(dir) {
+            case DIR_LEFT:
+                this.x = 0;
+                this.xv = 1;
+                this.y = Math.floor(Math.random() * virtualHeight);
+                this.yv = 0;
+                this.ang = 0;
+                break;
+            case DIR_UP:
+                this.x = Math.floor(Math.random() * virtualWidth);
+                this.xv = 0;
+                this.y = virtualHeight;
+                this.yv = 1;
+                this.ang = Math.PI/2;
+                break;
+            case DIR_RIGHT:
+                this.x = virtualWidth - 100;
+                this.xv = -1;
+                this.y = Math.floor(Math.random() * virtualHeight);
+                this.yv = 0;
+                this.ang = Math.PI;
+                break;
+            case DIR_DOWN:
+                this.x = Math.floor(Math.random() * virtualWidth);
+                this.xv = 0;
+                this.y = 0;
+                this.yv = -1;
+                this.ang = Math.PI * (3/2);
+                break;
+        }
+    } else {
+        this.x = Math.random() * virtualWidth;
+        this.y = Math.random() * virtualHeight;
+    }
+
     this.cyclesTilDirectionChange = 0;
     this.health = MAX_HEALTH[this.enemyType];
 };
@@ -60,7 +100,7 @@ UFO.prototype.draw = function() {
             angToFace = Math.atan2(this.yv,this.xv);
             break;
         default:
-            angToFace = 0;
+            angToFace = this.ang;
             break;
     }
 
@@ -108,8 +148,8 @@ UFO.prototype.update = function() {
             this.shotCooldown--;
         }
     } else {
-        if(this.x < 0 || this.x > virtualWidth) this.xv *= -1;
-        else if(this.y < 0 || this.y > virtualHeight) this.yv *= -1;
+        this.x += this.xv * FLEET_SPEED;
+        this.y += this.yv * FLEET_SPEED;
     }
 };
 

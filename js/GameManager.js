@@ -1,14 +1,14 @@
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
     this.stages = [
-        {waveName:"Intro",spearNum:0,shooterNum:1,fleetNum:1},
+        {waveName:"Intro",spearNum:0,shooterNum:1,fleetNum:2},
         {waveName:"Recon",spearNum:3,shooterNum:0,fleetNum:0},
-        {waveName:"Guards",spearNum:1,shooterNum:3,fleetNum:0}
+        {waveName:"Guards",spearNum:1,shooterNum:3,fleetNum:1}
         ];
 
     this.player = new Ship();
     this.playerShots = [];
-    this.enemies = [ ];
+    this.enemies = [];
     this.enemyShots = [];
     this.powerups = [];
 
@@ -39,11 +39,11 @@ function GameManager() {
         for(var fleetEnemies=0; fleetEnemies < this.stages[this.levelNow].fleetNum; fleetEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_FLEET));
         }
-        
+
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].reset();
         }
-    }
+    };
 
     this.moveEverything = function() {
         // console.log(this.shotsTillPowerup);
