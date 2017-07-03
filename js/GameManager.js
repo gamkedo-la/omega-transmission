@@ -46,7 +46,6 @@ function GameManager() {
     };
 
     this.moveEverything = function() {
-        // console.log(this.shotsTillPowerup);
         this.player.update();
         this.updateShots(this.playerShots);
 
@@ -170,8 +169,7 @@ function GameManager() {
     };
 
     this.dropPowerup = function(enemy) {
-        // var type = Math.floor(Math.random() * 3);
-        var type = TYPE_HEALTH;
+        var type = Math.floor(Math.random() * 3);
         this.powerups.push(new Powerup(enemy.x,enemy.y,type));
     };
 

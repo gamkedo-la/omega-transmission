@@ -5,6 +5,7 @@ var UFOShooterImage = document.createElement("img");
 var UFORammerImage = document.createElement("img");
 var UFOFleetImage = document.createElement("img");
 var backgroundImage = document.createElement("img");
+var plasmaPowerup = document.createElement("img");
 
 var imagesToLoad = 0;
 
@@ -22,18 +23,20 @@ function beginLoadingImage(image, fileName) {
 
 function loadImages() {
     var imageList = [
-        {varName: playerImage, fileName: "Player.png"},
-        {varName: bulletImage, fileName: "Bullet.png"},
-        {varName: plasmaImage, fileName: "Plasma.png"},
+        { varName: playerImage, fileName: "Player.png" },
+        { varName: bulletImage, fileName: "Bullet.png" },
+        // { varName: plasmaImage, fileName: "Plasma.png" },
+        { varName: plasmaImage, fileName: "Plasma2.png" },
         { varName: UFOShooterImage, fileName: "Cannondrone.png" },
         { varName: UFORammerImage, fileName: "Speardrone.png" },
         { varName: UFOFleetImage, fileName: "Fleetdrone.png" },
         //{varName: backgroundImage, fileName: "nebulae test.png" },
         //{varName: backgroundImage, fileName: "nebulae_abstract.png" },
         {varName: backgroundImage, fileName: "nebulae_abstract_2.png" },
-        //{varName: backgroundImage, fileName: "nebulae_lowbrightness_nostars.png" },
-        //{varName: backgroundImage, fileName: "nebulae_lowbrightness_stars.png" },
-        //{varName: backgroundImage, fileName: "nebulae_nostars.png" },
+        //{ varName: backgroundImage, fileName: "nebulae_lowbrightness_nostars.png" },
+        //{ varName: backgroundImage, fileName: "nebulae_lowbrightness_stars.png" },
+        //{ varName: backgroundImage, fileName: "nebulae_nostars.png" },
+        { varName: plasmaPowerup, fileName: "plasmaPowerup.png" },
     ];
 
     imagesToLoad = imageList.length;
@@ -42,3 +45,4 @@ function loadImages() {
         beginLoadingImage(imageList[i].varName, imageList[i].fileName);
     }
 }
+
