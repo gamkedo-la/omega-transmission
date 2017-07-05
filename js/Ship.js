@@ -105,7 +105,7 @@ function Ship() {
 
         }
 
-        if (this.keyHeld_StrafeLeft == true) {
+        if (this.keyHeld_StrafeRight == true) {
             this.xv += Math.cos(this.ang - Math.PI / 2) * THRUST_POWER;
             this.yv += Math.sin(this.ang - Math.PI / 2) * THRUST_POWER;
             // thruster flames at engine position:
@@ -115,7 +115,7 @@ function Ship() {
 
         }
 
-        if (this.keyHeld_StrafeRight == true) {
+        if (this.keyHeld_StrafeLeft == true) {
             this.xv += Math.cos(this.ang + Math.PI / 2) * THRUST_POWER;
             this.yv += Math.sin(this.ang + Math.PI / 2) * THRUST_POWER;
             // thruster flames at engine position:
