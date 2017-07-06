@@ -23,6 +23,7 @@ function Ship() {
     this.shield = 0;
     this.shieldCooldown = SHIELD_COOLDOWN;
     this.powerupLife = [ 0, 0, 0 ];
+	this.isActive = false;
 
     this.keyHeld_RapidFire = false;
     this.keyHeld_ForwardThrust = false;

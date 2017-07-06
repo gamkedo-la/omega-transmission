@@ -15,18 +15,36 @@ function GameManager() {
     this.score = 0;
 
     this.gameScale = 1.0;
+	this.intervalID = null;
 
     this.initialize = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.player.initialize(playerImage);
-        this.nextWave();
+        //this.nextWave();
+		this.preStartOfWave();
         inputManager.initializeInput();
         this.renderScore();
         this.update(); // start animating now
     };
+	
+	this.preStartOfWave = function() {
+		//var countDownTimer = 3000;
+		//console.log(this.stages.length);
+		var that = this;
+		
+		var callNextWave = function() {
+			that.nextWave();
+			that.player.isActive = true;
+		}
+		//console.log(this.intervalID);
+		//clearTimeout(this.intervalID);
+		this.intervalID = setTimeout(callNextWave, 3000);
+	}
 
     this.nextWave = function () {
         this.levelNow++;
+		//console.log(this.levelNow);
+		//console.log(this.stages.length);
         this.levelNow %= this.stages.length;
 
         console.log("Starting wave: " + this.stages[this.levelNow].waveName);
@@ -61,15 +79,22 @@ function GameManager() {
         }
 
         this.updateShots(this.enemyShots);
-        this.checkForCollisions();
+		//Only check for collision if player is alive
+		if(this.player.isActive) {
+			this.checkForCollisions();
+		}
         this.updatePowerups();
 
         if (this.player.health <= 0) {
+			this.player.isActive = false;
             this.score = 0;
             this.player = new Ship();
             this.player.initialize(playerImage);
             inputManager.initializeInput();
         }
+		else if (this.enemies.length > 0 && this.player.health > 0) {
+			this.player.isActive = true;
+		}
     };
 
     this.updatePowerups = function(){
@@ -150,7 +175,9 @@ function GameManager() {
             }
         }
         if(this.enemies.length==0) {
-            this.nextWave();
+            //this.nextWave();
+			this.player.isActive = false;
+			this.preStartOfWave();
         }
         for (var i = this.powerups.length - 1; i >= 0; i--) {
             if(this.isOverlapping(this.player, this.powerups[i], POWERUP_COLLISION_RADIUS)){
