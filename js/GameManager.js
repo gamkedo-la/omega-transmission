@@ -38,7 +38,9 @@ function GameManager() {
 		}
 		//console.log(this.intervalID);
 		//clearTimeout(this.intervalID);
-		this.intervalID = setTimeout(callNextWave, 3000);
+		var timeoutTimer = 3000;
+		console.log("Enemies will spawn in " + timeoutTimer/1000.0 + " secs");
+		this.intervalID = setTimeout(callNextWave, timeoutTimer);
 	}
 
     this.nextWave = function () {
@@ -86,11 +88,14 @@ function GameManager() {
         this.updatePowerups();
 
         if (this.player.health <= 0) {
-			this.player.isActive = false;
-            this.score = 0;
-            this.player = new Ship();
-            this.player.initialize(playerImage);
-            inputManager.initializeInput();
+			this.score = 0;
+			//this.player.isActive = false;
+			//this.player.health = PLAYER_MAX_HEALTH;
+			this.player.reinit();
+			//previous code which creates a new ship and reinitialize everything
+            //this.player = new Ship();
+            //this.player.initialize(playerImage);
+            //inputManager.initializeInput();
         }
 		else if (this.enemies.length > 0 && this.player.health > 0) {
 			this.player.isActive = true;
@@ -222,7 +227,11 @@ function GameManager() {
         for (var i = 0; i < this.powerups.length; i++) {
             this.powerups[i].draw();
         }
-        this.player.draw();
+		//only draws player when active
+		if(this.player.isActive) {
+			this.player.draw();
+		}
+		
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].draw();
         }
@@ -247,6 +256,8 @@ function GameManager() {
             this.moveEverything();
             this.drawEverything();
         }
+		
+		
 
         // optional: 100x the rendering performance! =)
         if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
