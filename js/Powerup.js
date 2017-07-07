@@ -8,6 +8,8 @@ const TYPE_HEALTH = 2;
 
 const POWERUP_HEALTH_INCREASE = 2;
 
+var powerupVisible = true;
+
 function Powerup(x,y,type) {
 
     this.x = x;
@@ -22,20 +24,31 @@ Powerup.prototype.step = function(){
 
 Powerup.prototype.draw = function(){
     if(this.remainingLife > 0){
-        switch(this.type){
-            case TYPE_LASER:
-                drawScaledCenteredBitmapWithRotation(plasmaPowerup,this.x,this.y,POWERUP_COLLISION_RADIUS*2,POWERUP_COLLISION_RADIUS*2,0);
-                // colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'yellow');
-                // drawText("L",this.x,this.y,"black");
-                break;
-            case TYPE_SHIELD:
-                colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'blue');
-                drawText("S",this.x,this.y,"black");
-                break;
-            case TYPE_HEALTH:
-                colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'red');
-                drawText("H",this.x,this.y,"black");
-                break;
+        if (this.remainingLife < POWERUP_LIFE / 2) {
+            setInterval(function() { 
+                if (powerupVisible) {
+                    powerupVisible = false;
+                } else {
+                    powerupVisible = true;
+                }}, 500);
+        }
+
+        if (powerupVisible) {
+            switch(this.type){
+                case TYPE_LASER:
+                    drawScaledCenteredBitmapWithRotation(plasmaPowerup,this.x,this.y,POWERUP_COLLISION_RADIUS*2,POWERUP_COLLISION_RADIUS*2,0);
+                    // colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'yellow');
+                    // drawText("L",this.x,this.y,"black");
+                    break;
+                case TYPE_SHIELD:
+                    colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'blue');
+                    drawText("S",this.x,this.y,"black");
+                    break;
+                case TYPE_HEALTH:
+                    colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'red');
+                    drawText("H",this.x,this.y,"black");
+                    break;
+            }
         }
     }
 };
