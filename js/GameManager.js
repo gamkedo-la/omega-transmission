@@ -16,6 +16,9 @@ function GameManager() {
 
     this.gameScale = 1.0;
 	this.intervalID = null;
+    this.showWaveName = false;
+    this.waitingForNextWaveToStart=false;
+    this.currentWaveName = "undefined";
 
     this.initialize = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
@@ -26,15 +29,28 @@ function GameManager() {
         this.renderScore();
         this.update(); // start animating now
     };
-	
+
 	this.preStartOfWave = function() {
 		//var countDownTimer = 3000;
 		//console.log(this.stages.length);
+
+        // locking to prevent stacking between stages:
+        if(this.waitingForNextWaveToStart) {
+            return;
+        }
+        this.waitingForNextWaveToStart=true;
+
 		var that = this;
-		
+
+        var nextLevel = (this.levelNow+1) % this.stages.length;
+        this.currentWaveName = this.stages[nextLevel].waveName;
+
+        this.showWaveName=true;
 		var callNextWave = function() {
+            that.showWaveName=false;
 			that.nextWave();
-			that.player.isActive = true;
+            that.waitingForNextWaveToStart=false;
+			// that.player.isActive = true;
 		}
 		//console.log(this.intervalID);
 		//clearTimeout(this.intervalID);
@@ -49,7 +65,6 @@ function GameManager() {
 		//console.log(this.stages.length);
         this.levelNow %= this.stages.length;
 
-        console.log("Starting wave: " + this.stages[this.levelNow].waveName);
         for(var shooterEnemies=0; shooterEnemies < this.stages[this.levelNow].shooterNum; shooterEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
         }
@@ -181,7 +196,7 @@ function GameManager() {
         }
         if(this.enemies.length==0) {
             //this.nextWave();
-			this.player.isActive = false;
+			// this.player.isActive = false;
 			this.preStartOfWave();
         }
         for (var i = this.powerups.length - 1; i >= 0; i--) {
@@ -239,6 +254,15 @@ function GameManager() {
         drawText("Shield", 1, 10, "cyan");
         drawText("Health", 1, 20, "tomato");
         drawText("Dash Cooldown", 1, 30, "white");
+
+        if(this.showWaveName) {
+            canvasContext.font = "30px Arial";
+            canvasContext.textAlign = "center";
+            drawText("Wave "+(this.levelNow+2), virtualWidth/2, virtualHeight/2-20, "yellow");
+            drawText(this.currentWaveName, virtualWidth/2, virtualHeight/2+20, "yellow");
+            
+            console.log();
+        }
 
         this.renderScore();
 
