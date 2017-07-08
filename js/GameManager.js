@@ -16,7 +16,6 @@ function GameManager() {
 
     this.gameScale = 1.0;
 	this.intervalID = null;
-    this.showWaveName = false;
     this.waitingForNextWaveToStart=false;
     this.currentWaveName = "undefined";
 
@@ -45,9 +44,7 @@ function GameManager() {
         var nextLevel = (this.levelNow+1) % this.stages.length;
         this.currentWaveName = this.stages[nextLevel].waveName;
 
-        this.showWaveName=true;
-		var callNextWave = function() {
-            that.showWaveName=false;
+        var callNextWave = function() {
 			that.nextWave();
             that.waitingForNextWaveToStart=false;
 			// that.player.isActive = true;
@@ -255,16 +252,13 @@ function GameManager() {
         drawText("Health", 1, 20, "tomato");
         drawText("Dash Cooldown", 1, 30, "white");
 
-        if(this.showWaveName) {
+        this.renderScore();
+        if(this.waitingForNextWaveToStart) {
             canvasContext.font = "30px Arial";
             canvasContext.textAlign = "center";
             drawText("Wave "+(this.levelNow+2), virtualWidth/2, virtualHeight/2-20, "yellow");
             drawText(this.currentWaveName, virtualWidth/2, virtualHeight/2+20, "yellow");
-            
-            console.log();
         }
-
-        this.renderScore();
 
         draw_particles(0,0);
 
