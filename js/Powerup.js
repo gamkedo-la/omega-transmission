@@ -20,18 +20,31 @@ function Powerup(x,y,type) {
 
 Powerup.prototype.step = function(){
     this.remainingLife--;
+
+    // about to dissappear? flicker
+    if (this.remainingLife < POWERUP_LIFE / 3) { 
+        
+        powerupVisible = Math.random() > 0.5;
+        
+    }
+
 };
 
 Powerup.prototype.draw = function(){
     if(this.remainingLife > 0){
-        if (this.remainingLife < POWERUP_LIFE / 2) {
+
+        // simplified and moved to update() function:
+        // (old way spams the cpu by creating hundreds of unique setIntervals with a function for each one)
+        /*
+        if (this.remainingLife < POWERUP_LIFE / 2) { 
             setInterval(function() { 
-                if (powerupVisible) {
-                    powerupVisible = false;
-                } else {
-                    powerupVisible = true;
-                }}, 500);
+            if (powerupVisible) {
+                powerupVisible = false;
+            } else {
+                powerupVisible = true;
+            }}, 500);
         }
+        */
 
         if (powerupVisible) {
             switch(this.type){
