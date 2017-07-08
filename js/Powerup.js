@@ -59,19 +59,19 @@ Powerup.prototype.draw = function(){
                     // drawText("L",this.x,this.y,"black");
                     break;
                 case TYPE_SHIELD:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'blue');
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'blue');
                     drawText("S",this.x,this.y,"black");
                     break;
                 case TYPE_HEALTH:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'red');
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'red');
                     drawText("H",this.x,this.y,"black");
                     break;
                 case TYPE_DOUBLESHOT:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'green');
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'green');
                     drawText("D",this.x,this.y,"black");
                     break;
                 case TYPE_PHALANX:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'yellow');
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'yellow');
                     drawText("X",this.x,this.y,"black");
                     break;
             }
