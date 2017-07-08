@@ -170,7 +170,7 @@ function GameManager() {
                     if (this.enemies[i].health <= 0) {
                         // ENEMY DESTROYED
                         this.score += 10;
-                        if(--this.shotsTillPowerup === 0){
+                        if((--this.shotsTillPowerup === 0) || (DEBUG_CREATE_MANY_POWERUPS)){
                             this.dropPowerup(this.enemies[i]);
                             this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
                         }
@@ -213,7 +213,7 @@ function GameManager() {
     };
 
     this.dropPowerup = function(enemy) {
-        var type = Math.floor(Math.random() * 3);
+        var type = Math.floor(Math.random() * NUM_POWERUP_TYPES);
         this.powerups.push(new Powerup(enemy.x,enemy.y,type));
     };
 

@@ -17,6 +17,7 @@ Shot.prototype.reset = function() {
 };
 
 Shot.prototype.shootFrom = function(shipFiring, firingAngle, color) {
+    
     this.x = shipFiring.x;
     this.y = shipFiring.y;
 

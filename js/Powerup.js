@@ -1,10 +1,15 @@
-const POWERUP_LIFE = 500;
-const POWERUP_COLLISION_RADIUS = 14;
+const DEBUG_CREATE_MANY_POWERUPS = false; // just used for testing, set to false for players!
 
-const NUM_POWERUP_TYPES = 3;
+const POWERUP_LIFE = 500;
+const POWERUP_COLLISION_RADIUS = 32;
+const POWERUP_DRAW_SIZE = 24;
+
+const NUM_POWERUP_TYPES = 5;
 const TYPE_LASER = 0;
 const TYPE_SHIELD = 1;
 const TYPE_HEALTH = 2;
+const TYPE_DOUBLESHOT = 3; 
+const TYPE_PHALANX = 4; 
 
 const POWERUP_HEALTH_INCREASE = 2;
 
@@ -49,17 +54,25 @@ Powerup.prototype.draw = function(){
         if (powerupVisible) {
             switch(this.type){
                 case TYPE_LASER:
-                    drawScaledCenteredBitmapWithRotation(plasmaPowerup,this.x,this.y,POWERUP_COLLISION_RADIUS*2,POWERUP_COLLISION_RADIUS*2,0);
-                    // colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'yellow');
+                    drawScaledCenteredBitmapWithRotation(plasmaPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
+                    // colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'yellow');
                     // drawText("L",this.x,this.y,"black");
                     break;
                 case TYPE_SHIELD:
-                    colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'blue');
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'blue');
                     drawText("S",this.x,this.y,"black");
                     break;
                 case TYPE_HEALTH:
-                    colorCircle(this.x,this.y,POWERUP_COLLISION_RADIUS,'red');
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'red');
                     drawText("H",this.x,this.y,"black");
+                    break;
+                case TYPE_DOUBLESHOT:
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'green');
+                    drawText("D",this.x,this.y,"black");
+                    break;
+                case TYPE_PHALANX:
+                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'yellow');
+                    drawText("X",this.x,this.y,"black");
                     break;
             }
         }

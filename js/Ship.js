@@ -22,7 +22,7 @@ function Ship() {
     this.health = PLAYER_MAX_HEALTH;
     this.shield = 0;
     this.shieldCooldown = SHIELD_COOLDOWN;
-    this.powerupLife = [ 0, 0, 0 ];
+    this.powerupLife = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	this.isActive = false;
 
     this.keyHeld_RapidFire = false;
@@ -38,7 +38,7 @@ function Ship() {
 		this.health = PLAYER_MAX_HEALTH;
 		this.shield = 0;
 		this.shieldCooldown = SHIELD_COOLDOWN;
-		this.powerupLife = [ 0, 0, 0 ];
+		this.powerupLife = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		this.isActive = false;
 	}
 
@@ -61,10 +61,31 @@ function Ship() {
             gameManager.playerShots.push(tempShot);
             this.readyToFire = false;
 
-            if(this.powerupLife[0] > 0)
+            if(this.powerupLife[TYPE_LASER] > 0)
                 this.shotCooldown = FIRE_RATE/2;
             else
                 this.shotCooldown = FIRE_RATE;
+
+            // double and phalanx powerups for extra bullets!
+            if(this.powerupLife[TYPE_DOUBLESHOT] > 0)
+            {
+                var tempShot2 = new Shot();
+                tempShot2.shootFrom(this, this.ang + 0.25, "white");
+                gameManager.playerShots.push(tempShot2);
+                var tempShot3 = new Shot();
+                tempShot3.shootFrom(this, this.ang - 0.25, "white");
+                gameManager.playerShots.push(tempShot3);
+            }
+
+            if(this.powerupLife[TYPE_PHALANX] > 0)
+            {
+                var tempShot4 = new Shot();
+                tempShot4.shootFrom(this, this.ang + 2, "white", 0, 0);
+                gameManager.playerShots.push(tempShot4);
+                var tempShot5 = new Shot();
+                tempShot5.shootFrom(this, this.ang - 2, "white", 0, 0);
+                gameManager.playerShots.push(tempShot5);
+            }
 
             // muzzle flash at gun position:
             var shootx = this.x + (Math.cos(this.ang) * 30);
