@@ -2,7 +2,7 @@
 const SHOT_SPEED = 8.0;
 const SHOT_LIFE = 120;
 const SHOT_COLLISION_RADIUS = 16.0;
-const TRACKING_STRENGTH = 0.4;
+const TRACKING_STRENGTH = 0.5;
 
 
 function Shot() {

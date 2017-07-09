@@ -61,10 +61,16 @@ function Ship() {
             gameManager.playerShots.push(tempShot);
             this.readyToFire = false;
 
+			//speed up fire rate if laser upgrade active
             if(this.powerupLife[TYPE_LASER] > 0)
-                this.shotCooldown = FIRE_RATE/2;
-            else
-                this.shotCooldown = FIRE_RATE;
+                this.shotCooldown = FIRE_RATE/2; 
+			//slow down fire rate if tracking upgrade active //stackable with laser upgrade
+			if(this.powerupLife[TYPE_ZEALOT] > 0)
+				this.shotCooldown = FIRE_RATE * 3;
+			else 
+				//default
+				this.shotCooldown = FIRE_RATE;
+			
 
             // double and phalanx powerups for extra bullets!
             if(this.powerupLife[TYPE_DOUBLESHOT] > 0)
