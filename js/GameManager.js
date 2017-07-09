@@ -1,16 +1,17 @@
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
     this.stages = [
-        {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2},      //dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
-        {waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0},    //dtderosa -new
-        {waveName:"Scouts",spearNum:0,shooterNum:0,fleetNum:3},     //dtderosa -new
-        {waveName:"Recon",spearNum:3,shooterNum:0,fleetNum:0},
-        {waveName:"Deterrance",spearNum:0,shooterNum:2,fleetNum:1}, //dtderosa -new
+        {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2, bossNum:0},      //dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
+        {waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0, bossNum:0},    //dtderosa -new
+        {waveName:"Scouts",spearNum:0,shooterNum:0,fleetNum:3, bossNum:0},     //dtderosa -new
+        {waveName:"Recon",spearNum:3,shooterNum:0,fleetNum:0, bossNum:0},
+        {waveName:"Deterrance",spearNum:0,shooterNum:2,fleetNum:1, bossNum:0}, //dtderosa -new
 
-        {waveName:"Garrison",spearNum:0,shooterNum:4,fleetNum:0},
-        {waveName:"Swarm",spearNum:4,shooterNum:0,fleetNum:0},      //dtderosa -new
-        {waveName:"Infiltration",spearNum:2,shooterNum:2,fleetNum:0},//dtderosa -new
-        {waveName:"Guards",spearNum:3,shooterNum:3,fleetNum:2}      //dtderosa - +1spear -1fleet
+        {waveName:"Garrison",spearNum:0,shooterNum:4,fleetNum:0, bossNum:0},
+        {waveName:"Swarm",spearNum:4,shooterNum:0,fleetNum:0, bossNum:0},      //dtderosa -new
+        {waveName:"Infiltration",spearNum:2,shooterNum:2,fleetNum:0, bossNum:0},//dtderosa -new
+        {waveName:"Guards",spearNum:3,shooterNum:3,fleetNum:2, bossNum:0},     //dtderosa - +1spear -1fleet
+		{waveName:"BOSS!",spearNum:0,shooterNum:0,fleetNum:0, bossNum:1}      //dtderosa -new boss level
         ];
 
     this.player = new Ship();
@@ -78,6 +79,10 @@ function GameManager() {
         }
         for(var fleetEnemies=0; fleetEnemies < this.stages[levelInd].fleetNum; fleetEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_FLEET));
+        }
+		//new boss level : 
+		for(var bossEnemy=0; bossEnemy < this.stages[levelInd].bossNum; bossEnemy++) {
+            this.enemies.push(new UFOBoss());
         }
 
         for (var i = 0; i < this.enemies.length; i++) {
