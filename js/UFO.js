@@ -148,8 +148,8 @@ UFO.prototype.update = function() {
             this.shotCooldown--;
         }
     } else {
-        this.x += this.xv * FLEET_SPEED;
-        this.y += this.yv * FLEET_SPEED;
+        this.x += this.xv * FLEET_SPEED * (1 + gameManager.levelNow/10);
+        this.y += this.yv * FLEET_SPEED * (1 + gameManager.levelNow/10);
     }
 };
 

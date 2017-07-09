@@ -24,24 +24,24 @@ function Ship() {
     this.shield = 0;
     this.shieldCooldown = SHIELD_COOLDOWN;
     this.powerupLife = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	this.isActive = false;
+    this.isActive = false;
 
     this.keyHeld_RapidFire = false;
     this.keyHeld_ForwardThrust = false;
     this.keyHeld_StrafeLeft = false;
     this.keyHeld_StrafeRight = false;
 
-	this.reinit = function() {
-		this.shotCooldown = 0;
-		this.readyToFire = true;
-		this.dashCooldown = 0;
-		this.readyToDash = true;
-		this.health = PLAYER_MAX_HEALTH;
-		this.shield = 0;
-		this.shieldCooldown = SHIELD_COOLDOWN;
-		this.powerupLife = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		this.isActive = false;
-	}
+    this.reinit = function() {
+        this.shotCooldown = 0;
+        this.readyToFire = true;
+        this.dashCooldown = 0;
+        this.readyToDash = true;
+        this.health = PLAYER_MAX_HEALTH;
+        this.shield = 0;
+        this.shieldCooldown = SHIELD_COOLDOWN;
+        this.powerupLife = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.isActive = false;
+    };
 
     this.initialize = function(whichGraphic) {
         this.myBitmap = whichGraphic;
@@ -61,17 +61,17 @@ function Ship() {
             tempShot.shootFrom(this, this.ang, "white");
             gameManager.playerShots.push(tempShot);
             this.readyToFire = false;
-			
-			//default
-			this.shotCooldown = FIRE_RATE;
-			//speed up fire rate if laser upgrade active
+
+            //default
+            this.shotCooldown = FIRE_RATE;
+            //speed up fire rate if laser upgrade active
             if(this.powerupLife[TYPE_LASER] > 0)
-                this.shotCooldown = FIRE_RATE/2; 
-			//slow down fire rate if tracking upgrade active //stackable with laser upgrade
-			if(this.powerupLife[TYPE_ZEALOT] > 0)
-				this.shotCooldown = FIRE_RATE * TRACKING_MISSILE_LIMITER;
-				
-			
+                this.shotCooldown = FIRE_RATE/2;
+            //slow down fire rate if tracking upgrade active //stackable with laser upgrade
+            if(this.powerupLife[TYPE_ZEALOT] > 0)
+                this.shotCooldown = FIRE_RATE * TRACKING_MISSILE_LIMITER;
+
+
 
             // double and phalanx powerups for extra bullets!
             if(this.powerupLife[TYPE_DOUBLESHOT] > 0)
@@ -130,78 +130,78 @@ function Ship() {
         } else {
             this.readyToDash = true;
         }
-		//only occurs when player is active
-		if(this.isActive) {
-			if (this.keyHeld_RapidFire == true) {
-				this.cannonFire();
-			}
-	
-			if (this.keyHeld_ForwardThrust == true) {
-				this.xv += Math.cos(this.ang) * THRUST_POWER;
-				this.yv += Math.sin(this.ang) * THRUST_POWER;
-				// thruster flames at engine position:
-				var shootx = this.x + (Math.cos(this.ang) * -20);
-				var shooty = this.y + (Math.sin(this.ang) * -20);
-				party(shootx,shooty);
-	
-			}
-	
-			if (this.keyHeld_StrafeRight == true) {
-				this.xv += Math.cos(this.ang - Math.PI / 2) * THRUST_POWER;
-				this.yv += Math.sin(this.ang - Math.PI / 2) * THRUST_POWER;
-				// thruster flames at engine position:
-				var shootx = this.x + (Math.cos(this.ang + Math.PI / 2) * +20);
-				var shooty = this.y + (Math.sin(this.ang + Math.PI / 2) * +20);
-				party(shootx,shooty);
-	
-			}
-	
-			if (this.keyHeld_StrafeLeft == true) {
-				this.xv += Math.cos(this.ang + Math.PI / 2) * THRUST_POWER;
-				this.yv += Math.sin(this.ang + Math.PI / 2) * THRUST_POWER;
-				// thruster flames at engine position:
-				var shootx = this.x + (Math.cos(this.ang - Math.PI / 2) * +20);
-				var shooty = this.y + (Math.sin(this.ang - Math.PI / 2) * +20);
-				party(shootx,shooty);
-	
-			}
-	
-			//prevent mouse position from causing a fight with the gamepad if it is in use
-			if (inputManager.mouseMoved == true) {
-				// rotate the ship to face the mouse cursor
-				var dx = inputManager.mouse.x - this.x;
-				var dy = inputManager.mouse.y - this.y;
-				this.ang = Math.atan2(dy, dx);
-			} else if (inputManager.gamepadMoved == true) {
-				// detect gamepad aiming (if any) and override mouse cursor ang
-				if (window.joystick) // created in GamepadSupport.js
-				{
-					var maybeAng = joystick.getAimAngle();
-					//console.log("gamepad aiming mode: " + maybeAng);
-					if (maybeAng != 0) { //special edge case so we ignore idle gamepads
-						this.ang = maybeAng;
-						// always fire if the gamepad is aiming!
-						this.cannonFire(); // TODO: maybe use R2/R1 for fire button?
-					}
-				}
-			}
-	
-			//console.log("this.ang: " + this.ang);
-	
-			this.wrappingMovementComponent.move();
-	
-			this.xv *= SPACESPEED_DECAY_MULT;
-			this.yv *= SPACESPEED_DECAY_MULT;
-	
-			if (this.shield < PLAYER_MAX_SHIELD) {
-				if (this.shieldCooldown <= 0) {
-					this.shield++;
-					this.shieldCooldown = SHIELD_COOLDOWN;
-				} else {
-					this.shieldCooldown--;
-				}
-			}
-		}
+        //only occurs when player is active
+        if(this.isActive) {
+            if (this.keyHeld_RapidFire == true) {
+                this.cannonFire();
+            }
+
+            if (this.keyHeld_ForwardThrust == true) {
+                this.xv += Math.cos(this.ang) * THRUST_POWER;
+                this.yv += Math.sin(this.ang) * THRUST_POWER;
+                // thruster flames at engine position:
+                var shootx = this.x + (Math.cos(this.ang) * -20);
+                var shooty = this.y + (Math.sin(this.ang) * -20);
+                party(shootx,shooty);
+
+            }
+
+            if (this.keyHeld_StrafeRight == true) {
+                this.xv += Math.cos(this.ang - Math.PI / 2) * THRUST_POWER;
+                this.yv += Math.sin(this.ang - Math.PI / 2) * THRUST_POWER;
+                // thruster flames at engine position:
+                var shootx = this.x + (Math.cos(this.ang + Math.PI / 2) * +20);
+                var shooty = this.y + (Math.sin(this.ang + Math.PI / 2) * +20);
+                party(shootx,shooty);
+
+            }
+
+            if (this.keyHeld_StrafeLeft == true) {
+                this.xv += Math.cos(this.ang + Math.PI / 2) * THRUST_POWER;
+                this.yv += Math.sin(this.ang + Math.PI / 2) * THRUST_POWER;
+                // thruster flames at engine position:
+                var shootx = this.x + (Math.cos(this.ang - Math.PI / 2) * +20);
+                var shooty = this.y + (Math.sin(this.ang - Math.PI / 2) * +20);
+                party(shootx,shooty);
+
+            }
+
+            //prevent mouse position from causing a fight with the gamepad if it is in use
+            if (inputManager.mouseMoved == true) {
+                // rotate the ship to face the mouse cursor
+                var dx = inputManager.mouse.x - this.x;
+                var dy = inputManager.mouse.y - this.y;
+                this.ang = Math.atan2(dy, dx);
+            } else if (inputManager.gamepadMoved == true) {
+                // detect gamepad aiming (if any) and override mouse cursor ang
+                if (window.joystick) // created in GamepadSupport.js
+                {
+                    var maybeAng = joystick.getAimAngle();
+                    //console.log("gamepad aiming mode: " + maybeAng);
+                    if (maybeAng != 0) { //special edge case so we ignore idle gamepads
+                        this.ang = maybeAng;
+                        // always fire if the gamepad is aiming!
+                        this.cannonFire(); // TODO: maybe use R2/R1 for fire button?
+                    }
+                }
+            }
+
+            //console.log("this.ang: " + this.ang);
+
+            this.wrappingMovementComponent.move();
+
+            this.xv *= SPACESPEED_DECAY_MULT;
+            this.yv *= SPACESPEED_DECAY_MULT;
+
+            if (this.shield < PLAYER_MAX_SHIELD) {
+                if (this.shieldCooldown <= 0) {
+                    this.shield++;
+                    this.shieldCooldown = SHIELD_COOLDOWN;
+                } else {
+                    this.shieldCooldown--;
+                }
+            }
+        }
     };
 
     this.draw = function () {

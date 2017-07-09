@@ -1,16 +1,16 @@
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
     this.stages = [
-        {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2}, 		//dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
-		{waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0}, 	//dtderosa -new
-		{waveName:"Scouts",spearNum:0,shooterNum:0,fleetNum:3},		//dtderosa -new
+        {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2},      //dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
+        {waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0},    //dtderosa -new
+        {waveName:"Scouts",spearNum:0,shooterNum:0,fleetNum:3},     //dtderosa -new
         {waveName:"Recon",spearNum:3,shooterNum:0,fleetNum:0},
-		{waveName:"Deterrance",spearNum:0,shooterNum:2,fleetNum:1},	//dtderosa -new
-		
-		{waveName:"Garrison",spearNum:0,shooterNum:4,fleetNum:0},
-		{waveName:"Swarm",spearNum:4,shooterNum:0,fleetNum:0},		//dtderosa -new 
-		{waveName:"Infiltration",spearNum:2,shooterNum:2,fleetNum:0},//dtderosa -new
-        {waveName:"Guards",spearNum:3,shooterNum:3,fleetNum:2} 		//dtderosa - +1spear -1fleet
+        {waveName:"Deterrance",spearNum:0,shooterNum:2,fleetNum:1}, //dtderosa -new
+
+        {waveName:"Garrison",spearNum:0,shooterNum:4,fleetNum:0},
+        {waveName:"Swarm",spearNum:4,shooterNum:0,fleetNum:0},      //dtderosa -new
+        {waveName:"Infiltration",spearNum:2,shooterNum:2,fleetNum:0},//dtderosa -new
+        {waveName:"Guards",spearNum:3,shooterNum:3,fleetNum:2}      //dtderosa - +1spear -1fleet
         ];
 
     this.player = new Ship();
@@ -22,23 +22,23 @@ function GameManager() {
     this.score = 0;
 
     this.gameScale = 1.0;
-	this.intervalID = null;
-    this.waitingForNextWaveToStart=false;
+    this.intervalID = null;
+    this.waitingForNextWaveToStart = false;
     this.currentWaveName = "undefined";
 
     this.initialize = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.player.initialize(playerImage);
         //this.nextWave();
-		this.preStartOfWave();
+        this.preStartOfWave();
         inputManager.initializeInput();
         this.renderScore();
         this.update(); // start animating now
     };
 
-	this.preStartOfWave = function() {
-		//var countDownTimer = 3000;
-		//console.log(this.stages.length);
+    this.preStartOfWave = function() {
+        //var countDownTimer = 3000;
+        //console.log(this.stages.length);
 
         // locking to prevent stacking between stages:
         if(this.waitingForNextWaveToStart) {
@@ -46,36 +46,37 @@ function GameManager() {
         }
         this.waitingForNextWaveToStart=true;
 
-		var that = this;
+        var that = this;
 
         var nextLevel = (this.levelNow+1) % this.stages.length;
         this.currentWaveName = this.stages[nextLevel].waveName;
 
         var callNextWave = function() {
-			that.nextWave();
+            that.nextWave();
             that.waitingForNextWaveToStart=false;
-			// that.player.isActive = true;
-		}
-		//console.log(this.intervalID);
-		//clearTimeout(this.intervalID);
-		var timeoutTimer = 3000;
-		console.log("Enemies will spawn in " + timeoutTimer/1000.0 + " secs");
-		this.intervalID = setTimeout(callNextWave, timeoutTimer);
-	}
+            // that.player.isActive = true;
+        };
+        //console.log(this.intervalID);
+        //clearTimeout(this.intervalID);
+        var timeoutTimer = 3000;
+        console.log("Enemies will spawn in " + timeoutTimer/1000.0 + " secs");
+        this.intervalID = setTimeout(callNextWave, timeoutTimer);
+    };
 
     this.nextWave = function () {
         this.levelNow++;
-		//console.log(this.levelNow);
-		//console.log(this.stages.length);
-        this.levelNow %= this.stages.length;
+        //console.log(this.levelNow);
+        //console.log(this.stages.length);
+        // this.levelNow %= this.stages.length;
+        var levelInd = this.levelNow % this.stages.length;
 
-        for(var shooterEnemies=0; shooterEnemies < this.stages[this.levelNow].shooterNum; shooterEnemies++) {
+        for(var shooterEnemies=0; shooterEnemies < this.stages[levelInd].shooterNum; shooterEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
         }
-        for(var rammerEnemies=0; rammerEnemies < this.stages[this.levelNow].spearNum; rammerEnemies++) {
+        for(var rammerEnemies=0; rammerEnemies < this.stages[levelInd].spearNum; rammerEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_RAMMER));
         }
-        for(var fleetEnemies=0; fleetEnemies < this.stages[this.levelNow].fleetNum; fleetEnemies++) {
+        for(var fleetEnemies=0; fleetEnemies < this.stages[levelInd].fleetNum; fleetEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_FLEET));
         }
 
@@ -100,25 +101,25 @@ function GameManager() {
         }
 
         this.updateShots(this.enemyShots);
-		//Only check for collision if player is alive
-		if(this.player.isActive) {
-			this.checkForCollisions();
-		}
+        //Only check for collision if player is alive
+        if(this.player.isActive) {
+            this.checkForCollisions();
+        }
         this.updatePowerups();
 
         if (this.player.health <= 0) {
-			this.score = 0;
-			//this.player.isActive = false;
-			//this.player.health = PLAYER_MAX_HEALTH;
-			this.player.reinit();
-			//previous code which creates a new ship and reinitialize everything
+            this.score = 0;
+            //this.player.isActive = false;
+            //this.player.health = PLAYER_MAX_HEALTH;
+            this.player.reinit();
+            //previous code which creates a new ship and reinitialize everything
             //this.player = new Ship();
             //this.player.initialize(playerImage);
             //inputManager.initializeInput();
         }
-		else if (this.enemies.length > 0 && this.player.health > 0) {
-			this.player.isActive = true;
-		}
+        else if (this.enemies.length > 0 && this.player.health > 0) {
+            this.player.isActive = true;
+        }
     };
 
     this.updatePowerups = function(){
@@ -136,10 +137,10 @@ function GameManager() {
                 shotArr.splice(i, 1);
             }
             else {
-				if(shotArr === this.playerShots)
-				{
-					shotArr[i].trackEnemy();
-				}
+                if(shotArr === this.playerShots)
+                {
+                    shotArr[i].trackEnemy();
+                }
                 shotArr[i].move();
             }
         }
@@ -204,8 +205,8 @@ function GameManager() {
         }
         if(this.enemies.length==0) {
             //this.nextWave();
-			// this.player.isActive = false;
-			this.preStartOfWave();
+            // this.player.isActive = false;
+            this.preStartOfWave();
         }
         for (var i = this.powerups.length - 1; i >= 0; i--) {
             if(this.isOverlapping(this.player, this.powerups[i], POWERUP_COLLISION_RADIUS)){
@@ -250,11 +251,11 @@ function GameManager() {
         for (var i = 0; i < this.powerups.length; i++) {
             this.powerups[i].draw();
         }
-		//only draws player when active
-		if(this.player.isActive) {
-			this.player.draw();
-		}
-		
+        //only draws player when active
+        if(this.player.isActive) {
+            this.player.draw();
+        }
+
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].draw();
         }
@@ -285,8 +286,8 @@ function GameManager() {
             this.moveEverything();
             this.drawEverything();
         }
-		
-		
+
+
 
         // optional: 100x the rendering performance! =)
         if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
