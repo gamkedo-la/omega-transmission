@@ -129,6 +129,10 @@ function GameManager() {
                 shotArr.splice(i, 1);
             }
             else {
+				if(shotArr === this.playerShots)
+				{
+					shotArr[i].trackEnemy();
+				}
                 shotArr[i].move();
             }
         }
