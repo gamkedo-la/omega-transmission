@@ -8,6 +8,7 @@ const DASH_RATE = 300;
 const PLAYER_MAX_HEALTH = 5;
 const PLAYER_MAX_SHIELD = 5;
 const SHIELD_COOLDOWN = 200;
+const TRACKING_MISSILE_LIMITER = 2; //higher number will slow rate more
 
 function Ship() {
 
@@ -60,16 +61,16 @@ function Ship() {
             tempShot.shootFrom(this, this.ang, "white");
             gameManager.playerShots.push(tempShot);
             this.readyToFire = false;
-
+			
+			//default
+			this.shotCooldown = FIRE_RATE;
 			//speed up fire rate if laser upgrade active
             if(this.powerupLife[TYPE_LASER] > 0)
                 this.shotCooldown = FIRE_RATE/2; 
 			//slow down fire rate if tracking upgrade active //stackable with laser upgrade
 			if(this.powerupLife[TYPE_ZEALOT] > 0)
-				this.shotCooldown = FIRE_RATE * 3;
-			else 
-				//default
-				this.shotCooldown = FIRE_RATE;
+				this.shotCooldown = FIRE_RATE * TRACKING_MISSILE_LIMITER;
+				
 			
 
             // double and phalanx powerups for extra bullets!

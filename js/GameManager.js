@@ -1,9 +1,16 @@
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
     this.stages = [
-        {waveName:"Intro",spearNum:0,shooterNum:1,fleetNum:2},
+        {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2}, 		//dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
+		{waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0}, 	//dtderosa -new
+		{waveName:"Scouts",spearNum:0,shooterNum:0,fleetNum:3},		//dtderosa -new
         {waveName:"Recon",spearNum:3,shooterNum:0,fleetNum:0},
-        {waveName:"Guards",spearNum:1,shooterNum:3,fleetNum:1}
+		{waveName:"Deterrance",spearNum:0,shooterNum:2,fleetNum:1},	//dtderosa -new
+		
+		{waveName:"Garrison",spearNum:0,shooterNum:4,fleetNum:0},
+		{waveName:"Swarm",spearNum:4,shooterNum:0,fleetNum:0},		//dtderosa -new 
+		{waveName:"Infiltration",spearNum:2,shooterNum:2,fleetNum:0},//dtderosa -new
+        {waveName:"Guards",spearNum:3,shooterNum:3,fleetNum:2} 		//dtderosa - +1spear -1fleet
         ];
 
     this.player = new Ship();
