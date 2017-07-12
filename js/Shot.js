@@ -3,6 +3,8 @@ const SHOT_SPEED = 8.0;
 const SHOT_LIFE = 120;
 const SHOT_COLLISION_RADIUS = 16.0;
 const TRACKING_STRENGTH = 0.5;
+const BOSS_MISSILE_TRACKING_STRENGTH = 0.5;
+const BOSS_TRACKING_MISSILE_SPEED = 10.0;
 
 
 function Shot() {
@@ -10,6 +12,7 @@ function Shot() {
 
     //Component List
     this.wrapComponent = new WrapComponent(this);
+	this.isTrackingMissile = false;
 }
 
 Shot.prototype.reset = function() {
@@ -80,5 +83,20 @@ Shot.prototype.trackEnemy = function(){
 				this.ang = angleToEnemy;
 			}
 		}
-}
+};
 
+
+Shot.prototype.trackPlayer = function(){	
+		//point bullet toward nearest enemy if ZEALOT type  //probably needs tweaking seems a little OP at the moment
+		//point bullet toward nearest enemy if ZEALOT type  //probably needs tweaking seems a little OP at the moment
+		if(this.isTrackingMissile){		
+			
+			console.log(this.x);
+			//actually calculating and changing the bullet velocity
+			//var angleToEnemy = Math.atan2(closestShip.y - this.y, closestShip.x - this.x );
+			var angleToEnemy = Math.atan2(gameManager.player.y - this.y, gameManager.player.x - this.x );
+			this.xv = ((Math.cos(angleToEnemy) * BOSS_MISSILE_TRACKING_STRENGTH) + (Math.cos(this.ang) * (1-BOSS_MISSILE_TRACKING_STRENGTH))) * BOSS_TRACKING_MISSILE_SPEED;
+			this.yv = ((Math.sin(angleToEnemy) * BOSS_MISSILE_TRACKING_STRENGTH) + (Math.cos(this.ang) * (1-BOSS_MISSILE_TRACKING_STRENGTH))) * BOSS_TRACKING_MISSILE_SPEED;
+			this.ang = angleToEnemy;
+		}
+};

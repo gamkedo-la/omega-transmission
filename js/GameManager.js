@@ -145,7 +145,10 @@ function GameManager() {
                 if(shotArr === this.playerShots)
                 {
                     shotArr[i].trackEnemy();
-                }
+                } else if (shotArr === this.enemyShots)
+				{
+					shotArr[i].trackPlayer();
+				}
                 shotArr[i].move();
             }
         }
