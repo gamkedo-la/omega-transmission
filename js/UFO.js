@@ -131,7 +131,7 @@ UFO.prototype.update = function() {
             var tempShot = new Shot();
             var dx = gameManager.player.x - this.x;
             var dy = gameManager.player.y - this.y;
-            var ang = Math.atan2(dy, dx) + (Math.random() * 0.05) - 0.1;
+            var ang = Math.atan2(dy, dx) /*+ (Math.random() * 0.05) - 0.1*/;
 
             switch(this.enemyType) {
                 case ENEMY_KIND_SHOOTER:
