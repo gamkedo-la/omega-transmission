@@ -2,8 +2,8 @@
 const SHOT_SPEED = 8.0;
 const SHOT_LIFE = 120;
 const SHOT_COLLISION_RADIUS = 16.0;
-const TRACKING_STRENGTH = 0.5;
-const BOSS_MISSILE_TRACKING_STRENGTH = 0.5;
+const TRACKING_STRENGTH = 0.1;
+const BOSS_MISSILE_TRACKING_STRENGTH = 0.25;
 const BOSS_TRACKING_MISSILE_SPEED = 10.0;
 
 
@@ -66,7 +66,6 @@ Shot.prototype.trackEnemy = function(){
 					//save distance for comparison
 					closestShipDistance = distanceToEnemy;
 					//save ship for reference
-					//closestShip = gameManager.enemies.slice(x);
 					closestShipX = gameManager.enemies[x].x;
 					closestShipY = gameManager.enemies[x].y;
 				}
@@ -79,8 +78,9 @@ Shot.prototype.trackEnemy = function(){
 				//var angleToEnemy = Math.atan2(closestShip.y - this.y, closestShip.x - this.x );
 				var angleToEnemy = Math.atan2(closestShipY - this.y, closestShipX - this.x );
 				this.xv = ((Math.cos(angleToEnemy) * TRACKING_STRENGTH) + (Math.cos(this.ang) * (1-TRACKING_STRENGTH))) * SHOT_SPEED;
-				this.yv = ((Math.sin(angleToEnemy) * TRACKING_STRENGTH) + (Math.cos(this.ang) * (1-TRACKING_STRENGTH))) * SHOT_SPEED;
-				this.ang = angleToEnemy;
+				this.yv = ((Math.sin(angleToEnemy) * TRACKING_STRENGTH) + (Math.sin(this.ang) * (1-TRACKING_STRENGTH))) * SHOT_SPEED;
+				//this.ang = angleToEnemy;
+				this.ang = Math.atan2(this.yv, this.xv);
 			}
 		}
 };
@@ -96,7 +96,8 @@ Shot.prototype.trackPlayer = function(){
 			//var angleToEnemy = Math.atan2(closestShip.y - this.y, closestShip.x - this.x );
 			var angleToEnemy = Math.atan2(gameManager.player.y - this.y, gameManager.player.x - this.x );
 			this.xv = ((Math.cos(angleToEnemy) * BOSS_MISSILE_TRACKING_STRENGTH) + (Math.cos(this.ang) * (1-BOSS_MISSILE_TRACKING_STRENGTH))) * BOSS_TRACKING_MISSILE_SPEED;
-			this.yv = ((Math.sin(angleToEnemy) * BOSS_MISSILE_TRACKING_STRENGTH) + (Math.cos(this.ang) * (1-BOSS_MISSILE_TRACKING_STRENGTH))) * BOSS_TRACKING_MISSILE_SPEED;
-			this.ang = angleToEnemy;
+			this.yv = ((Math.sin(angleToEnemy) * BOSS_MISSILE_TRACKING_STRENGTH) + (Math.sin(this.ang) * (1-BOSS_MISSILE_TRACKING_STRENGTH))) * BOSS_TRACKING_MISSILE_SPEED;
+			//this.ang = angleToEnemy;
+			this.ang = Math.atan2(this.yv, this.xv);
 		}
 };
