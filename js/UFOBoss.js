@@ -21,36 +21,36 @@ const BOSS_MAX_HEALTH = 35;
 // const DIR_LEFT = 2;
 // const DIR_DOWN = 3;
 var attackState = {
-	IDLE: 0,
-	SHOOT: 1,
-	RAM: 2,
-	SUPERATTACK: 3,
-	INJURED: 4
-}
+    IDLE: 0,
+    SHOOT: 1,
+    RAM: 2,
+    SUPERATTACK: 3,
+    INJURED: 4
+};
 
 
 function UFOBoss() {
-	this.myBitmap = UFOBossImage;
+    this.myBitmap = UFOBossImage;
 
     //Component List
     this.wrapComponent = new WrapComponent(this);
 
-    this.health = MAX_HEALTH[this.enemyType]; 
-	this.shotCooldown = ENEMY_FIRE_RATE; 
-	this.ang = Math.PI*2.0*Math.random();
+    this.health = MAX_HEALTH[this.enemyType];
+    this.shotCooldown = ENEMY_FIRE_RATE;
+    this.ang = Math.PI*2.0*Math.random();
 
     this.rammingTime = 0;
     this.readyToRemove = false;
-	
-	this.state = attackState.IDLE;
-	this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
+
+    this.state = attackState.IDLE;
+    this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
 }
 
 UFOBoss.prototype.reset = function() {
     this.wrapComponent.reset();
-	this.x = Math.random() * virtualWidth;
-	this.y = Math.random() * virtualHeight;
-    
+    this.x = Math.random() * virtualWidth;
+    this.y = Math.random() * virtualHeight;
+
 
     this.cyclesTilDirectionChange = 0;
     this.health = BOSS_MAX_HEALTH;
@@ -66,11 +66,11 @@ UFOBoss.prototype.draw = function() {
         case attackState.RAM:
             angToFace = Math.atan2(this.yv,this.xv);
             break;
-		case attackState.SUPERATTACK:
+        case attackState.SUPERATTACK:
             angToFace = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
-            break;	
+            break;
         default:
-             angToFace = this.ang;
+            angToFace = this.ang;
             break;
     }
 
@@ -81,7 +81,7 @@ UFOBoss.prototype.draw = function() {
 UFOBoss.prototype.update = function() {
      this.wrapComponent.move();
 
-    if(this.state === attackState.RAM || this.state === attackState.SHOOT) {
+    if(this.state === attackState.RAM || this.state === attackState.SHOOT || this.state == attackState.SUPERATTACK) {
         if(this.rammingTime>0 && this.state === attackState.RAM) { //Ramming
             this.rammingTime--;
             this.ang = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
@@ -97,7 +97,7 @@ UFOBoss.prototype.update = function() {
             }
         }
 
-        if (this.shotCooldown <= 0 ) { 
+        if (this.shotCooldown <= 0 ) {
             var tempShot = new Shot();
             var dx = gameManager.player.x - this.x;
             var dy = gameManager.player.y - this.y;
@@ -105,9 +105,10 @@ UFOBoss.prototype.update = function() {
 
             switch(this.state) {
                 case attackState.SHOOT:
+                case attackState.SUPERATTACK:
                     tempShot.shootFrom(this, ang, "darkred");
                     gameManager.enemyShots.push(tempShot);
-                    this.shotCooldown = BOSS_FIRE_RATE;
+                    this.shotCooldown = this.state == attackState.SHOOT ? BOSS_FIRE_RATE : BOSS_FIRE_RATE/2;
                     break;
                 case attackState.RAM:
                     this.rammingTime = BOSS_RAMMING_DASH_TIME;
@@ -120,39 +121,40 @@ UFOBoss.prototype.update = function() {
     } else if(this.state === attackState.IDLE) { //Idle state
         // this.x += this.xv * BOSS_SPEED //* (1 + gameManager.levelNow/10);
         // this.y += this.yv * BOSS_SPEED //* (1 + gameManager.levelNow/10);
-		this.timeUntilStateChange--; //extra decrement to make IDLE state shorter than others
-		this.xv = 0;
-		this.yv = 0;
-    } else if(this.state === attackState.SUPERATTACK){
-		this.ang = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
-		this.xv = 0;
-		this.yv = 0;
-		
-		if(this.shotCooldown <= 0){
-			var tempShot1 = new Shot();
-			tempShot1.shootFrom(this, this.ang + 0.6, "darkred");
-			tempShot1.isTrackingMissile = true;
-			gameManager.enemyShots.push(tempShot1);
-			var tempShot2 = new Shot();
-			tempShot2.shootFrom(this, this.ang - 0.6, "darkred");
-			tempShot2.isTrackingMissile = true;
-			gameManager.enemyShots.push(tempShot2);
-			
-			this.shotCooldown = BOSS_TRACKING_MISSILE_RATE;
-		} else {
-			this.shotCooldown = this.shotCooldown - 0.333; // is this to hack-ey? longer shot cooldown for tracking missiles
-		}
-	}
-	
-	if(this.timeUntilStateChange<=0){
-			this.state = Math.floor(Math.random() * 4);
-			this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
-	} else{
-		this.timeUntilStateChange--;
-	}
+        this.timeUntilStateChange--; //extra decrement to make IDLE state shorter than others
+        this.xv = 0;
+        this.yv = 0;
+    }
+    // else if(this.state === attackState.SUPERATTACK){
+    //     this.ang = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
+    //     this.xv = 0;
+    //     this.yv = 0;
+
+    //     if(this.shotCooldown <= 0){
+    //         var tempShot1 = new Shot();
+    //         tempShot1.shootFrom(this, this.ang + 0.6, "darkred");
+    //         tempShot1.isTrackingMissile = true;
+    //         gameManager.enemyShots.push(tempShot1);
+    //         var tempShot2 = new Shot();
+    //         tempShot2.shootFrom(this, this.ang - 0.6, "darkred");
+    //         tempShot2.isTrackingMissile = true;
+    //         gameManager.enemyShots.push(tempShot2);
+
+    //         this.shotCooldown = BOSS_TRACKING_MISSILE_RATE;
+    //     }
+    else {
+        this.shotCooldown = this.shotCooldown - 0.333; // is this to hack-ey? longer shot cooldown for tracking missiles
+    }
+
+    if(this.timeUntilStateChange<=0){
+            this.state = Math.floor(Math.random() * 4);
+            this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
+    } else{
+        this.timeUntilStateChange--;
+    }
 };
 
 UFOBoss.prototype.takenDamage = function(){
-	this.state = attackState.INJURED;
-}
+    this.state = attackState.INJURED;
+};
 
