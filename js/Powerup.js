@@ -1,4 +1,4 @@
-const DEBUG_CREATE_MANY_POWERUPS = true; // just used for testing, set to false for players!
+const DEBUG_CREATE_MANY_POWERUPS = false; // just used for testing, set to false for players!
 
 const POWERUP_LIFE = 500;
 const POWERUP_COLLISION_RADIUS = 32;
@@ -8,8 +8,8 @@ const NUM_POWERUP_TYPES = 6;
 const TYPE_LASER = 0;
 const TYPE_SHIELD = 1;
 const TYPE_HEALTH = 2;
-const TYPE_DOUBLESHOT = 3; 
-const TYPE_PHALANX = 4; 
+const TYPE_DOUBLESHOT = 3;
+const TYPE_PHALANX = 4;
 const TYPE_ZEALOT = 5;
 
 const POWERUP_HEALTH_INCREASE = 2;
@@ -28,10 +28,10 @@ Powerup.prototype.step = function(){
     this.remainingLife--;
 
     // about to dissappear? flicker
-    if (this.remainingLife < POWERUP_LIFE / 3) { 
-        
+    if (this.remainingLife < POWERUP_LIFE / 3) {
+
         powerupVisible = Math.random() > 0.5;
-        
+
     }
 
 };
@@ -42,8 +42,8 @@ Powerup.prototype.draw = function(){
         // simplified and moved to update() function:
         // (old way spams the cpu by creating hundreds of unique setIntervals with a function for each one)
         /*
-        if (this.remainingLife < POWERUP_LIFE / 2) { 
-            setInterval(function() { 
+        if (this.remainingLife < POWERUP_LIFE / 2) {
+            setInterval(function() {
             if (powerupVisible) {
                 powerupVisible = false;
             } else {
