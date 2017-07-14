@@ -7,7 +7,7 @@ const FIRE_RATE = 10; // was a calm 30;
 const DASH_RATE = 300;
 const PLAYER_MAX_HEALTH = 5;
 const PLAYER_MAX_SHIELD = 5;
-const SHIELD_COOLDOWN = 200;
+const SHIELD_COOLDOWN = 100;    //testing, 200 seems too long;
 const TRACKING_MISSILE_LIMITER = 2; //higher number will slow rate more
 
 function Ship() {
@@ -30,6 +30,7 @@ function Ship() {
     this.keyHeld_ForwardThrust = false;
     this.keyHeld_StrafeLeft = false;
     this.keyHeld_StrafeRight = false;
+    this.keyHeld_Shield = false;
 
     this.reinit = function() {
         this.shotCooldown = 0;
@@ -100,6 +101,10 @@ function Ship() {
             party(shootx,shooty);
         }
     };
+    
+    this.shieldUp = function() {
+            this.keyHeld_Shield = true;
+    }
 
     this.setPowerup = function(powerup){
         this.powerupLife[powerup.type] += 1000;

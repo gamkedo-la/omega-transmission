@@ -14,11 +14,12 @@ function inputManager() {
     this.mouseMoved = false;
     this.gamepadMoved = false;
 
-    this.setupControls = function (forwardKey, shotKey, strafeLeftKey, strafeRightKey) {
+    this.setupControls = function (forwardKey, shotKey, strafeLeftKey, strafeRightKey, shieldKey) {
         this.controlKeyForShotFire = shotKey;
         this.controlKeyForForwardThrust = forwardKey;
         this.controlKeyForStrafeLeft = strafeLeftKey;
         this.controlKeyForStrafeRight = strafeRightKey;
+		this.controlKeyForShield = shieldKey;
     };
 
     this.initializeInput = function() {
@@ -32,7 +33,7 @@ function inputManager() {
         //canvas.addEventListener('contextmenu', event => event.preventDefault()); //blocks right click menu
         //canvas.addEventListener('wheel', event => event.preventDefault());
 
-        this.setupControls(KEY_LETTER_W, KEY_SPACEBAR, KEY_LETTER_A, KEY_LETTER_D);
+        this.setupControls(KEY_LETTER_W, KEY_SPACEBAR, KEY_LETTER_A, KEY_LETTER_D, KEY_LETTER_S);
     };
 
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
@@ -59,6 +60,10 @@ function inputManager() {
         if (evt.keyCode == inputManager.controlKeyForShotFire) {
             gameManager.player.cannonFire();
         }
+		else if(evt.keyCode == inputManager.controlKeyForShield) {
+			gameManager.player.shieldUp();
+		}
+		
         evt.preventDefault(); // without this, arrow keys scroll the browser!
     };
 

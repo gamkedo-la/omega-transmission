@@ -165,7 +165,11 @@ function GameManager() {
         for (var i = 0, len = this.enemyShots.length; i < len; i++) {
             if (this.isOverlapping(this.player, this.enemyShots[i], SHOT_COLLISION_RADIUS) == true) {
                 // ENEMY SHOT HITS PLAYER
-                this.player.health--;
+                if(this.player.keyHeld_Shield && this.player.shield > 0) {
+                    this.player.shield--;
+                } else {
+                    this.player.health--;
+                }
                 this.enemyShots[i].reset();
                 screenshake(4);
                 party(this.player.x,this.player.y,null,null,null,null,1,2);
