@@ -14,7 +14,7 @@ const BOSS_TRACKING_MISSILE_RATE = 12;
 
 const BOSS_RAMMING_DASH_TIME = 50;
 
-const BOSS_MAX_HEALTH = 20;
+const BOSS_MAX_HEALTH = 35;
 
 // const DIR_UP = 0;
 // const DIR_RIGHT = 1;
@@ -130,17 +130,17 @@ UFOBoss.prototype.update = function() {
 		
 		if(this.shotCooldown <= 0){
 			var tempShot1 = new Shot();
-			tempShot1.shootFrom(this, this.ang + 0.4, "darkred");
-			//tempShot1.isTrackingMissile = true;
+			tempShot1.shootFrom(this, this.ang + 0.6, "darkred");
+			tempShot1.isTrackingMissile = true;
 			gameManager.enemyShots.push(tempShot1);
 			var tempShot2 = new Shot();
-			tempShot2.shootFrom(this, this.ang - 0.4, "darkred");
-			//tempShot2.isTrackingMissile = true;
+			tempShot2.shootFrom(this, this.ang - 0.6, "darkred");
+			tempShot2.isTrackingMissile = true;
 			gameManager.enemyShots.push(tempShot2);
 			
 			this.shotCooldown = BOSS_TRACKING_MISSILE_RATE;
 		} else {
-			this.shotCooldown--;
+			this.shotCooldown = this.shotCooldown - 0.333; // is this to hack-ey? longer shot cooldown for tracking missiles
 		}
 	}
 	
