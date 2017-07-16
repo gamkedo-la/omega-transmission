@@ -5,7 +5,7 @@
 
 "use strict";
 
-const BACKGROUND_VOL = 0.1;
+const BACKGROUND_VOL = 0.7;
 
 var Sound = new SoundSystem(); // global
 
