@@ -35,6 +35,8 @@ function GameManager() {
         inputManager.initializeInput();
         this.renderScore();
         this.update(); // start animating now
+        this.sound = new SoundSystem();
+        this.sound.play("OmegaThemeSong",false,0.06);
     };
 
     this.preStartOfWave = function() {
