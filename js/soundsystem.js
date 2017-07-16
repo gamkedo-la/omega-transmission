@@ -5,6 +5,10 @@
 
 "use strict";
 
+const BACKGROUND_VOL = 0.1;
+
+var Sound = new SoundSystem(); // global
+
 function SoundSystem() {
 
     var USE_SOUND_ATLAS = false; // useful but optional

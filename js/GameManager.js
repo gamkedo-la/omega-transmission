@@ -35,8 +35,7 @@ function GameManager() {
         inputManager.initializeInput();
         this.renderScore();
         this.update(); // start animating now
-        this.sound = new SoundSystem();
-        this.sound.play("OmegaThemeSong",false,0.06);
+        Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
     };
 
     this.preStartOfWave = function() {
@@ -299,6 +298,9 @@ function GameManager() {
             updateParticles(); // ...or lose it!" =)
             this.moveEverything();
             this.drawEverything();
+            if (!Sound.isPlaying("OmegaThemeSong")){
+                Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
+            }
         }
 
 
