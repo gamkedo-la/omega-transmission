@@ -73,7 +73,7 @@ Shot.prototype.trackEnemy = function(){
             
             
             if(closestShip != 'undefined' && this != 'undefined'){
-                console.log(this.x);
+                // console.log(this.x);
                 //actually calculating and changing the bullet velocity
                 //var angleToEnemy = Math.atan2(closestShip.y - this.y, closestShip.x - this.x );
                 var angleToEnemy = Math.atan2(closestShipY - this.y, closestShipX - this.x );
