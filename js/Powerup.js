@@ -60,8 +60,9 @@ Powerup.prototype.draw = function(){
                     // drawText("L",this.x,this.y,"black");
                     break;
                 case TYPE_SHIELD:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'blue');
-                    drawText("S",this.x,this.y,"black");
+                    drawScaledCenteredBitmapWithRotation(shieldPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
+                    //colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'blue');
+                    //drawText("S",this.x,this.y,"black");
                     break;
                 case TYPE_HEALTH:
                     colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'red');

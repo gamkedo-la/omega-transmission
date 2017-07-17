@@ -11,7 +11,7 @@ function GameManager() {
         {waveName:"Swarm",spearNum:4,shooterNum:0,fleetNum:0, bossNum:0},      //dtderosa -new
         {waveName:"Infiltration",spearNum:2,shooterNum:2,fleetNum:0, bossNum:0},//dtderosa -new
         {waveName:"Guards",spearNum:3,shooterNum:3,fleetNum:2, bossNum:0},     //dtderosa - +1spear -1fleet
-        {waveName:"BOSS!",spearNum:0,shooterNum:0,fleetNum:0, bossNum:1}      //dtderosa -new boss level
+        {waveName:"BOSS!",spearNum:2,shooterNum:0,fleetNum:1, bossNum:1}      //dtderosa -new boss level
         ];
 
     this.player = new Ship();
