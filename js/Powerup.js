@@ -1,4 +1,4 @@
-const DEBUG_CREATE_MANY_POWERUPS = false; // just used for testing, set to false for players!
+const DEBUG_CREATE_MANY_POWERUPS = true; // just used for testing, set to false for players!
 
 const POWERUP_LIFE = 500;
 const POWERUP_COLLISION_RADIUS = 32;
@@ -65,8 +65,9 @@ Powerup.prototype.draw = function(){
                     //drawText("S",this.x,this.y,"black");
                     break;
                 case TYPE_HEALTH:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'red');
-                    drawText("H",this.x,this.y,"black");
+                    drawScaledCenteredBitmapWithRotation(healthPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
+                    //colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'red');
+                    //drawText("H",this.x,this.y,"black");
                     break;
                 case TYPE_DOUBLESHOT:
                     colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'green');
