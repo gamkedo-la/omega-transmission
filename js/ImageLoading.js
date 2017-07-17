@@ -7,6 +7,7 @@ var UFOFleetImage = document.createElement("img");
 var backgroundImage = document.createElement("img");
 var plasmaPowerup = document.createElement("img");
 var shieldPowerup = document.createElement("img");
+var healthPowerup = document.createElement("img");
 var UFOBossImage = document.createElement("img");
 
 var imagesToLoad = 0;
@@ -40,6 +41,7 @@ function loadImages() {
         //{ varName: backgroundImage, fileName: "nebulae_nostars.png" },
         { varName: plasmaPowerup, fileName: "plasmaPowerup.png" },
         { varName: shieldPowerup, fileName: "shieldPowerup.png" },
+        { varName: healthPowerup, fileName: "healthPowerup.png" },
         { varName: UFOBossImage, fileName: "boss1.png" },
     ];
 
