@@ -297,21 +297,23 @@ function GameManager() {
     };
 
     this.update = function() {
-        if (this.player != null) {
-            updateScreenshake(); // "juice it...
-            updateParticles(); // ...or lose it!" =)
-            this.moveEverything();
-            this.drawEverything();
-            if (!Sound.isPlaying("OmegaThemeSongEdit")){
-                Sound.play("OmegaThemeSongEdit",true,BACKGROUND_VOL);
+        if (!isGamePaused) {
+            if (this.player != null) {
+                updateScreenshake(); // "juice it...
+                updateParticles(); // ...or lose it!" =)
+                this.moveEverything();
+                this.drawEverything();
+                if (!Sound.isPlaying("OmegaThemeSongEdit")){
+                    Sound.play("OmegaThemeSongEdit",true,BACKGROUND_VOL);
+                }
             }
-        }
 
 
 
-        // optional: 100x the rendering performance! =)
-        if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
-            webGL.flush(); // render all sprites in one draw call
+            // optional: 100x the rendering performance! =)
+            if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
+                webGL.flush(); // render all sprites in one draw call
+            }
         }
 
         // the bind() function ensures when it gets called again the "THIS" is set

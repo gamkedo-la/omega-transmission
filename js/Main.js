@@ -10,6 +10,8 @@ var inputManager = new inputManager();
 var virtualHeight = 720.0;
 var virtualWidth = 1280.0;
 
+var isGamePaused = false;
+
 window.onload = function() {
 
     console.log("Initializing game engine...");
