@@ -192,6 +192,10 @@ function GameManager() {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
                     // PLAYER SHOT HITS ENEMY
                     this.enemies[i].health--;
+					//BOSS INJURED STATE
+					if(this.enemies[i] instanceof UFOBoss){
+						this.enemies[i].takenDamage();
+					}
                     if (this.enemies[i].health <= 0) {
                         // ENEMY DESTROYED
                         this.score += 10;
