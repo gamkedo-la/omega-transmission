@@ -325,14 +325,19 @@ function GameManager() {
     this.drawIndicatorBars = function() {
         var healthFraction = this.player.health / 5;
         if(healthFraction > 1) healthFraction = 1; // 5 health is a full health bar
-        colorRect(HUDBAR_BORDER,HUDBAR_BORDER,HUDBAR_WIDTH*healthFraction - HUDBAR_BORDER,
+        colorRect(HUDBAR_BORDER,HUDBAR_BORDER,HUDBAR_WIDTH*healthFraction + HUDBAR_BORDER,
             HUDBAR_HEIGHT - HUDBAR_BORDER,"red");
         drawText("Health", HUDBAR_BORDER + 2, 13, "black");
 
+        console.log("shield" + this.player.shield);
         var shieldFraction = this.player.shield / 5;
-        if(shieldFraction > 1) shieldFraction = 1; // 5 shields is a full shield bar
+        if(this.player.shield) {
+            if(shieldFraction > 1) shieldFraction = 1; // 5 shields is a full shield bar
+        } else {
+            shieldFraction = 0;
+        }
         colorRect(HUDBAR_BORDER,2*HUDBAR_BORDER + HUDBAR_HEIGHT,
-            HUDBAR_WIDTH*shieldFraction - HUDBAR_BORDER, HUDBAR_HEIGHT - HUDBAR_BORDER,"cyan");
+            HUDBAR_WIDTH*shieldFraction + HUDBAR_BORDER, HUDBAR_HEIGHT - HUDBAR_BORDER,"cyan");
         drawText("Shield", HUDBAR_BORDER + 2, 36, "black");
     };
 }
