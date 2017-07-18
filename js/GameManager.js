@@ -107,7 +107,6 @@ function GameManager() {
         for (var i = 0; i < NUM_POWERUP_TYPES; i++){
             if(this.player.powerupLife[i] > 0){
                 this.player.powerupLife[i]--;
-                // console.log("Player holding powerup type " + i + " , holding for", this.player.powerupLife[i]);
             }
         }
 
@@ -247,7 +246,8 @@ function GameManager() {
     };
 
     this.dropPowerup = function(enemy) {
-        var type = Math.floor(Math.random() * NUM_POWERUP_TYPES);
+        // var type = Math.floor(Math.random() * NUM_POWERUP_TYPES);
+        var type = TYPE_LASER;
         this.powerups.push(new Powerup(enemy.x,enemy.y,type));
     };
 
@@ -265,7 +265,7 @@ function GameManager() {
         drawCenteredBitmapWithRotation(backgroundImage, virtualWidth / 2, virtualHeight / 2, 0);
 
         for (var i = 0; i < this.playerShots.length; i++) {
-            this.playerShots[i].draw();
+            this.playerShots[i].draw(true);
         }
         for (var i = 0; i < this.enemyShots.length; i++) {
             this.enemyShots[i].draw();
