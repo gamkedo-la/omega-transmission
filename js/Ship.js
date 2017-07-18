@@ -7,7 +7,7 @@ const FIRE_RATE = 10; // was a calm 30;
 const DASH_RATE = 300;
 const PLAYER_MAX_HEALTH = 5;
 const PLAYER_MAX_SHIELD = 5;
-const SHIELD_COOLDOWN = 100;    //testing, 200 seems too long;
+const SHIELD_COOLDOWN = 200;
 const TRACKING_MISSILE_LIMITER = 2; //higher number will slow rate more
 
 function Ship() {

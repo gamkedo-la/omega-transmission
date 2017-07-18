@@ -278,6 +278,11 @@ function GameManager() {
         //only draws player when active
         if(this.player.isActive) {
             this.player.draw();
+            if(this.player.keyHeld_Shield && this.player.shield > 0) {
+                drawCenteredBitmapWithRotation(shieldPowerup, gameManager.player.x, gameManager.player.y, gameManager.player.ang - (Math.PI/4));
+                //colorCircle(gameManager.player.x, gameManager.player.y, 60, "blue");
+                //console.log(gameManager.player.x+" , "+gameManager.player.y);
+            }
         }
 
         for (var i = 0; i < this.enemies.length; i++) {
