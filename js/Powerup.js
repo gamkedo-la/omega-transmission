@@ -1,4 +1,4 @@
-const DEBUG_CREATE_MANY_POWERUPS = false; // just used for testing, set to false for players!
+const DEBUG_CREATE_MANY_POWERUPS = true; // just used for testing, set to false for players!
 
 const POWERUP_LIFE = 500;
 const POWERUP_COLLISION_RADIUS = 32;
@@ -8,7 +8,7 @@ const NUM_POWERUP_TYPES = 6;
 const TYPE_LASER = 0;
 const TYPE_SHIELD = 1;
 const TYPE_HEALTH = 2;
-const TYPE_DOUBLESHOT = 3;
+const TYPE_TRIPLESHOT = 3;
 const TYPE_PHALANX = 4;
 const TYPE_ZEALOT = 5;
 
@@ -69,17 +69,20 @@ Powerup.prototype.draw = function(){
                     //colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'red');
                     //drawText("H",this.x,this.y,"black");
                     break;
-                case TYPE_DOUBLESHOT:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'green');
-                    drawText("D",this.x,this.y,"black");
+                case TYPE_TRIPLESHOT:
+                    //colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'green');
+                    //drawText("D",this.x,this.y,"black");
+                    drawScaledCenteredBitmapWithRotation(tripleShotPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
                     break;
                 case TYPE_PHALANX:
                     colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'yellow');
                     drawText("X",this.x,this.y,"black");
+                    //drawScaledCenteredBitmapWithRotation(phalanxPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
                     break;
                 case TYPE_ZEALOT:
                     colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'orange');
                     drawText("Z",this.x,this.y,"black");
+                    //drawScaledCenteredBitmapWithRotation(zealotPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
                     break;
             }
         }

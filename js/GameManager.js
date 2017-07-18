@@ -325,6 +325,8 @@ function GameManager() {
                 webGL.flush(); // render all sprites in one draw call
             }
         } else {
+            canvasContext.textAlign = "center";
+            drawText("GAME PAUSED", virtualWidth/2+65,canvas.height/2-PAUSEMENU_HEIGHT/2-20, "yellow");
             colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
                 PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
             // todo: Add some sort of pause menu

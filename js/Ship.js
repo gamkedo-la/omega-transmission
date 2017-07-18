@@ -74,8 +74,8 @@ function Ship() {
 
 
 
-            // double and phalanx powerups for extra bullets!
-            if(this.powerupLife[TYPE_DOUBLESHOT] > 0)
+            // triple and phalanx powerups for extra bullets!
+            if(this.powerupLife[TYPE_TRIPLESHOT] > 0)
             {
                 var tempShot2 = new Shot();
                 tempShot2.shootFrom(this, this.ang + 0.25, "white");
