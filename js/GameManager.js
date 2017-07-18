@@ -2,6 +2,9 @@ const HUDBAR_WIDTH  = 120;
 const HUDBAR_HEIGHT =  18;
 const HUDBAR_BORDER =   4;
 
+const PAUSEMENU_WIDTH  = 200;
+const PAUSEMENU_HEIGHT = 300;
+
 
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
@@ -316,6 +319,10 @@ function GameManager() {
             if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
                 webGL.flush(); // render all sprites in one draw call
             }
+        } else {
+            colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
+                PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
+            // todo: Add some sort of pause menu
         }
 
         // the bind() function ensures when it gets called again the "THIS" is set
@@ -329,7 +336,6 @@ function GameManager() {
             HUDBAR_HEIGHT - HUDBAR_BORDER,"red");
         drawText("Health", HUDBAR_BORDER + 2, 13, "black");
 
-        console.log("shield" + this.player.shield);
         var shieldFraction = this.player.shield / 5;
         if(this.player.shield) {
             if(shieldFraction > 1) shieldFraction = 1; // 5 shields is a full shield bar
