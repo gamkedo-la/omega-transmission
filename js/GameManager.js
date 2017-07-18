@@ -1,3 +1,8 @@
+const HUDBAR_WIDTH  = 120;
+const HUDBAR_HEIGHT =  18;
+const HUDBAR_BORDER =   4;
+
+
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
     this.stages = [
@@ -192,10 +197,10 @@ function GameManager() {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
                     // PLAYER SHOT HITS ENEMY
                     this.enemies[i].health--;
-					//BOSS INJURED STATE
-					if(this.enemies[i] instanceof UFOBoss){
-						this.enemies[i].takenDamage();
-					}
+                    //BOSS INJURED STATE
+                    if(this.enemies[i] instanceof UFOBoss){
+                        this.enemies[i].takenDamage();
+                    }
                     if (this.enemies[i].health <= 0) {
                         // ENEMY DESTROYED
                         this.score += 10;
@@ -277,9 +282,7 @@ function GameManager() {
             this.enemies[i].draw();
         }
 
-        drawText("Shield", 1, 10, "cyan");
-        drawText("Health", 1, 20, "tomato");
-        drawText("Dash Cooldown", 1, 30, "white");
+        this.drawIndicatorBars();
 
         this.renderScore();
         if(this.waitingForNextWaveToStart) {
@@ -318,6 +321,20 @@ function GameManager() {
 
         // the bind() function ensures when it gets called again the "THIS" is set
         requestAnimationFrame(this.update.bind(this));
+    };
+
+    this.drawIndicatorBars = function() {
+        var healthFraction = this.player.health / 5;
+        if(healthFraction > 1) healthFraction = 1; // 5 health is a full health bar
+        colorRect(HUDBAR_BORDER,HUDBAR_BORDER,HUDBAR_WIDTH*healthFraction - HUDBAR_BORDER,
+            HUDBAR_HEIGHT - HUDBAR_BORDER,"red");
+        drawText("Health", HUDBAR_BORDER + 2, 13, "black");
+
+        var shieldFraction = this.player.shield / 5;
+        if(shieldFraction > 1) shieldFraction = 1; // 5 shields is a full shield bar
+        colorRect(HUDBAR_BORDER,2*HUDBAR_BORDER + HUDBAR_HEIGHT,
+            HUDBAR_WIDTH*shieldFraction - HUDBAR_BORDER, HUDBAR_HEIGHT - HUDBAR_BORDER,"cyan");
+        drawText("Shield", HUDBAR_BORDER + 2, 36, "black");
     };
 }
 
