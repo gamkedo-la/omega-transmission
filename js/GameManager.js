@@ -165,8 +165,10 @@ function GameManager() {
     this.renderScore = function(){
         scoreStr = "Score: " + this.score;
         canvasContext.textAlign = "right";
-        drawText(scoreStr,virtualWidth - 1, 10,'white');
+        canvasContext.font = "20px Arial";
+        drawText(scoreStr,virtualWidth - 1, 20,'white');
         canvasContext.textAlign = "left";
+        canvasContext.font = "10px Arial";
     };
 
     this.checkForCollisions = function() {
@@ -325,10 +327,21 @@ function GameManager() {
                 webGL.flush(); // render all sprites in one draw call
             }
         } else {
+            canvasContext.textBaseline = 'middle';
             canvasContext.textAlign = "center";
-            drawText("GAME PAUSED", virtualWidth/2+65,canvas.height/2-PAUSEMENU_HEIGHT/2-20, "yellow");
+            canvasContext.font = "20px Arial";
+
+            var pausedString = "Game Paused";
+            var pausedStringWidth = canvasContext.measureText(pausedString).width;
+            console.log("pausedString: " + pausedStringWidth);
+
             colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
                 PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
+            // Shouldn't this be centered?? -mtn
+            drawText(pausedString,canvas.width/2-PAUSEMENU_WIDTH/2+pausedStringWidth/2,
+                canvas.height/2,"yellow");
+            canvasContext.textBaseline = "left";
+            canvasContext.textAlign = "left";
             // todo: Add some sort of pause menu
         }
 
