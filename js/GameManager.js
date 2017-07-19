@@ -1,6 +1,7 @@
 const HUDBAR_WIDTH  = 120;
-const HUDBAR_HEIGHT =  18;
-const HUDBAR_BORDER =   4;
+const HUDBAR_HEIGHT =  20;
+const HUDBAR_BORDER_HORIZONTAL =   16;
+const HUDBAR_BORDER_VERTICAL = 4;
 
 const PAUSEMENU_WIDTH  = 200;
 const PAUSEMENU_HEIGHT = 300;
@@ -366,9 +367,10 @@ function GameManager() {
     this.drawIndicatorBars = function() {
         var healthFraction = this.player.health / 5;
         if(healthFraction > 1) healthFraction = 1; // 5 health is a full health bar
-        colorRect(HUDBAR_BORDER,HUDBAR_BORDER,HUDBAR_WIDTH*healthFraction + HUDBAR_BORDER,
-            HUDBAR_HEIGHT - HUDBAR_BORDER,"red");
-        drawText("Health", HUDBAR_BORDER + 2, 13, "black");
+        colorRect(HUDBAR_BORDER_HORIZONTAL,HUDBAR_BORDER_VERTICAL, HUDBAR_WIDTH*healthFraction + HUDBAR_BORDER_HORIZONTAL,
+            HUDBAR_HEIGHT - HUDBAR_BORDER_VERTICAL, this.player.getHealthBarColor());
+        //drawText("Health", HUDBAR_BORDER + 2, 13, "black");
+        drawScaledCenteredBitmapWithRotation(healthPowerup, POWERUP_DRAW_SIZE/2,POWERUP_DRAW_SIZE/2, POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE, 0);
 
         var shieldFraction = this.player.shield / 5;
         if(this.player.shield) {
@@ -376,8 +378,9 @@ function GameManager() {
         } else {
             shieldFraction = 0;
         }
-        colorRect(HUDBAR_BORDER,2*HUDBAR_BORDER + HUDBAR_HEIGHT,
-            HUDBAR_WIDTH*shieldFraction + HUDBAR_BORDER, HUDBAR_HEIGHT - HUDBAR_BORDER,"cyan");
-        drawText("Shield", HUDBAR_BORDER + 2, 36, "black");
+        colorRect(HUDBAR_BORDER_HORIZONTAL,2*HUDBAR_BORDER_VERTICAL + HUDBAR_HEIGHT,
+            HUDBAR_WIDTH*shieldFraction + HUDBAR_BORDER_HORIZONTAL,HUDBAR_HEIGHT - HUDBAR_BORDER_VERTICAL, "cyan");
+        //drawText("Shield", HUDBAR_BORDER + 2, 36, "black");
+        drawScaledCenteredBitmapWithRotation(shieldPowerup, POWERUP_DRAW_SIZE/2,POWERUP_DRAW_SIZE*1.5, POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE, 0);
     };
 }

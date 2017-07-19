@@ -215,5 +215,15 @@ function Ship() {
         drawText(this.health, this.x + 20, this.y + 5, 'tomato');
         drawText(this.shield, this.x + 20, this.y - 5, 'cyan');
     };
+
+    this.getHealthBarColor = function() {
+        if (this.health / PLAYER_MAX_HEALTH > 2/3) {
+            return "lime";
+        } else if (this.health / PLAYER_MAX_HEALTH > 1/3) {
+            return "orange";
+        } else {
+            return "red";
+        }
+    }
 }
 
