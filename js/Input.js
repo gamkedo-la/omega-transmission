@@ -53,6 +53,10 @@ function inputManager() {
         if (thisKey == this.controlKeyForForwardThrust) {
             thisShip.keyHeld_ForwardThrust = setTo;
         }
+
+        if(thisKey == this.controlKeyForShield) {
+            thisShip.keyHeld_Shield = setTo;
+        }
     };
 
     this.keyPressed = function (evt) {

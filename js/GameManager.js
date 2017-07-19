@@ -1,3 +1,11 @@
+const HUDBAR_WIDTH  = 120;
+const HUDBAR_HEIGHT =  18;
+const HUDBAR_BORDER =   4;
+
+const PAUSEMENU_WIDTH  = 200;
+const PAUSEMENU_HEIGHT = 300;
+
+
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
     this.stages = [
@@ -11,7 +19,7 @@ function GameManager() {
         {waveName:"Swarm",spearNum:4,shooterNum:0,fleetNum:0, bossNum:0},      //dtderosa -new
         {waveName:"Infiltration",spearNum:2,shooterNum:2,fleetNum:0, bossNum:0},//dtderosa -new
         {waveName:"Guards",spearNum:3,shooterNum:3,fleetNum:2, bossNum:0},     //dtderosa - +1spear -1fleet
-        {waveName:"BOSS!",spearNum:2,shooterNum:0,fleetNum:1, bossNum:1}      //dtderosa -new boss level
+        {waveName:"BOSS!",spearNum:0,shooterNum:0,fleetNum:0, bossNum:1}      //dtderosa -new boss level
         ];
 
     this.player = new Ship();
@@ -102,7 +110,6 @@ function GameManager() {
         for (var i = 0; i < NUM_POWERUP_TYPES; i++){
             if(this.player.powerupLife[i] > 0){
                 this.player.powerupLife[i]--;
-                // console.log("Player holding powerup type " + i + " , holding for", this.player.powerupLife[i]);
             }
         }
 
@@ -192,10 +199,10 @@ function GameManager() {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
                     // PLAYER SHOT HITS ENEMY
                     this.enemies[i].health--;
-					//BOSS INJURED STATE
-					if(this.enemies[i] instanceof UFOBoss){
-						this.enemies[i].takenDamage();
-					}
+                    //BOSS INJURED STATE
+                    if(this.enemies[i] instanceof UFOBoss){
+                        this.enemies[i].takenDamage();
+                    }
                     if (this.enemies[i].health <= 0) {
                         // ENEMY DESTROYED
                         this.score += 10;
@@ -260,7 +267,7 @@ function GameManager() {
         drawCenteredBitmapWithRotation(backgroundImage, virtualWidth / 2, virtualHeight / 2, 0);
 
         for (var i = 0; i < this.playerShots.length; i++) {
-            this.playerShots[i].draw();
+            this.playerShots[i].draw(true);
         }
         for (var i = 0; i < this.enemyShots.length; i++) {
             this.enemyShots[i].draw();
@@ -271,15 +278,18 @@ function GameManager() {
         //only draws player when active
         if(this.player.isActive) {
             this.player.draw();
+            if(this.player.keyHeld_Shield && this.player.shield > 0) {
+                drawCenteredBitmapWithRotation(shieldPowerup, gameManager.player.x, gameManager.player.y, gameManager.player.ang - (Math.PI/4));
+                //colorCircle(gameManager.player.x, gameManager.player.y, 60, "blue");
+                //console.log(gameManager.player.x+" , "+gameManager.player.y);
+            }
         }
 
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].draw();
         }
 
-        drawText("Shield", 1, 10, "cyan");
-        drawText("Health", 1, 20, "tomato");
-        drawText("Dash Cooldown", 1, 30, "white");
+        this.drawIndicatorBars();
 
         this.renderScore();
         if(this.waitingForNextWaveToStart) {
@@ -314,10 +324,33 @@ function GameManager() {
             if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
                 webGL.flush(); // render all sprites in one draw call
             }
+        } else {
+            canvasContext.textAlign = "center";
+            drawText("GAME PAUSED", virtualWidth/2+65,canvas.height/2-PAUSEMENU_HEIGHT/2-20, "yellow");
+            colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
+                PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
+            // todo: Add some sort of pause menu
         }
 
         // the bind() function ensures when it gets called again the "THIS" is set
         requestAnimationFrame(this.update.bind(this));
     };
-}
 
+    this.drawIndicatorBars = function() {
+        var healthFraction = this.player.health / 5;
+        if(healthFraction > 1) healthFraction = 1; // 5 health is a full health bar
+        colorRect(HUDBAR_BORDER,HUDBAR_BORDER,HUDBAR_WIDTH*healthFraction + HUDBAR_BORDER,
+            HUDBAR_HEIGHT - HUDBAR_BORDER,"red");
+        drawText("Health", HUDBAR_BORDER + 2, 13, "black");
+
+        var shieldFraction = this.player.shield / 5;
+        if(this.player.shield) {
+            if(shieldFraction > 1) shieldFraction = 1; // 5 shields is a full shield bar
+        } else {
+            shieldFraction = 0;
+        }
+        colorRect(HUDBAR_BORDER,2*HUDBAR_BORDER + HUDBAR_HEIGHT,
+            HUDBAR_WIDTH*shieldFraction + HUDBAR_BORDER, HUDBAR_HEIGHT - HUDBAR_BORDER,"cyan");
+        drawText("Shield", HUDBAR_BORDER + 2, 36, "black");
+    };
+}

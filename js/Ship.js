@@ -7,7 +7,7 @@ const FIRE_RATE = 10; // was a calm 30;
 const DASH_RATE = 300;
 const PLAYER_MAX_HEALTH = 5;
 const PLAYER_MAX_SHIELD = 5;
-const SHIELD_COOLDOWN = 100;    //testing, 200 seems too long;
+const SHIELD_COOLDOWN = 200;
 const TRACKING_MISSILE_LIMITER = 2; //higher number will slow rate more
 
 function Ship() {
@@ -74,8 +74,8 @@ function Ship() {
 
 
 
-            // double and phalanx powerups for extra bullets!
-            if(this.powerupLife[TYPE_DOUBLESHOT] > 0)
+            // triple and phalanx powerups for extra bullets!
+            if(this.powerupLife[TYPE_TRIPLESHOT] > 0)
             {
                 var tempShot2 = new Shot();
                 tempShot2.shootFrom(this, this.ang + 0.25, "white");

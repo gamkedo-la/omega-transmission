@@ -22,7 +22,7 @@ Shot.prototype.reset = function() {
 };
 
 Shot.prototype.shootFrom = function(shipFiring, firingAngle, color) {
-    
+
     this.x = shipFiring.x;
     this.y = shipFiring.y;
 
@@ -43,16 +43,16 @@ Shot.prototype.move = function() {
     }
 };
 
-Shot.prototype.draw = function() {
+Shot.prototype.draw = function(typePlayerShot = false) {
     if (this.shotLife > 0) {
-        if(gameManager.player.powerupLife[TYPE_LASER] != 0)
-            drawScaledCenteredBitmapWithRotation(plasmaImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME (outdated note?)
+        if(gameManager.player.powerupLife[TYPE_LASER] != 0 && typePlayerShot == true)
+            drawScaledCenteredBitmapWithRotation(plasmaImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180));
         else
-            drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180)); // art is rotated 90 ccw wrong FIXME
+            drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180));
     }
 };
 
-Shot.prototype.trackEnemy = function(){ 
+Shot.prototype.trackEnemy = function(){
         //point bullet toward nearest enemy if ZEALOT type  //probably needs tweaking seems a little OP at the moment
         if(gameManager.player.powerupLife[TYPE_ZEALOT] > 0 && gameManager.enemies.length > 0){
             var closestShip;
@@ -71,8 +71,8 @@ Shot.prototype.trackEnemy = function(){
                     closestShipY = gameManager.enemies[x].y;
                 }
             }
-            
-            
+
+
             if(closestShip != 'undefined' && this != 'undefined'){
                 // console.log(this.x);
                 //actually calculating and changing the bullet velocity
@@ -87,13 +87,13 @@ Shot.prototype.trackEnemy = function(){
 };
 
 
-Shot.prototype.trackPlayer = function(){    
-        if(this.isTrackingMissile){  
+Shot.prototype.trackPlayer = function(){
+        if(this.isTrackingMissile){
             //console.log(this.x);
             //actually calculating and changing the bullet velocity
             //var angleToEnemy = Math.atan2(closestShip.y - this.y, closestShip.x - this.x );
             var angleToEnemy = Math.atan2(gameManager.player.y - this.y, gameManager.player.x - this.x );
-			var newMissileAngle = Math.abs(angleToEnemy - this.ang) > BOSS_MISSILE_TRACKING_LIMITER ? this.ang : angleToEnemy
+            var newMissileAngle = Math.abs(angleToEnemy - this.ang) > BOSS_MISSILE_TRACKING_LIMITER ? this.ang : angleToEnemy;
             this.xv = ((Math.cos(newMissileAngle) * BOSS_MISSILE_TRACKING_STRENGTH) + (Math.cos(this.ang) * (1-BOSS_MISSILE_TRACKING_STRENGTH))) * BOSS_TRACKING_MISSILE_SPEED;
             this.yv = ((Math.sin(newMissileAngle) * BOSS_MISSILE_TRACKING_STRENGTH) + (Math.sin(this.ang) * (1-BOSS_MISSILE_TRACKING_STRENGTH))) * BOSS_TRACKING_MISSILE_SPEED;
             //this.ang = angleToEnemy;

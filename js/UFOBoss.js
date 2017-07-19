@@ -162,11 +162,15 @@ UFOBoss.prototype.takenDamage = function(){
 		this.injuredStateCooldown = BOSS_INJURED_STATE_COOLDOWN;
 		this.state = attackState.INJURED;
 	}
+
+    if (this.health % 5 === 0) {
+        gameManager.enemies.push(new UFO(Math.floor(Math.random() * MAX_HEALTH.length)));
+        gameManager.enemies[gameManager.enemies.length - 1].reset();
+    }
 };
 
 UFOBoss.prototype.ChooseRandomState = function(){
 	this.state = Math.floor(Math.random() * 4);
 	//this.state = 3;  /// can use this line instead of line above to force a constant state for testing
 	this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
-}
-
+};
