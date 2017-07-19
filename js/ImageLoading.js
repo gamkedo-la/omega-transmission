@@ -1,4 +1,5 @@
 var playerImage = document.createElement("img");
+var playerShield = document.createElement("img");
 var bulletImage = document.createElement("img");
 var plasmaImage = document.createElement("img");
 var UFOShooterImage = document.createElement("img");
@@ -28,6 +29,7 @@ function beginLoadingImage(image, fileName) {
 function loadImages() {
     var imageList = [
         { varName: playerImage, fileName: "Player.png" },
+        { varName: playerShield, fileName: "playerShield.png" },
         { varName: bulletImage, fileName: "Bullet.png" },
         // { varName: plasmaImage, fileName: "Plasma.png" },
         { varName: plasmaImage, fileName: "Plasma2.png" },
