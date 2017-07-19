@@ -94,6 +94,20 @@ function GameManager() {
             this.enemies.push(new UFOBoss());
         }
 
+        //test to increase enemy during the next cycle
+        if(this.stages[levelInd].shooterNum > 0) {
+            this.stages[levelInd].shooterNum += 2;
+        }
+        if(this.stages[levelInd].spearNum > 0) {
+            this.stages[levelInd].spearNum += 2;
+        }
+        if(this.stages[levelInd].fleetNum > 0) {
+            this.stages[levelInd].fleetNum += 2;
+        }
+        if(this.stages[levelInd].bossNum > 0) {
+            this.stages[levelInd].bossNum++;
+        }
+
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].reset();
         }
