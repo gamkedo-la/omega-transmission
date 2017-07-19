@@ -338,7 +338,7 @@ function GameManager() {
             colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
                 PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
             // Shouldn't this be centered?? -mtn
-            drawText(pausedString,canvas.width/2-PAUSEMENU_WIDTH/2+pausedStringWidth/2,
+            drawText(pausedString,canvas.width/2,
                 canvas.height/2,"yellow");
             canvasContext.textBaseline = "left";
             canvasContext.textAlign = "left";
