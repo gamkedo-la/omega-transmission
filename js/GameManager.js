@@ -30,7 +30,7 @@ function GameManager() {
                     "D - Move Right",
                     "S - Activate Shield",
                     "T - Sound On/Off",
-                    "U - Quit Game"]
+                    "U - Quit Game"];
 
     this.player = new Ship();
     this.playerShots = [];
@@ -53,7 +53,9 @@ function GameManager() {
         inputManager.initializeInput();
         this.renderScore();
         this.update(); // start animating now
-        Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
+        if(!Sound.mute) {
+            Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
+        }
     };
 
     this.preStartOfWave = function() {
@@ -339,7 +341,7 @@ function GameManager() {
                 updateParticles(); // ...or lose it!" =)
                 this.moveEverything();
                 this.drawEverything();
-                if (!Sound.isPlaying("OmegaThemeSong")){
+                if (!Sound.isPlaying("OmegaThemeSong") && !Sound.mute){
                     Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
                 }
             }
@@ -362,19 +364,17 @@ function GameManager() {
 
             colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
                 PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
-            // Shouldn't this be centered?? -mtn
             drawText(pausedString,canvas.width/2,
                 canvas.height/2 - PAUSEMENU_HEIGHT/2 + fontSize/2,"yellow");
 
             fontSize *= 3/4;
             canvasContext.font = fontSize + "px Arial";
             for (var i = 0; i < this.menuItems.length; i++) {
-                drawText(this.menuItems[i], canvas.width/2,(canvas.height/2 - PAUSEMENU_HEIGHT/2 + 3*fontSize) + i*(fontSize+5), "white")
+                drawText(this.menuItems[i], canvas.width/2,(canvas.height/2 - PAUSEMENU_HEIGHT/2 + 3*fontSize) + i*(fontSize+5), "white");
             }
 
             canvasContext.textBaseline = "left";
             canvasContext.textAlign = "left";
-            // todo: Add some sort of pause menu
         }
 
         // the bind() function ensures when it gets called again the "THIS" is set

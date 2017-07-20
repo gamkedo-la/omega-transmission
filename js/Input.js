@@ -8,6 +8,7 @@ const KEY_LETTER_A = 65;
 const KEY_LETTER_S = 83;
 const KEY_LETTER_D = 68;
 const KEY_LETTER_P = 80;
+const KEY_LETTER_T = 84;
 const KEY_SPACEBAR = 32;
 
 function inputManager() {
@@ -70,6 +71,13 @@ function inputManager() {
 		}
         else if (evt.keyCode == KEY_LETTER_P) {
             isGamePaused = (isGamePaused == true) ? false : true;
+        }
+        else if (evt.keyCode == KEY_LETTER_T) {
+            if(!Sound.mute) {
+                Sound.Mute();
+            } else {
+                Sound.unMute();
+            }
         }
 		
         evt.preventDefault(); // without this, arrow keys scroll the browser!

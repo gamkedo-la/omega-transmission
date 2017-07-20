@@ -12,11 +12,12 @@ var Sound = new SoundSystem(); // global
 function SoundSystem() {
 
     var USE_SOUND_ATLAS = false; // useful but optional
-    var mute = false;   // if true ignore all play()
     var music = null;   // one looping Howl() object
     var sounds = [];    // an array of Howl() objects
     var atlas = null;   // one big sound sprite (optional)
     var debug_sound = false; // write to console?
+
+    this.mute = false;   // if true ignore all play()
 
     // playback function
     this.play = function(samplename,looping,vol,rate,pan)
@@ -46,7 +47,7 @@ function SoundSystem() {
                 pan: pan
             });
         }
-        if (!mute) // we still download even if muted
+        if (!this.mute) // we still download even if muted
             sounds[samplename].play();
 
         //stops a sample from playing if it exists
@@ -153,11 +154,13 @@ function SoundSystem() {
     this.Mute = function() {
         console.log("muting sound");
         Howler.mute(true);
+        this.mute = true;
     };
 
     this.unMute = function() {
         console.log("unmuting sound");
         Howler.mute(false);
+        this.mute = false;
     };
 
     init();
