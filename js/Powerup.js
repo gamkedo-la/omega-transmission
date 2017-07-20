@@ -14,7 +14,7 @@ const TYPE_ZEALOT = 5;
 
 const POWERUP_HEALTH_INCREASE = 2;
 
-var powerupVisible = true;
+const POWERUP_BLINK_FRAMES = 10;
 
 function Powerup(x,y,type) {
 
@@ -22,37 +22,27 @@ function Powerup(x,y,type) {
     this.y = y;
     this.type = type;
     this.remainingLife = POWERUP_LIFE;
+    this.powerupVisible = true;
+    this.framesToBlink = 0;
 }
 
 Powerup.prototype.step = function(){
     this.remainingLife--;
-
-    // about to dissappear? flicker
-    if (this.remainingLife < POWERUP_LIFE / 3) {
-
-        powerupVisible = Math.random() > 0.5;
-
-    }
-
+        
+        // about to dissappear? flicker
+        if (this.remainingLife < POWERUP_LIFE / 3) {
+            if (!this.framesToBlink) {
+                this.powerupVisible = (this.powerupVisible) ? false : true;
+                this.framesToBlink = POWERUP_BLINK_FRAMES;
+            }
+            this.framesToBlink--;
+        }
 };
 
 Powerup.prototype.draw = function(){
     if(this.remainingLife > 0){
 
-        // simplified and moved to update() function:
-        // (old way spams the cpu by creating hundreds of unique setIntervals with a function for each one)
-        /*
-        if (this.remainingLife < POWERUP_LIFE / 2) {
-            setInterval(function() {
-            if (powerupVisible) {
-                powerupVisible = false;
-            } else {
-                powerupVisible = true;
-            }}, 500);
-        }
-        */
-
-        if (powerupVisible) {
+        if (this.powerupVisible) {
             switch(this.type){
                 case TYPE_LASER:
                     drawScaledCenteredBitmapWithRotation(plasmaPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
