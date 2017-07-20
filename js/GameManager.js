@@ -392,7 +392,6 @@ function GameManager() {
         canvasContext.textAlign = "center";
         canvasContext.font = fontSize + "px Arial";
 
-        console.log(virtualWidth/2,width/2);
         colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2,
             width,height,"black");
         drawText(titleString,virtualWidth/2,
