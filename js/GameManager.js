@@ -23,6 +23,15 @@ function GameManager() {
         {waveName:"BOSS!",spearNum:0,shooterNum:0,fleetNum:0, bossNum:1}      //dtderosa -new boss level
         ];
 
+    this.menuItems = [
+                    "P - Pause/Resume",
+                    "W - Move Up",
+                    "A - Move Left",
+                    "D - Move Right",
+                    "S - Activate Shield",
+                    "T - Sound On/Off",
+                    "U - Quit Game"]
+
     this.player = new Ship();
     this.playerShots = [];
     this.enemies = [];
@@ -342,9 +351,10 @@ function GameManager() {
                 webGL.flush(); // render all sprites in one draw call
             }
         } else {
+            var fontSize = 20;
             canvasContext.textBaseline = 'middle';
             canvasContext.textAlign = "center";
-            canvasContext.font = "20px Arial";
+            canvasContext.font = fontSize + "px Arial";
 
             var pausedString = "Game Paused";
             var pausedStringWidth = canvasContext.measureText(pausedString).width;
@@ -354,7 +364,14 @@ function GameManager() {
                 PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
             // Shouldn't this be centered?? -mtn
             drawText(pausedString,canvas.width/2,
-                canvas.height/2,"yellow");
+                canvas.height/2 - PAUSEMENU_HEIGHT/2 + fontSize/2,"yellow");
+
+            fontSize *= 3/4;
+            canvasContext.font = fontSize + "px Arial";
+            for (var i = 0; i < this.menuItems.length; i++) {
+                drawText(this.menuItems[i], canvas.width/2,(canvas.height/2 - PAUSEMENU_HEIGHT/2 + 3*fontSize) + i*(fontSize+5), "white")
+            }
+
             canvasContext.textBaseline = "left";
             canvasContext.textAlign = "left";
             // todo: Add some sort of pause menu
