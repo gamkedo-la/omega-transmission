@@ -8,7 +8,7 @@ const MENU_HEIGHT = 240;
 
 
 function GameManager() {
-    this.levelNow = 0; // will increment to 0 on start
+    this.levelNow = -1; // will increment to 0 on start
     this.stages = [
         {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2, bossNum:0},      //dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
         {waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0, bossNum:0},    //dtderosa -new
