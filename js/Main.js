@@ -7,8 +7,8 @@ const FULL_SIZE_CANVAS = true; // responsive resizing?
 var gameManager = new GameManager();
 var inputManager = new inputManager();
 
-var virtualHeight = 720.0;
-var virtualWidth = 1280.0;
+var virtualHeight = 1080.0;
+var virtualWidth = 1920.0;
 
 var isGamePaused = false;
 
