@@ -70,7 +70,7 @@ function inputManager() {
 			gameManager.player.shieldUp();
 		}
         else if (evt.keyCode == KEY_LETTER_P) {
-            isGamePaused = (isGamePaused == true) ? false : true;
+            isGamePaused = isGamePaused ? false : true;
         }
         else if (evt.keyCode == KEY_LETTER_T) {
             if(!Sound.mute) {

@@ -3,12 +3,12 @@ const HUDBAR_HEIGHT =  20;
 const HUDBAR_BORDER_HORIZONTAL =   16;
 const HUDBAR_BORDER_VERTICAL = 4;
 
-const PAUSEMENU_WIDTH  = 200;
-const PAUSEMENU_HEIGHT = 300;
+const MENU_WIDTH  = 200;
+const MENU_HEIGHT = 240;
 
 
 function GameManager() {
-    this.levelNow = -1; // will increment to 0 on start
+    this.levelNow = 0; // will increment to 0 on start
     this.stages = [
         {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2, bossNum:0},      //dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
         {waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0, bossNum:0},    //dtderosa -new
@@ -23,15 +23,6 @@ function GameManager() {
         {waveName:"BOSS!",spearNum:0,shooterNum:0,fleetNum:0, bossNum:1}      //dtderosa -new boss level
         ];
 
-    this.menuItems = [
-                    "P - Pause/Resume",
-                    "W - Move Up",
-                    "A - Move Left",
-                    "D - Move Right",
-                    "S - Activate Shield",
-                    "T - Sound On/Off",
-                    "U - Quit Game"];
-
     this.player = new Ship();
     this.playerShots = [];
     this.enemies = [];
@@ -44,6 +35,22 @@ function GameManager() {
     this.intervalID = null;
     this.waitingForNextWaveToStart = false;
     this.currentWaveName = "undefined";
+
+    this.pauseMenuItems = [
+        "P - Pause/Resume",
+        "W - Move Up",
+        "A - Move Left",
+        "D - Move Right",
+        "S - Activate Shield",
+        "T - Sound On/Off",
+        "U - Quit Game"
+    ];
+
+    this.endgameMenuItems = [
+        "Final Score: " + this.score,
+        "",
+        "P - Play Again",
+    ];
 
     this.initialize = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
@@ -127,36 +134,32 @@ function GameManager() {
 
     this.moveEverything = function() {
         this.player.update();
-        this.updateShots(this.playerShots);
-
         for (var i = 0; i < this.enemies.length; i++) {
             this.enemies[i].update();
         }
-
-        for (var i = 0; i < NUM_POWERUP_TYPES; i++){
-            if(this.player.powerupLife[i] > 0){
-                this.player.powerupLife[i]--;
-            }
-        }
-
-        this.updateShots(this.enemyShots);
-        //Only check for collision if player is alive
         if(this.player.isActive) {
+            this.updateShots(this.playerShots);
+
+            for (var i = 0; i < NUM_POWERUP_TYPES; i++){
+                if(this.player.powerupLife[i] > 0){
+                    this.player.powerupLife[i]--;
+                }
+            }
+
+            this.updateShots(this.enemyShots);
             this.checkForCollisions();
         }
+        // else {
+            // if(this.enemyShots) {
+            //     this.enemyShots = null;
+            // }
+        // }
         this.updatePowerups();
 
         if (this.player.health <= 0) {
-            this.score = 0;
-            //this.player.isActive = false;
-            //this.player.health = PLAYER_MAX_HEALTH;
-            this.player.reinit();
-            //previous code which creates a new ship and reinitialize everything
-            //this.player = new Ship();
-            //this.player.initialize(playerImage);
-            //inputManager.initializeInput();
-        }
-        else if (this.enemies.length > 0 && this.player.health > 0) {
+            this.player.isActive = false;
+            this.renderMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+        } else if (this.enemies.length > 0 && this.player.health > 0) {
             this.player.isActive = true;
         }
     };
@@ -257,7 +260,6 @@ function GameManager() {
         }
         if(this.enemies.length==0) {
             //this.nextWave();
-            // this.player.isActive = false;
             this.preStartOfWave();
         }
         for (var i = this.powerups.length - 1; i >= 0; i--) {
@@ -284,8 +286,7 @@ function GameManager() {
     this.drawEverything = function () {
         if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
             webGL.cls();
-        }
-        else {
+        } else {
             canvasContext.save();
             canvasContext.scale(this.gameScale, this.gameScale);
 
@@ -294,22 +295,24 @@ function GameManager() {
 
         drawCenteredBitmapWithRotation(backgroundImage, virtualWidth / 2, virtualHeight / 2, 0);
 
-        for (var i = 0; i < this.playerShots.length; i++) {
-            this.playerShots[i].draw(true);
-        }
-        for (var i = 0; i < this.enemyShots.length; i++) {
-            this.enemyShots[i].draw();
-        }
-        for (var i = 0; i < this.powerups.length; i++) {
-            this.powerups[i].draw();
-        }
-        //only draws player when active
         if(this.player.isActive) {
+            for (var i = 0; i < this.playerShots.length; i++) {
+                this.playerShots[i].draw(true);
+            }
+            for (var i = 0; i < this.enemyShots.length; i++) {
+                this.enemyShots[i].draw();
+            }
+            for (var i = 0; i < this.powerups.length; i++) {
+                this.powerups[i].draw();
+            }
+
             this.player.draw();
             if(this.player.keyHeld_Shield && this.player.shield > 0) {
                 drawCenteredBitmapWithRotation(playerShield, gameManager.player.x, gameManager.player.y, gameManager.player.ang - (Math.PI/4));
-                //colorCircle(gameManager.player.x, gameManager.player.y, 60, "blue");
-                //console.log(gameManager.player.x+" , "+gameManager.player.y);
+            }
+        } else {
+            if(this.player.health <= 0) {
+                this.renderMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.endgameMenuItems);
             }
         }
 
@@ -346,34 +349,12 @@ function GameManager() {
                 }
             }
 
-
-
             // optional: 100x the rendering performance! =)
             if (USE_WEBGL_IF_SUPPORTED && window.webGL) {
                 webGL.flush(); // render all sprites in one draw call
             }
         } else {
-            var fontSize = 20;
-            canvasContext.textBaseline = 'middle';
-            canvasContext.textAlign = "center";
-            canvasContext.font = fontSize + "px Arial";
-
-            var pausedString = "Game Paused";
-            var pausedStringWidth = canvasContext.measureText(pausedString).width;
-
-            colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
-                PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");
-            drawText(pausedString,canvas.width/2,
-                canvas.height/2 - PAUSEMENU_HEIGHT/2 + fontSize/2,"yellow");
-
-            fontSize *= 3/4;
-            canvasContext.font = fontSize + "px Arial";
-            for (var i = 0; i < this.menuItems.length; i++) {
-                drawText(this.menuItems[i], canvas.width/2,(canvas.height/2 - PAUSEMENU_HEIGHT/2 + 3*fontSize) + i*(fontSize+5), "white");
-            }
-
-            canvasContext.textBaseline = "left";
-            canvasContext.textAlign = "left";
+            this.renderMenu("Game Paused",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
         }
 
         // the bind() function ensures when it gets called again the "THIS" is set
@@ -398,5 +379,29 @@ function GameManager() {
             HUDBAR_WIDTH*shieldFraction + HUDBAR_BORDER_HORIZONTAL,HUDBAR_HEIGHT - HUDBAR_BORDER_VERTICAL, "cyan");
         //drawText("Shield", HUDBAR_BORDER + 2, 36, "black");
         drawScaledCenteredBitmapWithRotation(shieldPowerup, POWERUP_DRAW_SIZE/2,POWERUP_DRAW_SIZE*1.5, POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE, 0);
+    };
+
+    this.renderMenu = function(titleString,width,height,menuItems) {
+        var fontSize = 20;
+        canvasContext.textBaseline = 'middle';
+        canvasContext.textAlign = "center";
+        canvasContext.font = fontSize + "px Arial";
+
+        var titleStringWidth = canvasContext.measureText(titleString).width;
+
+        console.log(canvas.width/2-MENU_WIDTH/2 + titleString);
+        colorRect(canvas.width/2-MENU_WIDTH/2,canvas.height/2-MENU_HEIGHT/2,
+            MENU_WIDTH,MENU_HEIGHT,"black");
+        drawText(titleString,canvas.width/2,
+            canvas.height/2 - MENU_HEIGHT/2 + fontSize/2,"yellow");
+
+        fontSize *= 3/4;
+        canvasContext.font = fontSize + "px Arial";
+        for (var i = 0; i < menuItems.length; i++) {
+            drawText(menuItems[i], canvas.width/2,(canvas.height/2 - MENU_HEIGHT/2 + 3*fontSize) + i*(fontSize+5), "white");
+        }
+
+        canvasContext.textBaseline = "left";
+        canvasContext.textAlign = "left";
     };
 }
