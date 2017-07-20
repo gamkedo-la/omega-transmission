@@ -360,7 +360,6 @@ function GameManager() {
 
             var pausedString = "Game Paused";
             var pausedStringWidth = canvasContext.measureText(pausedString).width;
-            console.log("pausedString: " + pausedStringWidth);
 
             colorRect(canvas.width/2-PAUSEMENU_WIDTH/2,canvas.height/2-PAUSEMENU_HEIGHT/2,
                 PAUSEMENU_WIDTH,PAUSEMENU_HEIGHT,"black");

@@ -152,13 +152,11 @@ function SoundSystem() {
     //this.shoe = function() { atlas.play('shoe'+randomInt(1,10)); }
 
     this.Mute = function() {
-        console.log("muting sound");
         Howler.mute(true);
         this.mute = true;
     };
 
     this.unMute = function() {
-        console.log("unmuting sound");
         Howler.mute(false);
         this.mute = false;
     };
