@@ -354,7 +354,12 @@ function GameManager() {
                 webGL.flush(); // render all sprites in one draw call
             }
         } else {
+            canvasContext.save();
+            canvasContext.scale(this.gameScale, this.gameScale);
+
             this.renderMenu("Game Paused",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+
+            canvasContext.restore();
         }
 
         // the bind() function ensures when it gets called again the "THIS" is set
@@ -387,18 +392,16 @@ function GameManager() {
         canvasContext.textAlign = "center";
         canvasContext.font = fontSize + "px Arial";
 
-        var titleStringWidth = canvasContext.measureText(titleString).width;
-
-        console.log(canvas.width/2-MENU_WIDTH/2 + titleString);
-        colorRect(canvas.width/2-MENU_WIDTH/2,canvas.height/2-MENU_HEIGHT/2,
-            MENU_WIDTH,MENU_HEIGHT,"black");
-        drawText(titleString,canvas.width/2,
-            canvas.height/2 - MENU_HEIGHT/2 + fontSize/2,"yellow");
+        console.log(virtualWidth/2,width/2);
+        colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2,
+            width,height,"black");
+        drawText(titleString,virtualWidth/2,
+            virtualHeight/2 - height/2 + fontSize/2,"yellow");
 
         fontSize *= 3/4;
         canvasContext.font = fontSize + "px Arial";
         for (var i = 0; i < menuItems.length; i++) {
-            drawText(menuItems[i], canvas.width/2,(canvas.height/2 - MENU_HEIGHT/2 + 3*fontSize) + i*(fontSize+5), "white");
+            drawText(menuItems[i], virtualWidth/2,(virtualHeight/2 - height/2 + 3*fontSize) + i*(fontSize+5), "white");
         }
 
         canvasContext.textBaseline = "left";
