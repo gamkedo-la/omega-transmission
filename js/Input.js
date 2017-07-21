@@ -5,9 +5,10 @@ const KEY_RIGHT_ARROW = 39;
 const KEY_DOWN_ARROW = 40;
 const KEY_LETTER_W = 87;
 const KEY_LETTER_A = 65;
-const KEY_LETTER_S = 83;
 const KEY_LETTER_D = 68;
 const KEY_LETTER_P = 80;
+const KEY_LETTER_R = 82;
+const KEY_LETTER_S = 83;
 const KEY_LETTER_T = 84;
 const KEY_SPACEBAR = 32;
 
@@ -21,7 +22,7 @@ function inputManager() {
         this.controlKeyForForwardThrust = forwardKey;
         this.controlKeyForStrafeLeft = strafeLeftKey;
         this.controlKeyForStrafeRight = strafeRightKey;
-		this.controlKeyForShield = shieldKey;
+        this.controlKeyForShield = shieldKey;
     };
 
     this.initializeInput = function() {
@@ -63,23 +64,27 @@ function inputManager() {
     this.keyPressed = function (evt) {
         //needed to use inputManager instead of this due to scope with event
         inputManager.setKeyHoldState(evt.keyCode, gameManager.player, true);
-        if (evt.keyCode == inputManager.controlKeyForShotFire) {
+        if (evt.keyCode === inputManager.controlKeyForShotFire) {
             gameManager.player.cannonFire();
         }
-		else if(evt.keyCode == inputManager.controlKeyForShield) {
-			gameManager.player.shieldUp();
-		}
-        else if (evt.keyCode == KEY_LETTER_P) {
+        else if(evt.keyCode === inputManager.controlKeyForShield) {
+            gameManager.player.shieldUp();
+        }
+        else if (evt.keyCode === KEY_LETTER_P) {
             isGamePaused = isGamePaused ? false : true;
         }
-        else if (evt.keyCode == KEY_LETTER_T) {
+        else if (evt.keyCode === KEY_LETTER_T) {
             if(!Sound.mute) {
                 Sound.Mute();
             } else {
                 Sound.unMute();
             }
         }
-		
+        else if(!gameManager.player.isActive && evt.keyCode === KEY_LETTER_R) {
+            gameManager.first = false;
+            gameManager.reinit();
+        }
+
         evt.preventDefault(); // without this, arrow keys scroll the browser!
     };
 

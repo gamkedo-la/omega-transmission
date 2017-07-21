@@ -8,7 +8,7 @@ const MENU_HEIGHT = 240;
 
 
 function GameManager() {
-    this.levelNow = 0; // will increment to 0 on start
+    this.levelNow = -1; // will increment to 0 on start
     this.stages = [
         {waveName:"Intro",spearNum:0,shooterNum:0,fleetNum:2, bossNum:0},      //dtderosa -changed fleetNum from 3 to 2 to make 'Intro' even easier
         {waveName:"Contact",spearNum:1,shooterNum:1,fleetNum:0, bossNum:0},    //dtderosa -new
@@ -30,6 +30,7 @@ function GameManager() {
     this.powerups = [];
 
     this.score = 0;
+    this.first = true;
 
     this.gameScale = 1.0;
     this.intervalID = null;
@@ -66,10 +67,20 @@ function GameManager() {
         }
     };
 
-    this.preStartOfWave = function() {
-        //var countDownTimer = 3000;
-        //console.log(this.stages.length);
+    this.reinit = function() {
+        this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
+        this.player.isActive = true;
+        this.player.initialize(playerImage);
+        this.levelNow = -1; // will increment to 0 on start
+        this.score = 0;
+        this.renderScore();
+        this.player.health = PLAYER_MAX_HEALTH;
+        this.enemies = [];
+        this.enemyShots = [];
+        this.playerShots = [];
+    };
 
+    this.preStartOfWave = function() {
         // locking to prevent stacking between stages:
         if(this.waitingForNextWaveToStart) {
             return;
@@ -95,37 +106,28 @@ function GameManager() {
 
     this.nextWave = function () {
         this.levelNow++;
-        //console.log(this.levelNow);
-        //console.log(this.stages.length);
-        // this.levelNow %= this.stages.length;
         var levelInd = this.levelNow % this.stages.length;
+        // So difficulty can be increased in higher levels
+        var round = Math.floor(this.levelNow / this.stages.length);
 
-        for(var shooterEnemies=0; shooterEnemies < this.stages[levelInd].shooterNum; shooterEnemies++) {
+        var shooterIncrease = this.stages[levelInd].shooterNum ? 2*round : 0;
+        var rammerIncrease = this.stages[levelInd].spearNum ? 2*round : 0;
+        var fleetIncrease = this.stages[levelInd].fleetNum ? 2*round : 0;
+        var bossIncrease = this.stages[levelInd].bossNum ? 2*round : 0;
+        // console.log("s " + (this.stages[levelInd].shooterNum+shooterIncrease) + " r " + (this.stages[levelInd].spearNum+rammerIncrease) + " f " + (this.stages[levelInd].fleetNum+fleetIncrease));
+
+        for(var shooterEnemies=0; shooterEnemies < this.stages[levelInd].shooterNum + shooterIncrease; shooterEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
         }
-        for(var rammerEnemies=0; rammerEnemies < this.stages[levelInd].spearNum; rammerEnemies++) {
+        for(var rammerEnemies=0; rammerEnemies < this.stages[levelInd].spearNum + rammerIncrease; rammerEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_RAMMER));
         }
-        for(var fleetEnemies=0; fleetEnemies < this.stages[levelInd].fleetNum; fleetEnemies++) {
+        for(var fleetEnemies=0; fleetEnemies < this.stages[levelInd].fleetNum + fleetIncrease; fleetEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_FLEET));
         }
         //new boss level :
-        for(var bossEnemy=0; bossEnemy < this.stages[levelInd].bossNum; bossEnemy++) {
+        for(var bossEnemy=0; bossEnemy < this.stages[levelInd].bossNum + bossIncrease; bossEnemy++) {
             this.enemies.push(new UFOBoss());
-        }
-
-        //test to increase enemy during the next cycle
-        if(this.stages[levelInd].shooterNum > 0) {
-            this.stages[levelInd].shooterNum += 2;
-        }
-        if(this.stages[levelInd].spearNum > 0) {
-            this.stages[levelInd].spearNum += 2;
-        }
-        if(this.stages[levelInd].fleetNum > 0) {
-            this.stages[levelInd].fleetNum += 2;
-        }
-        if(this.stages[levelInd].bossNum > 0) {
-            this.stages[levelInd].bossNum++;
         }
 
         for (var i = 0; i < this.enemies.length; i++) {
@@ -388,6 +390,7 @@ function GameManager() {
     };
 
     this.renderMenu = function(titleString,width,height,menuItems) {
+        if(this.player.health > 0) console.log(this.player.health);
         var fontSize = 20;
         canvasContext.textBaseline = 'middle';
         canvasContext.textAlign = "center";
