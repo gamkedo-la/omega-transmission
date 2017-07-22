@@ -92,7 +92,7 @@ function GamepadSupport()
                 inputManager.mouseMoved = false;
                 inputManager.gamepadMoved = true;
             }
-            
+
         }
         else
         {
@@ -129,13 +129,13 @@ function GamepadSupport()
         prev_gamepad_fire = gamepad_fire;
         prev_gamepad_jump = gamepad_jump;
     }
-    
-    function simulateKeyDown(thisKey) 
+
+    function simulateKeyDown(thisKey)
     {
         //console.log('fake keydown: ' + thisKey)
         var oEvent = document.createEvent('KeyboardEvent');
-        Object.defineProperty(oEvent, 'keyCode', { get : function() { return this.keyCodeVal; } });     
-        Object.defineProperty(oEvent, 'which', { get : function() { return this.keyCodeVal; } });     
+        Object.defineProperty(oEvent, 'keyCode', { get : function() { return this.keyCodeVal; } });
+        Object.defineProperty(oEvent, 'which', { get : function() { return this.keyCodeVal; } });
         if (oEvent.initKeyboardEvent) {
             oEvent.initKeyboardEvent("keydown", true, true, document.defaultView, false, false, false, false, thisKey, thisKey);
         } else {
@@ -144,13 +144,13 @@ function GamepadSupport()
         oEvent.keyCodeVal = thisKey;
         document.dispatchEvent(oEvent);
     }
-    
-    function simulateKeyUp(thisKey) 
+
+    function simulateKeyUp(thisKey)
     {
         //console.log('fake keyup: ' + thisKey)
         var oEvent = document.createEvent('KeyboardEvent');
-        Object.defineProperty(oEvent, 'keyCode', { get : function() { return this.keyCodeVal; } });     
-        Object.defineProperty(oEvent, 'which', { get : function() { return this.keyCodeVal; } });     
+        Object.defineProperty(oEvent, 'keyCode', { get : function() { return this.keyCodeVal; } });
+        Object.defineProperty(oEvent, 'which', { get : function() { return this.keyCodeVal; } });
         if (oEvent.initKeyboardEvent) {
             oEvent.initKeyboardEvent("keyup", true, true, document.defaultView, false, false, false, false, thisKey, thisKey);
         } else {
@@ -161,7 +161,7 @@ function GamepadSupport()
     }
 
     // init
-    console.log('Initializing gamepad support...')
+    console.log('Initializing gamepad support...');
     window.requestAnimationFrame(handle_gamepad);
 
 } // GamepadKeyboardEventEmulator

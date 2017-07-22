@@ -1,4 +1,4 @@
-const DEBUG_CREATE_MANY_POWERUPS = false; // just used for testing, set to false for players!
+const DEBUG_CREATE_MANY_POWERUPS = true; // just used for testing, set to false for players!
 
 const POWERUP_LIFE = 500;
 const POWERUP_COLLISION_RADIUS = 32;
@@ -28,7 +28,7 @@ function Powerup(x,y,type) {
 
 Powerup.prototype.step = function(){
     this.remainingLife--;
-        
+
         // about to dissappear? flicker
         if (this.remainingLife < POWERUP_LIFE / 3) {
             if (!this.framesToBlink) {

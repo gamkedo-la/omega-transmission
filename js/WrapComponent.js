@@ -14,18 +14,19 @@ function WrapComponent(parent) {
         } else if (parent.y >= virtualHeight) {
             parent.y -= virtualHeight;
         }
-    }
+    };
 
     this.reset = function () {
         parent.xv = 0.0;
         parent.yv = 0.0;
         parent.x = virtualWidth / 2;
         parent.y = virtualHeight / 2;
-    }
+    };
 
     this.move = function () {
         parent.x += parent.xv;
         parent.y += parent.yv;
         this.handleScreenWrap();
-    }
+    };
 }
+

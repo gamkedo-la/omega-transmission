@@ -52,8 +52,7 @@ function Ship() {
     this.reset = function() {
         this.wrappingMovementComponent.reset();
         this.x = virtualWidth / 2;
-        this.y = virtualHeight / 2;
-        this.ang = -0.5 * Math.PI;
+        this.y = virtualHeight / 2; this.ang = -0.5 * Math.PI;
     };
 
     this.cannonFire = function() {
@@ -224,6 +223,6 @@ function Ship() {
         } else {
             return "red";
         }
-    }
+    };
 }
 

@@ -291,7 +291,8 @@ function GameManager() {
     };
 
     this.dropPowerup = function(enemy) {
-        var type = Math.floor(Math.random() * NUM_POWERUP_TYPES);
+        // var type = Math.floor(Math.random() * NUM_POWERUP_TYPES);
+        var type = TYPE_ZEALOT;
         this.powerups.push(new Powerup(enemy.x,enemy.y,type));
     };
 

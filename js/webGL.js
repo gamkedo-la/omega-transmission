@@ -1,7 +1,7 @@
 // webGL plugin for the Gamkedo GraphicsCommon.js coding style
-// Made by Christer @McFunkypants Kaitila based on code by 
+// Made by Christer @McFunkypants Kaitila based on code by
 // Felipe Alfonso, creator of https://github.com/bitnenfer/tiny-canvas
- 
+
 window.webGL = null; // a global object when webGL did init ok
 
 // class constructor - run once during init to make a the object above
@@ -11,7 +11,7 @@ function webGL_renderer(canvas) {
         VERTEX_SIZE = 4 + ((4 * 2) * 4) + (4),
         MAX_BATCH = 10922, // floor((2 ^ 16) / 6)
         VERTEX_DATA_SIZE = VERTEX_SIZE * MAX_BATCH * 4,
-        VERTICES_PER_QUAD = 6, 
+        VERTICES_PER_QUAD = 6,
         INDEX_DATA_SIZE = MAX_BATCH * (2 * VERTICES_PER_QUAD),
         width = virtualWidth,// was canvas.width
         height = virtualHeight,// was canvas.height,
@@ -60,7 +60,7 @@ function webGL_renderer(canvas) {
 
         if (!gl)
         {
-            console.log("No webGL found. Falling back to 2d canvas rendering.")
+            console.log("No webGL found. Falling back to 2d canvas rendering.");
             window.webGL = null;
             return;
         }
@@ -69,8 +69,8 @@ function webGL_renderer(canvas) {
     gl.enable(3042);
     gl.useProgram(shader);
     gl.bindBuffer(34963, IBO);
-    for (var indexA = indexB = 0; 
-        indexA < MAX_BATCH * VERTICES_PER_QUAD; 
+    for (var indexA = indexB = 0;
+        indexA < MAX_BATCH * VERTICES_PER_QUAD;
         indexA += VERTICES_PER_QUAD, indexB += 4)
         vIndexData[indexA + 0] = indexB,
         vIndexData[indexA + 1] = indexB + 1,
@@ -146,8 +146,7 @@ function webGL_renderer(canvas) {
 
             if (texture != currentTexture ||
                 count + 1 >= MAX_BATCH) {
-                glBufferSubData(34962, 0, vertexData);
-                glDrawElements(4, count * VERTICES_PER_QUAD, 5123, 0);
+                glBufferSubData(34962, 0, vertexData); glDrawElements(4, count * VERTICES_PER_QUAD, 5123, 0);
                 count = 0;
                 if (texture != currentTexture) {
                     currentTexture = texture;
@@ -156,7 +155,7 @@ function webGL_renderer(canvas) {
             }
 
             offset = count * VERTEX_SIZE;
-            // Vertex Order: 
+            // Vertex Order:
             // rotation | translation | scale | position | uv | color
             // Vertex 1
             vPositionData[offset++] = r;
@@ -209,7 +208,7 @@ function webGL_renderer(canvas) {
             if (++count >= MAX_BATCH) {
                 glBufferSubData(34962, 0, vertexData);
                 glDrawElements(4, count * VERTICES_PER_QUAD, 5123, 0);
-                count = 0;               
+                count = 0;
             }
         },
         'flush': function () {
@@ -276,12 +275,12 @@ function CreateTexture(gl, image, width, height) {
 }
 
 function init_webGL() {
-	
-	console.log("init_webGL...");
-	// FIXME TODO handle errors and browser detect webGL support
-	window.webGL = new webGL_renderer(document.getElementById('gameCanvas')); // init immediately using first known canvas
-	webGL.bkg(0,0,0); // give welGL a pure black background
+
+    console.log("init_webGL...");
+    // FIXME TODO handle errors and browser detect webGL support
+    window.webGL = new webGL_renderer(document.getElementById('gameCanvas')); // init immediately using first known canvas
+    webGL.bkg(0,0,0); // give welGL a pure black background
     console.log("webGL creating a new 1x1 pure white texture...");
-	webGL.pureWhiteTexture = Create1x1WHITETexture(webGL.g);
+    webGL.pureWhiteTexture = Create1x1WHITETexture(webGL.g);
 }
 

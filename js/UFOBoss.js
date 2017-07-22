@@ -10,14 +10,14 @@ const BOSS_RAM_ATTACK_SPEED = 4;
 
 const BOSS_FIRE_RATE = 18;
 const BOSS_RAM_RATE = 200;
-const BOSS_TRACKING_MISSILE_RATE = 55;  	//How often the boss shoots tracking missiles during missile state
+const BOSS_TRACKING_MISSILE_RATE = 55;      //How often the boss shoots tracking missiles during missile state
 
 const BOSS_RAMMING_DASH_TIME = 40;
 
 const BOSS_MAX_HEALTH = 30;
 
-const BOSS_MAX_INJURED_SPINTIME = 50; 		//Amount of time to spin when injured
-const BOSS_INJURED_STATE_COOLDOWN = 200;	//Minimum amount of time to pass before spinning out boss upon injury
+const BOSS_MAX_INJURED_SPINTIME = 50;       //Amount of time to spin when injured
+const BOSS_INJURED_STATE_COOLDOWN = 200;    //Minimum amount of time to pass before spinning out boss upon injury
 
 var attackState = {
     IDLE: 0,
@@ -43,7 +43,7 @@ function UFOBoss() {
 
     this.state = attackState.IDLE;
     this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
-	this.injuredStateCooldown = BOSS_INJURED_STATE_COOLDOWN;
+    this.injuredStateCooldown = BOSS_INJURED_STATE_COOLDOWN;
 }
 
 UFOBoss.prototype.reset = function() {
@@ -80,7 +80,7 @@ UFOBoss.prototype.draw = function() {
 
 UFOBoss.prototype.update = function() {
      this.wrapComponent.move();
-	
+
     if(this.state === attackState.RAM || this.state === attackState.SHOOT) {
         if(this.rammingTime>0 && this.state === attackState.RAM) { //Ramming
             this.rammingTime--;
@@ -109,7 +109,7 @@ UFOBoss.prototype.update = function() {
                     tempShot.shootFrom(this, ang, "darkred");
                     gameManager.enemyShots.push(tempShot);
                 //    this.shotCooldown = this.state == attackState.SHOOT ? BOSS_FIRE_RATE : BOSS_FIRE_RATE/2;
-					this.shotCooldown = BOSS_FIRE_RATE;
+                    this.shotCooldown = BOSS_FIRE_RATE;
                     break;
                 case attackState.RAM:
                     this.rammingTime = BOSS_RAMMING_DASH_TIME;
@@ -139,29 +139,29 @@ UFOBoss.prototype.update = function() {
 
             this.shotCooldown = BOSS_TRACKING_MISSILE_RATE;
         }else {
-			this.shotCooldown--;// = this.shotCooldown - 0.333; // is this to hack-ey? longer shot cooldown for tracking missiles
-		}
-	}else if(this.state === attackState.INJURED){
-		this.xv = 0;
-		this.yv = 0;
-		this.ang = this.ang+(10 * Math.PI / 180);
-	}
-	
-	this.injuredStateCooldown--;
+            this.shotCooldown--;// = this.shotCooldown - 0.333; // is this to hack-ey? longer shot cooldown for tracking missiles
+        }
+    }else if(this.state === attackState.INJURED){
+        this.xv = 0;
+        this.yv = 0;
+        this.ang = this.ang+(10 * Math.PI / 180);
+    }
+
+    this.injuredStateCooldown--;
 
     if(this.timeUntilStateChange<=0){
-		this.ChooseRandomState();
+        this.ChooseRandomState();
     } else{
         this.timeUntilStateChange--;
     }
 };
 
 UFOBoss.prototype.takenDamage = function(){
-	if(this.injuredStateCooldown <= 0){
-		this.timeUntilStateChange = BOSS_MAX_INJURED_SPINTIME;
-		this.injuredStateCooldown = BOSS_INJURED_STATE_COOLDOWN;
-		this.state = attackState.INJURED;
-	}
+    if(this.injuredStateCooldown <= 0){
+        this.timeUntilStateChange = BOSS_MAX_INJURED_SPINTIME;
+        this.injuredStateCooldown = BOSS_INJURED_STATE_COOLDOWN;
+        this.state = attackState.INJURED;
+    }
 
     if (this.health % 5 === 0) {
         gameManager.enemies.push(new UFO(Math.floor(Math.random() * MAX_HEALTH.length)));
@@ -170,7 +170,7 @@ UFOBoss.prototype.takenDamage = function(){
 };
 
 UFOBoss.prototype.ChooseRandomState = function(){
-	this.state = Math.floor(Math.random() * 4);
-	//this.state = 3;  /// can use this line instead of line above to force a constant state for testing
-	this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
+    this.state = Math.floor(Math.random() * 4);
+    //this.state = 3;  /// can use this line instead of line above to force a constant state for testing
+    this.timeUntilStateChange = BOSS_TIME_BETWEEN_CHANGE_STATE;
 };

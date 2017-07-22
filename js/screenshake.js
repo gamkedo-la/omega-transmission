@@ -10,7 +10,7 @@ function screenshake(howmany)
 	// console.log('screenshake ' + howmany);
 	if (!screen_shake_me)
 	{
-		console.log('ERROR: screenshake does not know which element to shake!')
+		console.log('ERROR: screenshake does not know which element to shake!');
 		return;
 	}
 	screen_shake_pivot_x = 0;
@@ -28,7 +28,7 @@ function updateScreenshake()
 		if (shakesize > 20) shakesize = 20;
 
 		// shake around a pivot point
-		screen_shake_me.style.margin = "" + (screen_shake_pivot_x + Math.round((Math.random() * shakesize) - shakesize / 2) * 2) + 
+		screen_shake_me.style.margin = "" + (screen_shake_pivot_x + Math.round((Math.random() * shakesize) - shakesize / 2) * 2) +
 					"px " + (screen_shake_pivot_y + Math.round((Math.random() * shakesize) - shakesize / 2) * 2) + "px";
 
 		screen_shakes--;
