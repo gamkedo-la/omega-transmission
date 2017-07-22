@@ -72,7 +72,7 @@ Powerup.prototype.draw = function(){
                 case TYPE_ZEALOT:
                     colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'orange');
                     drawText("Z",this.x,this.y,"black");
-                    //drawScaledCenteredBitmapWithRotation(zealotPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
+                    drawScaledCenteredBitmapWithRotation(zealotPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
                     break;
             }
         }

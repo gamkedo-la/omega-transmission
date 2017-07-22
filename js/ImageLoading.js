@@ -10,6 +10,7 @@ var plasmaPowerup = document.createElement("img");
 var shieldPowerup = document.createElement("img");
 var healthPowerup = document.createElement("img");
 var tripleShotPowerup = document.createElement("img");
+var zealotPowerup = document.createElement("img");
 var UFOBossImage = document.createElement("img");
 
 var imagesToLoad = 0;
@@ -46,6 +47,7 @@ function loadImages() {
         { varName: shieldPowerup, fileName: "shieldPowerup.png" },
         { varName: healthPowerup, fileName: "healthPowerup.png" },
         { varName: tripleShotPowerup, fileName: "tripleShotPowerup.png" },
+        { varName: zealotPowerup, fileName: "zealotPowerup.png" },
         { varName: UFOBossImage, fileName: "boss1.png" },
     ];
 
