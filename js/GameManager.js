@@ -170,7 +170,7 @@ function GameManager() {
 
         if (this.player.health <= 0) {
             this.player.isActive = false;
-            this.renderMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+            renderInGameMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
         } else if (this.enemies.length > 0 && this.player.health > 0) {
             this.player.isActive = true;
         }
@@ -324,7 +324,7 @@ function GameManager() {
             }
         } else {
             if(this.player.health <= 0) {
-                this.renderMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.endgameMenuItems);
+                renderInGameMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.endgameMenuItems);
             }
         }
 
@@ -369,7 +369,7 @@ function GameManager() {
             canvasContext.save();
             canvasContext.scale(this.gameScale, this.gameScale);
 
-            this.renderMenu("Game Paused",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+            renderInGameMenu("Game Paused",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
 
             canvasContext.restore();
         }
@@ -397,29 +397,5 @@ function GameManager() {
         drawScaledCenteredBitmapWithRotation(shieldPowerup, POWERUP_DRAW_SIZE/2,POWERUP_DRAW_SIZE*1.5, POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE, 0);
     };
 
-    this.renderMenu = function(titleString,width,height,menuItems) {
-        if(this.player.health > 0) console.log(this.player.health);
-        var fontSize = 20;
-        canvasContext.textBaseline = 'middle';
-        canvasContext.textAlign = "center";
-        canvasContext.font = fontSize + "px PressStart";
-
-        if(titleString === "Game Over") {
-            menuItems[0] = "Final Score: " + this.score;
-        }
-
-        colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2,
-            width,height,"black");
-        drawText(titleString,virtualWidth/2,
-            virtualHeight/2 - height/2 + fontSize/2,"yellow");
-
-        fontSize *= 3/4;
-        canvasContext.font = fontSize + "px Arial";
-        for (var i = 0; i < menuItems.length; i++) {
-            drawText(menuItems[i], virtualWidth/2,(virtualHeight/2 - height/2 + 3*fontSize) + i*(fontSize+5), "white");
-        }
-
-        canvasContext.textBaseline = "left";
-        canvasContext.textAlign = "left";
-    };
 }
+

@@ -1,6 +1,7 @@
 1 - User shouldn't be able to open pause menu when on game over screen
 2 - Laser powerup shot doesn't alternate. Might modify or leave as is (currently all 3 display as one shot)
 3 - Display wave name in corner of level. Smooth animation to corner?
-4 - Background image?
+4 - Background image
 5 - Mouse-enabled, nicer menus
-6 - Fix bug with 
+6 - Fix bug with enemies charging player after death
+7 - More audio by deepbluezen

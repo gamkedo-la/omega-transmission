@@ -39,7 +39,9 @@ function UFO(enemyType) {
     //Component List
     this.wrapComponent = new WrapComponent(this);
 
-    this.health = MAX_HEALTH[this.enemyType]; this.shotCooldown = ENEMY_FIRE_RATE; this.ang = Math.PI*2.0*Math.random();
+    this.health = MAX_HEALTH[this.enemyType];
+    this.shotCooldown = ENEMY_FIRE_RATE;
+    this.ang = Math.PI*2.0*Math.random();
 
     this.rammingTime = 0;
     this.readyToRemove = false;
@@ -90,7 +92,6 @@ UFO.prototype.reset = function() {
 };
 
 UFO.prototype.draw = function() {
-    //colorCircle(this.x, this.y + 3, UFO_COLLISION_RADIUS, 'grey'); //uncomment to visualize collision radius
     var angToFace;
     switch(this.enemyType) {
         case ENEMY_KIND_SHOOTER:

@@ -110,3 +110,28 @@ function drawText(text, x, y, fillColor) {
     }
 }
 
+function renderInGameMenu(titleString,width,height,menuItems) {
+    var fontSize = 20;
+    canvasContext.textBaseline = 'middle';
+    canvasContext.textAlign = "center";
+    canvasContext.font = fontSize + "px PressStart";
+
+    if(titleString === "Game Over") {
+        menuItems[0] = "Final Score: " + gameManager.score;
+    }
+
+    colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2,
+        width,height,"black");
+    drawText(titleString,virtualWidth/2,
+        virtualHeight/2 - height/2 + fontSize/2,"yellow");
+
+    fontSize *= 3/4;
+    canvasContext.font = fontSize + "px Arial";
+    for (var i = 0; i < menuItems.length; i++) {
+        drawText(menuItems[i], virtualWidth/2,(virtualHeight/2 - height/2 + 3*fontSize) + i*(fontSize+5), "white");
+    }
+
+    canvasContext.textBaseline = "left";
+    canvasContext.textAlign = "left";
+}
+
