@@ -5,3 +5,5 @@
 5 - Mouse-enabled, nicer menus
 6 - Fix bug with enemies charging player after death
 7 - More audio by deepbluezen
+8 - Prevent enemy spawning right next to player
+

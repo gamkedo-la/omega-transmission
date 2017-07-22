@@ -37,6 +37,8 @@ function GameManager() {
     this.waitingForNextWaveToStart = false;
     this.currentWaveName = "undefined";
 
+    this.atEndScreen = false;
+
     this.titleMenuItems = [
         "Play",
         "Controls",
@@ -79,6 +81,7 @@ function GameManager() {
     this.reinit = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.player.isActive = true;
+        this.atEndScreen = true;
         this.player.initialize(playerImage);
         this.levelNow = -1; // will increment to 0 on start
         this.score = 0;
@@ -170,7 +173,7 @@ function GameManager() {
 
         if (this.player.health <= 0) {
             this.player.isActive = false;
-            renderInGameMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+            this.renderGameOverMenu();
         } else if (this.enemies.length > 0 && this.player.health > 0) {
             this.player.isActive = true;
         }
@@ -324,7 +327,7 @@ function GameManager() {
             }
         } else {
             if(this.player.health <= 0) {
-                renderInGameMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.endgameMenuItems);
+                this.renderGameOverMenu();
             }
         }
 
@@ -369,7 +372,7 @@ function GameManager() {
             canvasContext.save();
             canvasContext.scale(this.gameScale, this.gameScale);
 
-            renderInGameMenu("Game Paused",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+            this.renderPauseMenu();
 
             canvasContext.restore();
         }
@@ -397,5 +400,14 @@ function GameManager() {
         drawScaledCenteredBitmapWithRotation(shieldPowerup, POWERUP_DRAW_SIZE/2,POWERUP_DRAW_SIZE*1.5, POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE, 0);
     };
 
+    this.renderPauseMenu = function() {
+        renderInGameMenu("Game Paused",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+    };
+
+    this.renderGameOverMenu = function() {
+        this.endgameMenuItems[0] = "Final Score: " + this.score;
+        renderInGameMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.endgameMenuItems);
+        this.atEndScreen = true;
+    };
 }
 

@@ -71,7 +71,8 @@ function inputManager() {
             gameManager.player.shieldUp();
         }
         else if (evt.keyCode === KEY_LETTER_P) {
-            isGamePaused = isGamePaused ? false : true;
+            if(!gameManager.atEndScreen)
+                isGamePaused = isGamePaused ? false : true;
         }
         else if (evt.keyCode === KEY_LETTER_T) {
             if(!Sound.mute) {

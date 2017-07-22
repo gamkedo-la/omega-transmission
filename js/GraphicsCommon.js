@@ -116,10 +116,6 @@ function renderInGameMenu(titleString,width,height,menuItems) {
     canvasContext.textAlign = "center";
     canvasContext.font = fontSize + "px PressStart";
 
-    if(titleString === "Game Over") {
-        menuItems[0] = "Final Score: " + gameManager.score;
-    }
-
     colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2,
         width,height,"black");
     drawText(titleString,virtualWidth/2,
