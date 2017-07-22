@@ -73,6 +73,7 @@ function GameManager() {
         this.preStartOfWave();
         inputManager.initializeInput();
         this.renderScore();
+        this.renderWave();
         this.update(); // start animating now
         if(!Sound.mute) {
             Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
@@ -87,6 +88,7 @@ function GameManager() {
         this.levelNow = -1; // will increment to 0 on start
         this.score = 0;
         this.renderScore();
+        this.renderWave();
         this.player.health = PLAYER_MAX_HEALTH;
         this.enemies = [];
         this.enemyShots = [];
@@ -208,11 +210,19 @@ function GameManager() {
     };
 
     this.renderScore = function(){
-        scoreStr = "Score: " + this.score;
+        var scoreStr = "Score: " + this.score;
         canvasContext.textAlign = "right";
         canvasContext.font = "20px PressStart";
         drawText(scoreStr,virtualWidth - 1, 20,'white');
         canvasContext.textAlign = "left";
+        canvasContext.font = "10px Arial";
+    };
+
+    this.renderWave = function() {
+        var waveStr = "Wave " + (this.levelNow+1);
+        canvasContext.textAlign = "left";
+        canvasContext.font = "20px PressStart";
+        drawText(waveStr,1,virtualHeight,'white');
         canvasContext.font = "10px Arial";
     };
 
@@ -341,7 +351,10 @@ function GameManager() {
             canvasContext.font = "30px PressStart";
             canvasContext.textAlign = "center";
             drawText("Wave "+(this.levelNow+2), virtualWidth/2, virtualHeight/2-20, "yellow");
-            drawText(this.currentWaveName, virtualWidth/2, virtualHeight/2+20, "yellow");
+            if(this.levelNow < 9)
+                drawText(this.currentWaveName, virtualWidth/2, virtualHeight/2+20, "yellow");
+        } else {
+            this.renderWave();
         }
 
         draw_particles(0,0);

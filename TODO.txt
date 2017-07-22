@@ -1,6 +1,6 @@
 1 - Laser powerup shot doesn't alternate. Might modify or leave as is (currently all 3 display as one shot)
-2 - Display wave name in corner of level. Smooth animation to corner?
-3 - Background image
-4 - Mouse-enabled, nicer menus and start screen
-5 - Find a way to fix thruster audio integration with game
+2 - Background image
+3 - Mouse-enabled, nicer menus and start screen
+4 - Find a way to fix thruster audio integration with game
+5 - License? Readme? (even though it seems previous projects don't have these things)
 
