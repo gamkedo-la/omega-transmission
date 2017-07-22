@@ -394,7 +394,6 @@ function GameManager() {
         }
         colorRect(HUDBAR_BORDER_HORIZONTAL,2*HUDBAR_BORDER_VERTICAL + HUDBAR_HEIGHT,
             HUDBAR_WIDTH*shieldFraction + HUDBAR_BORDER_HORIZONTAL,HUDBAR_HEIGHT - HUDBAR_BORDER_VERTICAL, "cyan");
-        //drawText("Shield", HUDBAR_BORDER + 2, 36, "black");
         drawScaledCenteredBitmapWithRotation(shieldPowerup, POWERUP_DRAW_SIZE/2,POWERUP_DRAW_SIZE*1.5, POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE, 0);
     };
 

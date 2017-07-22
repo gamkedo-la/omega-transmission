@@ -48,7 +48,7 @@ function loadImages() {
         { varName: zealotPowerup, fileName: "zealotPowerup.png" },
         { varName: phalanxPowerup, fileName: "phalanxPowerup.png" },
 
-        { varName: UFOBossImage, fileName: "boss1.png" },
+        { varName: UFOBossImage, fileName: "Boss1.png" },
     ];
 
     imagesToLoad = imageList.length;
