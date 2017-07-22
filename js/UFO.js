@@ -21,6 +21,8 @@ const DIR_RIGHT = 1;
 const DIR_LEFT = 2;
 const DIR_DOWN = 3;
 
+const SPAWN_RADIUS = 20; // Enemies cannot spawn within this distance from the player
+
 function UFO(enemyType) {
 
     this.enemyType = enemyType;
@@ -83,8 +85,10 @@ UFO.prototype.reset = function() {
                 break;
         }
     } else {
-        this.x = Math.random() * virtualWidth;
-        this.y = Math.random() * virtualHeight;
+        do {
+            this.x = Math.random() * virtualWidth;
+            this.y = Math.random() * virtualHeight;
+        } while(gameManager.isOverlapping(gameManager.player,this,SPAWN_RADIUS));
     }
 
     this.cyclesTilDirectionChange = 0;
@@ -132,7 +136,7 @@ UFO.prototype.update = function() {
             var tempShot = new Shot();
             var dx = gameManager.player.x - this.x;
             var dy = gameManager.player.y - this.y;
-            var ang = Math.atan2(dy, dx) /*+ (Math.random() * 0.05) - 0.1*/;
+            var ang = Math.atan2(dy, dx);
 
             switch(this.enemyType) {
                 case ENEMY_KIND_SHOOTER:

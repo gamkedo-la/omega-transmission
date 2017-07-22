@@ -107,10 +107,8 @@ function GameManager() {
         var callNextWave = function() {
             that.nextWave();
             that.waitingForNextWaveToStart=false;
-            // that.player.isActive = true;
         };
-        //console.log(this.intervalID);
-        //clearTimeout(this.intervalID);
+
         var timeoutTimer = 3000;
         console.log("Enemies will spawn in " + timeoutTimer/1000.0 + " secs");
         this.intervalID = setTimeout(callNextWave, timeoutTimer);
@@ -119,6 +117,7 @@ function GameManager() {
     this.nextWave = function () {
         this.levelNow++;
         var levelInd = this.levelNow % this.stages.length;
+
         // So difficulty can be increased in higher levels
         var round = Math.floor(this.levelNow / this.stages.length);
 
@@ -126,7 +125,6 @@ function GameManager() {
         var rammerIncrease = this.stages[levelInd].spearNum ? 2*round : 0;
         var fleetIncrease = this.stages[levelInd].fleetNum ? 2*round : 0;
         var bossIncrease = this.stages[levelInd].bossNum ? 2*round : 0;
-        // console.log("s " + (this.stages[levelInd].shooterNum+shooterIncrease) + " r " + (this.stages[levelInd].spearNum+rammerIncrease) + " f " + (this.stages[levelInd].fleetNum+fleetIncrease));
 
         for(var shooterEnemies=0; shooterEnemies < this.stages[levelInd].shooterNum + shooterIncrease; shooterEnemies++) {
             this.enemies.push(new UFO(ENEMY_KIND_SHOOTER));
@@ -234,7 +232,6 @@ function GameManager() {
                 // PLAYER SHIP HITS ENEMY
                 this.player.reset();
                 this.player.health--;
-                document.getElementById("debugText").innerHTML = "Player Crashed!";
                 screenshake(10);
                 party(this.player.x,this.player.y,PARTICLE_EXPLOSION,null,null,null,2,2);
                 party(this.player.x,this.player.y,PARTICLE_SHOCKWAVE,null,null,null,0,1);
@@ -262,7 +259,6 @@ function GameManager() {
                         screenshake(2);
                     }
                     this.playerShots[j].reset();
-                    document.getElementById("debugText").innerHTML = "Enemy Blasted!";
                     party(this.enemies[i].x,this.enemies[i].y);
                 }
             }
