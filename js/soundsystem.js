@@ -38,8 +38,8 @@ function SoundSystem() {
             if (debug_sound) console.log("Downloading a new sound: " + samplename);
             sounds[samplename] = new Howl({
                 src: [
-                    'audio/'+samplename+'.mp3',
                     'audio/'+samplename+'.ogg',
+                    'audio/'+samplename+'.mp3',
                     'audio/'+samplename+'.webm'],
                 loop: looping,
                 volume: vol,
@@ -164,3 +164,4 @@ function SoundSystem() {
     init();
 
 }
+

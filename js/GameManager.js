@@ -171,6 +171,8 @@ function GameManager() {
 
         if (this.player.health <= 0) {
             this.player.isActive = false;
+            if(!Sound.mute && !Sound.isPlaying("playerdead"))
+                Sound.play("playerdead",false,BACKGROUND_VOL/4);
             this.renderGameOverMenu();
         } else if (this.enemies.length > 0 && this.player.health > 0) {
             this.player.isActive = true;
@@ -353,8 +355,10 @@ function GameManager() {
             if (this.player != null) {
                 updateScreenshake(); // "juice it...
                 updateParticles(); // ...or lose it!" =)
+
                 this.moveEverything();
                 this.drawEverything();
+
                 if (!Sound.isPlaying("OmegaThemeSong") && !Sound.mute){
                     Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
                 }

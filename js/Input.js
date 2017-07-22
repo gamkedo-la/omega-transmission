@@ -42,21 +42,23 @@ function inputManager() {
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
         if (thisKey == this.controlKeyForStrafeLeft) {
             thisShip.keyHeld_StrafeLeft = setTo;
+            if(!Sound.mute && !Sound.isPlaying("thrust"))
+                Sound.play("thrust",false,BACKGROUND_VOL/10);
         }
         if (thisKey == this.controlKeyForStrafeRight) {
             thisShip.keyHeld_StrafeRight = setTo;
-        }
-        if (thisKey == this.controlKeyForUp) {
-            thisShip.keyHeld_Up = setTo;
-        }
-        if (thisKey == this.controlKeyForDown) {
-            thisShip.keyHeld_Down = setTo;
+            if(!Sound.mute && !Sound.isPlaying("thrust"))
+                Sound.play("thrust",false,BACKGROUND_VOL/10);
         }
         if (thisKey == this.controlKeyForForwardThrust) {
             thisShip.keyHeld_ForwardThrust = setTo;
+            if(!Sound.mute && !Sound.isPlaying("thrust"))
+                Sound.play("thrust",false,BACKGROUND_VOL/10);
         }
 
         if(thisKey == this.controlKeyForShield) {
+            if(!thisShip.keyHeld_Shield && !Sound.mute && !Sound.isPlaying("shieldup"))
+                Sound.play("shieldup",false,BACKGROUND_VOL/5);
             thisShip.keyHeld_Shield = setTo;
         }
     };
@@ -66,6 +68,7 @@ function inputManager() {
         inputManager.setKeyHoldState(evt.keyCode, gameManager.player, true);
         if (evt.keyCode === inputManager.controlKeyForShotFire) {
             gameManager.player.cannonFire();
+            Sound.play("lasershot",false,BACKGROUND_VOL/2);
         }
         else if(evt.keyCode === inputManager.controlKeyForShield) {
             gameManager.player.shieldUp();
