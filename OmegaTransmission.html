@@ -25,6 +25,10 @@ canvas {
     -ms-user-select: none;
     user-select: none;
 }
+@font-face {
+    font-family: 'PressStart';
+    src: url('fonts/prstartk.ttf');
+}
 </style>
 </head>
 <body>
@@ -33,6 +37,9 @@ canvas {
     </center>
 
     <p id="debugText">(recent text display or temporary debug output)</p>
+
+    <!-- Ensures fonts are preloaded -->
+    <div style="font-family: PressStart;"> </div>
 
     <script src="js/screenshake.js"></script>
     <script src="js/partytime.js"></script>

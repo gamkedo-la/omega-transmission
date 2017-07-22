@@ -37,27 +37,36 @@ function GameManager() {
     this.waitingForNextWaveToStart = false;
     this.currentWaveName = "undefined";
 
+    this.titleMenuItems = [
+        "Play",
+        "Controls",
+        "Credits",
+    ];
+
     this.pauseMenuItems = [
-        "P - Pause/Resume",
+        "Pause/Resume",
+        "View Controls",
+        "Toggle Sound",
+        "Return to Main Menu",
+    ];
+
+    this.controlsList = [
         "W - Move Up",
         "A - Move Left",
         "D - Move Right",
         "S - Activate Shield",
-        "T - Sound On/Off",
-        "U - Quit Game"
     ];
 
     this.endgameMenuItems = [
         "",
         "",
-        "R - Play Again",
-        "M - Return to Main Menu",
+        "Play Again",
+        "Return to Main Menu",
     ];
 
     this.initialize = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.player.initialize(playerImage);
-        //this.nextWave();
         this.preStartOfWave();
         inputManager.initializeInput();
         this.renderScore();
@@ -197,7 +206,7 @@ function GameManager() {
     this.renderScore = function(){
         scoreStr = "Score: " + this.score;
         canvasContext.textAlign = "right";
-        canvasContext.font = "20px Arial";
+        canvasContext.font = "20px PressStart";
         drawText(scoreStr,virtualWidth - 1, 20,'white');
         canvasContext.textAlign = "left";
         canvasContext.font = "10px Arial";
@@ -327,7 +336,7 @@ function GameManager() {
 
         this.renderScore();
         if(this.waitingForNextWaveToStart) {
-            canvasContext.font = "30px Arial";
+            canvasContext.font = "30px PressStart";
             canvasContext.textAlign = "center";
             drawText("Wave "+(this.levelNow+2), virtualWidth/2, virtualHeight/2-20, "yellow");
             drawText(this.currentWaveName, virtualWidth/2, virtualHeight/2+20, "yellow");
@@ -394,7 +403,7 @@ function GameManager() {
         var fontSize = 20;
         canvasContext.textBaseline = 'middle';
         canvasContext.textAlign = "center";
-        canvasContext.font = fontSize + "px Arial";
+        canvasContext.font = fontSize + "px PressStart";
 
         if(titleString === "Game Over") {
             menuItems[0] = "Final Score: " + this.score;
