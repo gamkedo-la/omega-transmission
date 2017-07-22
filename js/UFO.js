@@ -96,17 +96,19 @@ UFO.prototype.reset = function() {
 };
 
 UFO.prototype.draw = function() {
-    var angToFace;
-    switch(this.enemyType) {
-        case ENEMY_KIND_SHOOTER:
-            angToFace = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
-            break;
-        case ENEMY_KIND_RAMMER:
-            angToFace = Math.atan2(this.yv,this.xv);
-            break;
-        default:
-            angToFace = this.ang;
-            break;
+    var angToFace = this.ang;
+    if(gameManager.player.isActive) {
+        switch(this.enemyType) {
+            case ENEMY_KIND_SHOOTER:
+                angToFace = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
+                break;
+            case ENEMY_KIND_RAMMER:
+                angToFace = Math.atan2(this.yv,this.xv);
+                break;
+            default:
+                angToFace = this.ang;
+                break;
+        }
     }
 
     drawScaledCenteredBitmapWithRotation(this.myBitmap, this.x, this.y, 60, 45, angToFace);
@@ -116,45 +118,51 @@ UFO.prototype.draw = function() {
 UFO.prototype.update = function() {
     this.wrapComponent.move();
 
-    if(this.enemyType === ENEMY_KIND_RAMMER || this.enemyType === ENEMY_KIND_SHOOTER) {
-        if(this.rammingTime>0 && this.enemyType === ENEMY_KIND_RAMMER) {
-            this.rammingTime--;
-            this.ang = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
-            this.xv = Math.cos(this.ang) * RAM_ATTACK_SPEED;
-            this.yv = Math.sin(this.ang) * RAM_ATTACK_SPEED;
-        } else {
-            this.cyclesTilDirectionChange--;
-            if(this.cyclesTilDirectionChange <= 0) {
-                this.ang = Math.random() * Math.PI * 2.0;
-                this.xv = Math.cos(this.ang) * UFO_SPEED;
-                this.yv = Math.sin(this.ang) * UFO_SPEED;
-                this.cyclesTilDirectionChange = UFO_TIME_BETWEEN_CHANGE_DIR;
+    if(gameManager.player.isActive) {
+        if(this.enemyType === ENEMY_KIND_RAMMER || this.enemyType === ENEMY_KIND_SHOOTER) {
+            if(this.rammingTime>0 && this.enemyType === ENEMY_KIND_RAMMER) {
+                this.rammingTime--;
+                this.ang = Math.atan2(gameManager.player.y-this.y,gameManager.player.x-this.x);
+                this.xv = Math.cos(this.ang) * RAM_ATTACK_SPEED;
+                this.yv = Math.sin(this.ang) * RAM_ATTACK_SPEED;
+            } else {
+                this.cyclesTilDirectionChange--;
+                if(this.cyclesTilDirectionChange <= 0) {
+                    this.ang = Math.random() * Math.PI * 2.0;
+                    this.xv = Math.cos(this.ang) * UFO_SPEED;
+                    this.yv = Math.sin(this.ang) * UFO_SPEED;
+                    this.cyclesTilDirectionChange = UFO_TIME_BETWEEN_CHANGE_DIR;
+                }
             }
-        }
 
-        if (this.shotCooldown <= 0) {
-            var tempShot = new Shot();
-            var dx = gameManager.player.x - this.x;
-            var dy = gameManager.player.y - this.y;
-            var ang = Math.atan2(dy, dx);
+            if (this.shotCooldown <= 0) {
+                var tempShot = new Shot();
+                var dx = gameManager.player.x - this.x;
+                var dy = gameManager.player.y - this.y;
+                var ang = Math.atan2(dy, dx);
 
-            switch(this.enemyType) {
-                case ENEMY_KIND_SHOOTER:
-                    tempShot.shootFrom(this, ang, "darkred");
-                    gameManager.enemyShots.push(tempShot);
-                    this.shotCooldown = ENEMY_FIRE_RATE;
-                    break;
-                case ENEMY_KIND_RAMMER:
-                    this.rammingTime = RAMMING_DASH_TIME;
-                    this.shotCooldown = ENEMY_RAM_RATE;
-                    break;
+                switch(this.enemyType) {
+                    case ENEMY_KIND_SHOOTER:
+                        tempShot.shootFrom(this, ang, "darkred");
+                        gameManager.enemyShots.push(tempShot);
+                        this.shotCooldown = ENEMY_FIRE_RATE;
+                        break;
+                    case ENEMY_KIND_RAMMER:
+                        this.rammingTime = RAMMING_DASH_TIME;
+                        this.shotCooldown = ENEMY_RAM_RATE;
+                        break;
+                }
+            } else {
+                this.shotCooldown--;
             }
         } else {
-            this.shotCooldown--;
+            this.x += this.xv * FLEET_SPEED * (1 + gameManager.levelNow/10);
+            this.y += this.yv * FLEET_SPEED * (1 + gameManager.levelNow/10);
         }
-    } else {
-        this.x += this.xv * FLEET_SPEED * (1 + gameManager.levelNow/10);
-        this.y += this.yv * FLEET_SPEED * (1 + gameManager.levelNow/10);
     }
+};
+
+UFO.prototype.roam = function() {
+    this.ang += 0.03;
 };
 

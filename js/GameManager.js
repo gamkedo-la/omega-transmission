@@ -68,6 +68,7 @@ function GameManager() {
 
     this.initialize = function() {
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
+        this.player.isActive = true;
         this.player.initialize(playerImage);
         this.preStartOfWave();
         inputManager.initializeInput();
@@ -79,8 +80,8 @@ function GameManager() {
     };
 
     this.reinit = function() {
-        this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.player.isActive = true;
+        this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
         this.atEndScreen = true;
         this.player.initialize(playerImage);
         this.levelNow = -1; // will increment to 0 on start
@@ -146,11 +147,11 @@ function GameManager() {
     };
 
     this.moveEverything = function() {
-        this.player.update();
-        for (var i = 0; i < this.enemies.length; i++) {
-            this.enemies[i].update();
-        }
         if(this.player.isActive) {
+            this.player.update();
+            for (var i = 0; i < this.enemies.length; i++) {
+                this.enemies[i].update();
+            }
             this.updateShots(this.playerShots);
 
             for (var i = 0; i < NUM_POWERUP_TYPES; i++){
@@ -161,18 +162,18 @@ function GameManager() {
 
             this.updateShots(this.enemyShots);
             this.checkForCollisions();
+        } else {
+            for(var i = 0; i < this.enemies.length; i++) {
+                this.enemies[i].roam();
+            }
         }
-        // else {
-            // if(this.enemyShots) {
-            //     this.enemyShots = null;
-            // }
-        // }
+
         this.updatePowerups();
 
         if (this.player.health <= 0) {
-            this.player.isActive = false;
-            if(!Sound.mute && !Sound.isPlaying("playerdead"))
+            if(this.player.isActive && !Sound.mute && !Sound.isPlaying("playerdead"))
                 Sound.play("playerdead",false,BACKGROUND_VOL/4);
+            this.player.isActive = false;
             this.renderGameOverMenu();
         } else if (this.enemies.length > 0 && this.player.health > 0) {
             this.player.isActive = true;

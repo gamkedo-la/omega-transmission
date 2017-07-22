@@ -1,7 +1,6 @@
-2 - Laser powerup shot doesn't alternate. Might modify or leave as is (currently all 3 display as one shot)
-3 - Display wave name in corner of level. Smooth animation to corner?
-4 - Background image
-5 - Mouse-enabled, nicer menus and start screen
-6 - Fix bug with enemies charging player after death
-8 - Find a way to fix thruster audio integration with game
+1 - Laser powerup shot doesn't alternate. Might modify or leave as is (currently all 3 display as one shot)
+2 - Display wave name in corner of level. Smooth animation to corner?
+3 - Background image
+4 - Mouse-enabled, nicer menus and start screen
+5 - Find a way to fix thruster audio integration with game
 
