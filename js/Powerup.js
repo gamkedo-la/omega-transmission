@@ -1,4 +1,4 @@
-const DEBUG_CREATE_MANY_POWERUPS = true; // just used for testing, set to false for players!
+const DEBUG_CREATE_MANY_POWERUPS = false; // just used for testing, set to false for players!
 
 const POWERUP_LIFE = 500;
 const POWERUP_COLLISION_RADIUS = 32;
@@ -46,32 +46,20 @@ Powerup.prototype.draw = function(){
             switch(this.type){
                 case TYPE_LASER:
                     drawScaledCenteredBitmapWithRotation(plasmaPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
-                    // colorCircle(this.x,this.y,POWERUP_DRAW_SIZE,'yellow');
-                    // drawText("L",this.x,this.y,"black");
                     break;
                 case TYPE_SHIELD:
                     drawScaledCenteredBitmapWithRotation(shieldPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
-                    //colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'blue');
-                    //drawText("S",this.x,this.y,"black");
                     break;
                 case TYPE_HEALTH:
                     drawScaledCenteredBitmapWithRotation(healthPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
-                    //colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'red');
-                    //drawText("H",this.x,this.y,"black");
                     break;
                 case TYPE_TRIPLESHOT:
-                    //colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'green');
-                    //drawText("D",this.x,this.y,"black");
                     drawScaledCenteredBitmapWithRotation(tripleShotPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
                     break;
                 case TYPE_PHALANX:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'yellow');
-                    drawText("X",this.x,this.y,"black");
-                    //drawScaledCenteredBitmapWithRotation(phalanxPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
+                    drawScaledCenteredBitmapWithRotation(phalanxPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
                     break;
                 case TYPE_ZEALOT:
-                    colorCircle(this.x,this.y,POWERUP_DRAW_SIZE/2,'orange');
-                    drawText("Z",this.x,this.y,"black");
                     drawScaledCenteredBitmapWithRotation(zealotPowerup,this.x,this.y,POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE,0);
                     break;
             }
