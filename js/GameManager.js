@@ -75,9 +75,7 @@ function GameManager() {
         this.renderScore();
         this.renderWave();
         this.update(); // start animating now
-        if(!Sound.mute) {
-            Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
-        }
+        Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
     };
 
     this.reinit = function() {
@@ -173,7 +171,7 @@ function GameManager() {
         this.updatePowerups();
 
         if (this.player.health <= 0) {
-            if(this.player.isActive && !Sound.mute && !Sound.isPlaying("playerdead"))
+            if(this.player.isActive && !Sound.isPlaying("playerdead"))
                 Sound.play("playerdead",false,BACKGROUND_VOL/4);
             this.player.isActive = false;
             this.renderGameOverMenu();
@@ -230,6 +228,7 @@ function GameManager() {
         for (var i = 0, len = this.enemyShots.length; i < len; i++) {
             if (this.isOverlapping(this.player, this.enemyShots[i], SHOT_COLLISION_RADIUS) == true) {
                 // ENEMY SHOT HITS PLAYER
+                Sound.play("playerdead",false,BACKGROUND_VOL/6); // Death sound but quieter
                 if(this.player.keyHeld_Shield && this.player.shield > 0) {
                     this.player.shield--;
                 } else {
@@ -283,12 +282,12 @@ function GameManager() {
             }
         }
         if(this.enemies.length==0) {
-            //this.nextWave();
             this.preStartOfWave();
         }
         for (var i = this.powerups.length - 1; i >= 0; i--) {
             if(this.isOverlapping(this.player, this.powerups[i], POWERUP_COLLISION_RADIUS)){
                 // PLAYER HITS POWERUP
+                Sound.play("pickup",false,BACKGROUND_VOL/2);
                 this.player.setPowerup(this.powerups[i]);
                 this.powerups.splice(i, 1);
             }
@@ -373,7 +372,7 @@ function GameManager() {
                 this.moveEverything();
                 this.drawEverything();
 
-                if (!Sound.isPlaying("OmegaThemeSong") && !Sound.mute){
+                if (!Sound.isPlaying("OmegaThemeSong")){
                     Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
                 }
             }

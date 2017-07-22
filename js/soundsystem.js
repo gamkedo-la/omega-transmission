@@ -22,6 +22,7 @@ function SoundSystem() {
     // playback function
     this.play = function(samplename,looping,vol,rate,pan)
     {
+        if(this.mute) return;
         // null variable conditions
         if (looping==null) looping = false;
         if (vol == null) vol = 1;

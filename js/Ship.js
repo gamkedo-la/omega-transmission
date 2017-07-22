@@ -60,6 +60,10 @@ function Ship() {
             var tempShot = new Shot();
             tempShot.shootFrom(this, this.ang, "white");
             gameManager.playerShots.push(tempShot);
+
+            if(!Sound.mute && !Sound.isPlaying("laserShot"))
+                Sound.play("lasershot",false,BACKGROUND_VOL/2);
+
             this.readyToFire = false;
 
             //default
