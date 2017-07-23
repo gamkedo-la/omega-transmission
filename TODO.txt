@@ -4,7 +4,9 @@
 4 - Find a way to fix thruster audio integration with game
 5 - License? Readme? (even though it seems previous projects don't have these things)
 6 - Mouse remains pressed after release onscreen, allowing continued shooting.
-7 - No sound on crash into enemy
-8 - Thruster sound, etc. continue to play after death.
-9 - Load credits into game
+7 - Load credits into game
+80 - Game over screen pushes wave name off the bottom
+9 - Enemy can remain on top of endgame menu
+10 - Change player shot color to be different from enemy
+11 - Boss tuning, art change?
 

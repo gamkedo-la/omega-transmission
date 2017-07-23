@@ -40,37 +40,39 @@ function inputManager() {
     };
 
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
-        if (thisKey == this.controlKeyForStrafeLeft) {
-            thisShip.keyHeld_StrafeLeft = setTo;
-            if(!Sound.isPlaying("thrust") && thisShip.keyHeld_StrafeLeft) {
-                Sound.play("thrust",true,BACKGROUND_VOL/10);
+        if (gameManager.player.isActive) {
+            if (thisKey == this.controlKeyForStrafeLeft) {
+                thisShip.keyHeld_StrafeLeft = setTo;
+                if(!Sound.isPlaying("thrust") && thisShip.keyHeld_StrafeLeft) {
+                    Sound.play("thrust",true,BACKGROUND_VOL/10);
+                }
+                else {
+                    Sound.pause("thrust");
+                }
             }
-            else {
-                Sound.pause("thrust");
+            if (thisKey == this.controlKeyForStrafeRight) {
+                thisShip.keyHeld_StrafeRight = setTo;
+                if(!Sound.isPlaying("thrust") && thisShip.keyHeld_StrafeRight)
+                    Sound.play("thrust",true,BACKGROUND_VOL/10);
+                else {
+                    Sound.pause("thrust");
+                }
             }
-        }
-        if (thisKey == this.controlKeyForStrafeRight) {
-            thisShip.keyHeld_StrafeRight = setTo;
-            if(!Sound.isPlaying("thrust") && thisShip.keyHeld_StrafeRight)
-                Sound.play("thrust",true,BACKGROUND_VOL/10);
-            else {
-                Sound.pause("thrust");
+            if (thisKey == this.controlKeyForForwardThrust) {
+                thisShip.keyHeld_ForwardThrust = setTo;
+                if(!Sound.isPlaying("thrust") && thisShip.keyHeld_ForwardThrust) {
+                    Sound.play("thrust",true,BACKGROUND_VOL/10);
+                }
+                else {
+                    Sound.pause("thrust");
+                }
             }
-        }
-        if (thisKey == this.controlKeyForForwardThrust) {
-            thisShip.keyHeld_ForwardThrust = setTo;
-            if(!Sound.isPlaying("thrust") && thisShip.keyHeld_ForwardThrust) {
-                Sound.play("thrust",true,BACKGROUND_VOL/10);
-            }
-            else {
-                Sound.pause("thrust");
-            }
-        }
 
-        if(thisKey == this.controlKeyForShield) {
-            if(!thisShip.keyHeld_Shield && !Sound.isPlaying("shieldup"))
-                Sound.play("shieldup",false,BACKGROUND_VOL/5);
-            thisShip.keyHeld_Shield = setTo;
+            if(thisKey == this.controlKeyForShield) {
+                if(!thisShip.keyHeld_Shield && !Sound.isPlaying("shieldup"))
+                    Sound.play("shieldup",false,BACKGROUND_VOL/5);
+                thisShip.keyHeld_Shield = setTo;
+            }
         }
     };
 

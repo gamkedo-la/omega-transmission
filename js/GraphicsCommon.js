@@ -110,6 +110,11 @@ function drawText(text, x, y, fillColor) {
     }
 }
 
+function clearMenu() {
+    context.clearRect(0, 0, width, height);
+}
+
+
 function renderInGameMenu(titleString,width,height,menuItems) {
     var fontSize = 20;
     canvasContext.textBaseline = 'middle';

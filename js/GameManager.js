@@ -243,6 +243,7 @@ function GameManager() {
         for (var i = 0; i < this.enemies.length; i++) {
             if (this.isOverlapping(this.player, this.enemies[i], UFO_COLLISION_RADIUS) == true) {
                 // PLAYER SHIP HITS ENEMY
+                Sound.play("playerdead",false,BACKGROUND_VOL/6); // Death sound but quieter
                 this.player.reset();
                 this.player.health--;
                 screenshake(10);
@@ -254,6 +255,7 @@ function GameManager() {
             for (var j = 0, len = this.playerShots.length; j < len; j++) {
                 if (this.isOverlapping(this.playerShots[j], this.enemies[i], SHOT_COLLISION_RADIUS)) {
                     // PLAYER SHOT HITS ENEMY
+                    Sound.play("playerdead",false,BACKGROUND_VOL/10); // Death sound but quieter
                     this.enemies[i].health--;
                     //BOSS INJURED STATE
                     if(this.enemies[i] instanceof UFOBoss){
@@ -261,6 +263,7 @@ function GameManager() {
                     }
                     if (this.enemies[i].health <= 0) {
                         // ENEMY DESTROYED
+                        Sound.play("playerdead",false,BACKGROUND_VOL/8); // Death sound but quieter
                         this.score += 10;
                         if((--this.shotsTillPowerup === 0) || (DEBUG_CREATE_MANY_POWERUPS)){
                             this.dropPowerup(this.enemies[i]);
@@ -332,7 +335,7 @@ function GameManager() {
 
             this.player.draw();
             if(this.player.keyHeld_Shield && this.player.shield > 0) {
-                drawCenteredBitmapWithRotation(playerShield, gameManager.player.x, gameManager.player.y, gameManager.player.ang - (Math.PI/4));
+                drawCenteredBitmapWithRotation(playerShield, this.player.x, this.player.y, this.player.ang - (Math.PI/4));
             }
         } else {
             if(this.player.health <= 0) {
@@ -400,7 +403,6 @@ function GameManager() {
         if(healthFraction > 1) healthFraction = 1; // 5 health is a full health bar
         colorRect(HUDBAR_BORDER_HORIZONTAL,HUDBAR_BORDER_VERTICAL, HUDBAR_WIDTH*healthFraction + HUDBAR_BORDER_HORIZONTAL,
             HUDBAR_HEIGHT - HUDBAR_BORDER_VERTICAL, this.player.getHealthBarColor());
-        //drawText("Health", HUDBAR_BORDER + 2, 13, "black");
         drawScaledCenteredBitmapWithRotation(healthPowerup, POWERUP_DRAW_SIZE/2,POWERUP_DRAW_SIZE/2, POWERUP_DRAW_SIZE,POWERUP_DRAW_SIZE, 0);
 
         var shieldFraction = this.player.shield / 5;

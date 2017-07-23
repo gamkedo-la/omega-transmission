@@ -45,10 +45,13 @@ Shot.prototype.move = function() {
 
 Shot.prototype.draw = function(typePlayerShot = false) {
     if (this.shotLife > 0) {
-        if(gameManager.player.powerupLife[TYPE_LASER] != 0 && typePlayerShot == true)
+        if(gameManager.player.powerupLife[TYPE_LASER] !== 0 && typePlayerShot === true)
             drawScaledCenteredBitmapWithRotation(plasmaImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180));
+        else if(typePlayerShot === true)
+            drawScaledCenteredBitmapWithRotation(playerBulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180));
         else
-            drawScaledCenteredBitmapWithRotation(bulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180));
+            drawScaledCenteredBitmapWithRotation(enemyBulletImage, this.x, this.y, 8, 17, this.ang + (90*Math.PI/180));
+
     }
 };
 

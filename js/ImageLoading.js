@@ -1,6 +1,7 @@
 var playerImage = document.createElement("img");
 var playerShield = document.createElement("img");
-var bulletImage = document.createElement("img");
+var playerBulletImage = document.createElement("img");
+var enemyBulletImage = document.createElement("img");
 var plasmaImage = document.createElement("img");
 var UFOShooterImage = document.createElement("img");
 var UFORammerImage = document.createElement("img");
@@ -32,7 +33,8 @@ function loadImages() {
     var imageList = [
         { varName: playerImage, fileName: "Player.png" },
         { varName: playerShield, fileName: "playerShield.png" },
-        { varName: bulletImage, fileName: "Bullet.png" },
+        { varName: playerBulletImage, fileName: "PlayerBullet.png" },
+        { varName: enemyBulletImage, fileName: "EnemyBullet.png" },
         { varName: plasmaImage, fileName: "Plasma2.png" },
 
         { varName: UFOShooterImage, fileName: "Cannondrone.png" },
