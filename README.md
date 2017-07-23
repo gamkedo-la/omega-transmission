@@ -7,36 +7,25 @@ Asteroids game with 3 types of enemies and 1 boss at the end
 
 ## Credits
 
-Team/Project lead, programming, player movement input,
-concept art : Renaud Marshall
+Original project lead, base programming, player movement and input, concept art: Renaud Marshall
 
-Graphics, animation, particle system, gamepad support,
-screenshake, shockwave particle, reset enemy, code optimization,
-powerups : Christer "McFunkypants" Kaitila
+Particle system, gamepad support, screenshake, shockwave particle, powerups : Christer "McFunkypants" Kaitila
 
-Background, player ship art, projectiles art,
-player attack input, sfx : Andy King
+Background and player ship art, projectiles art, player attack input, sfx: Andy King
 
-Enemy facing direction, update screen size, spawning of enemy wave,
-wave name display, refactoring, player art update, coaching,
-display fixing : Chris DeLeon
+Dynamic display size, enemy wave structure, wave name display: Chris DeLeon
 
-Score display, score UI, spear drone art, refactoring,
-various powerups, laser powerup art, boss tweaking, playing of bgm sound,
-menu, pause, sound mute, restart option : mtn (Michael are you sure you wanna use mtn to appear in credits?)
+Score display, score UI, refactoring, various powerup and laser art, music code, menus and pause: mtn (Michael are you sure you wanna use mtn to appear in credits?)
 
-Strafing movement : Dana Alcala
+Strafing movement, collision tuning: Dana Alcala
 
-Switched strafing direction, powerup flashing, shield powerup art,
-health bar update, pause menu : Sahil Haridas
+Switched strafing direction, powerup flashing, shield powerup art, health bar update, pause menu : Sahil Haridas
 
-Timeout before spawning waves, code optimization, shield powerup,
- : Ezovex Dickson Goh
+Timeout before spawning waves, code optimization, shield powerup: Ezovex Dickson Goh
 
-Tracking powerup and fine tuning, level creation, boss AI,
-boss art : dtderosa
+Tracking powerup and fine tuning, level authoring, boss AI, boss art : dtderosa
 
-BGM, health art, powerup art : Simon J Hoffiz
+Music: Simon J Hoffiz
 
-Ship direction art, shield art : Mary Brady
+Healthbar art, ship direction art, shield art : Mary Brady
 
