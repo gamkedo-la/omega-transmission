@@ -3,4 +3,8 @@
 3 - Mouse-enabled, nicer menus and start screen
 4 - Find a way to fix thruster audio integration with game
 5 - License? Readme? (even though it seems previous projects don't have these things)
+6 - Mouse remains pressed after release onscreen, allowing continued shooting.
+7 - No sound on crash into enemy
+8 - Thruster sound, etc. continue to play after death.
+9 - Load credits into game
 
