@@ -42,18 +42,29 @@ function inputManager() {
     this.setKeyHoldState = function(thisKey, thisShip, setTo) {
         if (thisKey == this.controlKeyForStrafeLeft) {
             thisShip.keyHeld_StrafeLeft = setTo;
-            if(!Sound.isPlaying("thrust"))
-                Sound.play("thrust",false,BACKGROUND_VOL/10);
+            if(!Sound.isPlaying("thrust") && thisShip.keyHeld_StrafeLeft) {
+                Sound.play("thrust",true,BACKGROUND_VOL/10);
+            }
+            else {
+                Sound.pause("thrust");
+            }
         }
         if (thisKey == this.controlKeyForStrafeRight) {
             thisShip.keyHeld_StrafeRight = setTo;
-            if(!Sound.isPlaying("thrust"))
-                Sound.play("thrust",false,BACKGROUND_VOL/10);
+            if(!Sound.isPlaying("thrust") && thisShip.keyHeld_StrafeRight)
+                Sound.play("thrust",true,BACKGROUND_VOL/10);
+            else {
+                Sound.pause("thrust");
+            }
         }
         if (thisKey == this.controlKeyForForwardThrust) {
             thisShip.keyHeld_ForwardThrust = setTo;
-            if(!Sound.isPlaying("thrust"))
-                Sound.play("thrust",false,BACKGROUND_VOL/10);
+            if(!Sound.isPlaying("thrust") && thisShip.keyHeld_ForwardThrust) {
+                Sound.play("thrust",true,BACKGROUND_VOL/10);
+            }
+            else {
+                Sound.pause("thrust");
+            }
         }
 
         if(thisKey == this.controlKeyForShield) {
