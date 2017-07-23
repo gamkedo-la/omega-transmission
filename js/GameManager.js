@@ -76,7 +76,6 @@ function GameManager() {
         this.renderWave();
         this.update(); // start animating now
         Sound.play("OmegaThemeSong",true,BACKGROUND_VOL);
-        // Sound.play("thrust",true,0);
     };
 
     this.reinit = function() {

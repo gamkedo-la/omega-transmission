@@ -22,6 +22,7 @@ const DIR_LEFT = 2;
 const DIR_DOWN = 3;
 
 const SPAWN_RADIUS = 20; // Enemies cannot spawn within this distance from the player
+const ENDGAME_MENU_RADIUS = 120;
 
 function UFO(enemyType) {
 
@@ -164,5 +165,10 @@ UFO.prototype.update = function() {
 
 UFO.prototype.roam = function() {
     this.ang += 0.03;
+    var canvasCenter = { x : virtualWidth/2, y : virtualHeight/2 };
+    if(gameManager.isOverlapping(this,canvasCenter,ENDGAME_MENU_RADIUS)) {
+        ++this.x;
+        ++this.y;
+    }
 };
 
