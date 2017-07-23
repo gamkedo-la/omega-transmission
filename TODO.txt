@@ -6,4 +6,4 @@
 6 - Load credits into game
 7 - Game over screen pushes wave name off the bottom
 8 - Boss tuning, art change?
-
+9 - Particle effects (sometimes?) become suspended on player death
