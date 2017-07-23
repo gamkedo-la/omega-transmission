@@ -86,7 +86,7 @@ function inputManager() {
             gameManager.player.shieldUp();
         }
         else if (evt.keyCode === KEY_LETTER_P) {
-            if(!gameManager.atEndScreen)
+            if(!gameManager.menuStatus[MENU_END])
                 isGamePaused = isGamePaused ? false : true;
         }
         else if (evt.keyCode === KEY_LETTER_T) {

@@ -15,7 +15,7 @@ Background and player ship art, projectiles art, player attack input, sfx: Andy 
 
 Dynamic display size, enemy wave structure, wave name display: Chris DeLeon
 
-Score display, score UI, refactoring, various powerup and laser art, music code, menus and pause: mtn (Michael are you sure you wanna use mtn to appear in credits?)
+Score display, score UI, refactoring, various powerup and laser art, music code, menus and pause, fleet enemy type: Michael Noronha
 
 Strafing movement, collision tuning: Dana Alcala
 

@@ -1,9 +1,7 @@
 1 - Laser powerup shot doesn't alternate. Might modify or leave as is (currently all 3 display as one shot)
-2 - Background image
-3 - Mouse-enabled, nicer menus and start screen
-4 - License? Readme? (even though it seems previous projects don't have these things)
-5 - Mouse remains pressed after release onscreen, allowing continued shooting.
-6 - Load credits into game
-7 - Game over screen pushes wave name off the bottom
-8 - Boss tuning, art change?
-9 - Particle effects (sometimes?) become suspended on player death
+2 - Mouse-enabled, nicer menus and start screen
+3 - License? (finish) Readme?
+4 - Load credits into game
+5 - Game over screen pushes wave name off the bottom
+6 - Boss tuning, art change?
+7 - Particle effects (sometimes?) become suspended on player death

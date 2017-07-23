@@ -1,8 +1,12 @@
 const HUDBAR_WIDTH  = 120;
 const HUDBAR_HEIGHT =  20;
-const HUDBAR_BORDER_HORIZONTAL =   16;
+const HUDBAR_BORDER_HORIZONTAL = 16;
 const HUDBAR_BORDER_VERTICAL = 4;
 
+const MENU_MAIN = 0;
+const MENU_PAUSE = 1;
+const MENU_END = 2;
+const MENU_CTRL = 3;
 
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
@@ -34,7 +38,8 @@ function GameManager() {
     this.waitingForNextWaveToStart = false;
     this.currentWaveName = "undefined";
 
-    this.atEndScreen = false;
+    // Index into this array to tell which menu is active
+    this.menuStatus = [ false, false, false, false ];
 
     this.titleMenuItems = [
         "Play",
@@ -54,6 +59,8 @@ function GameManager() {
         "A - Move Left",
         "D - Move Right",
         "S - Activate Shield",
+        "",
+        "Back"
     ];
 
     this.endgameMenuItems = [
@@ -78,7 +85,7 @@ function GameManager() {
     this.reinit = function() {
         this.player.isActive = true;
         this.shotsTillPowerup = Math.floor(Math.random() * 4 + 3);
-        this.atEndScreen = true;
+        this.menuStatus[MENU_END] = true;
         this.player.initialize(playerImage);
         this.levelNow = -1; // will increment to 0 on start
         this.score = 0;
@@ -414,12 +421,19 @@ function GameManager() {
 
     this.renderPauseMenu = function() {
         renderInGameMenu("Game Paused",this.pauseMenuItems);
+        this.menuStatus[MENU_PAUSE] = true;
     };
 
     this.renderGameOverMenu = function() {
         this.endgameMenuItems[0] = "Final Score: " + this.score;
-        renderInGameMenu("Game Over",this.endgameMenuItems);
-        this.atEndScreen = true;
+        var excludedIndices = [0];
+        renderInGameMenu("Game Over",this.endgameMenuItems,excludedIndices);
+        this.menuStatus[MENU_END] = true;
+    };
+
+    this.renderControlList = function() {
+        var excludedIndices = [0,1,2,3];
+        renderInGameMenu("Controls",this.controlsList,excludedIndices);
     };
 }
 
