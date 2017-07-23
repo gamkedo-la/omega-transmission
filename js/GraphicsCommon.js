@@ -110,30 +110,32 @@ function drawText(text, x, y, fillColor) {
     }
 }
 
-
-function renderInGameMenu(titleString,width,height,menuItems) {
+function renderInGameMenu(titleString,menuItems) {
     var fontSize = 20;
     canvasContext.textBaseline = 'middle';
     canvasContext.textAlign = "center";
     canvasContext.font = fontSize + "px PressStart";
 
-    colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2,
+    var height = 40 + menuItems.length * (2 * fontSize + 5);
+    var width = 280; // Yea...
+
+    colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2 - 20,
         width,height,"black");
     drawText(titleString,virtualWidth/2,
         virtualHeight/2 - height/2 + fontSize/2,"yellow");
 
-    fontSize *= 3/4;
-    canvasContext.font = fontSize + "px Arial";
+    fontSize *= 3/5;
+    canvasContext.font = fontSize + "px PressStart";
     for (var i = 0; i < menuItems.length; i++) {
         var xPos = virtualWidth/2;
-        var yPos = (virtualHeight/2 - height/2 + 3*fontSize) + i*(fontSize+5);
+        var yPos = (virtualHeight/2 - height/2 + 5*fontSize) + i*(2*fontSize+5);
 
         var optionWidth = canvasContext.measureText(menuItems[i]).width;
 
         if(inputManager.mouse.x >= xPos - optionWidth/2 && inputManager.mouse.x <= xPos + optionWidth/2 &&
             inputManager.mouse.y >= yPos && inputManager.mouse.y <= yPos + fontSize) {
-            drawText("**",xPos-optionWidth/2-8,yPos,"yellow");
-            drawText("**",xPos+optionWidth/2+8,yPos,"yellow");
+            drawText("**",xPos-optionWidth/2-10,yPos,"yellow");
+            drawText("**",xPos+optionWidth/2+10,yPos,"yellow");
         }
         drawText(menuItems[i],xPos,yPos,"white");
     }

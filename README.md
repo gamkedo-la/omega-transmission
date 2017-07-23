@@ -1,9 +1,11 @@
-OMEGA TRANSMISSION
-DEVELOPMENT TIME:
-MAY 29 - JULY 23, 2017
-PLAY: IN_BROWSER
+# Omega Transmission
+
+Development Time: May 29 - July 23, 2017
+Browser-based game (HTML5 Canvas + Javascript)
 
 Asteroids game with 3 types of enemies and 1 boss at the end
+
+## Credits
 
 Team/Project lead, programming, player movement input,
 concept art : Renaud Marshall
@@ -12,7 +14,7 @@ Graphics, animation, particle system, gamepad support,
 screenshake, shockwave particle, reset enemy, code optimization,
 powerups : Christer "McFunkypants" Kaitila
 
-Background, player ship art, projectiles art, 
+Background, player ship art, projectiles art,
 player attack input, sfx : Andy King
 
 Enemy facing direction, update screen size, spawning of enemy wave,
@@ -37,3 +39,4 @@ boss art : dtderosa
 BGM, health art, powerup art : Simon J Hoffiz
 
 Ship direction art, shield art : Mary Brady
+

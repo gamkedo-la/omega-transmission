@@ -3,9 +3,6 @@ const HUDBAR_HEIGHT =  20;
 const HUDBAR_BORDER_HORIZONTAL =   16;
 const HUDBAR_BORDER_VERTICAL = 4;
 
-const MENU_WIDTH  = 200;
-const MENU_HEIGHT = 240;
-
 
 function GameManager() {
     this.levelNow = -1; // will increment to 0 on start
@@ -416,12 +413,12 @@ function GameManager() {
     };
 
     this.renderPauseMenu = function() {
-        renderInGameMenu("Game Paused",MENU_WIDTH,MENU_HEIGHT,this.pauseMenuItems);
+        renderInGameMenu("Game Paused",this.pauseMenuItems);
     };
 
     this.renderGameOverMenu = function() {
         this.endgameMenuItems[0] = "Final Score: " + this.score;
-        renderInGameMenu("Game Over",MENU_WIDTH,MENU_HEIGHT,this.endgameMenuItems);
+        renderInGameMenu("Game Over",this.endgameMenuItems);
         this.atEndScreen = true;
     };
 }
