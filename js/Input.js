@@ -137,7 +137,6 @@ function inputManager() {
                     break;
             }
 
-            console.log("in here");
             var fontSize = 20;
             var height = 40 + menu.length * (2 * fontSize + 5);
             var width = 280; // Yea...
@@ -152,12 +151,60 @@ function inputManager() {
                 if(inputManager.mouse.x >= xPos - optionWidth/2 &&
                     inputManager.mouse.x <= xPos + optionWidth/2 &&
                     inputManager.mouse.y >= yPos && inputManager.mouse.y <= yPos + fontSize) {
-                    console.log("hi");
                     break;
                 }
             }
 
-            console.log("i: " + i);
+            switch(gameManager.menuStatus.indexOf(true)) {
+                case MENU_MAIN:
+                    switch(i) {
+                        case 0:
+                            // TODO modify main
+                            break;
+                        case 1:
+                            gameManager.renderControlList();
+                            break;
+                        case 2:
+                            gameManager.renderCreditsList();
+                            break;
+                    }
+                    break;
+                case MENU_PAUSE:
+                    switch(i) {
+                        case 0:
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                    }
+                    break;
+                case MENU_END:
+                    switch(i) {
+                        case 0:
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                    }
+                    break;
+                case MENU_CTRL:
+                    switch(i) {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                    }
+                    break;
+            }
             switch(i) {
                 case 0:
                     isGamePaused = false;

@@ -435,5 +435,13 @@ function GameManager() {
         var excludedIndices = [0,1,2,3];
         renderMenu("Controls",this.controlsList,excludedIndices);
     };
+
+    this.renderMainMenu = function() {
+        renderMenu("Hi",this.titleMenuItems,[],virtualWidth,virtualHeight);
+    };
+
+    this.renderCreditsList = function() {
+
+    };
 }
 

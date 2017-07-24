@@ -57,5 +57,7 @@ function onResize() { // changing window dimensions
 
 function loadingDoneSoStartGame() {
     gameManager.initialize();
+    isGamePaused = true;
+    gameManager.renderMainMenu();
 }
 
