@@ -110,14 +110,16 @@ function drawText(text, x, y, fillColor) {
     }
 }
 
-function renderInGameMenu(titleString,menuItems,excludedIndices=[]) {
+function renderMenu(titleString,menuItems,excludedIndices=[],width=0,height=0) {
     var fontSize = 20;
     canvasContext.textBaseline = 'middle';
     canvasContext.textAlign = "center";
     canvasContext.font = fontSize + "px PressStart";
 
-    var height = 40 + menuItems.length * (2 * fontSize + 5);
-    var width = 280; // Yea...
+    if(!width && !height) {
+        height = 40 + menuItems.length * (2 * fontSize + 5);
+        width = 280; // Yea...
+    }
 
     colorRect(virtualWidth/2-width/2,virtualHeight/2-height/2 - 20,
         width,height,"black");

@@ -3,5 +3,6 @@
 3 - License? (finish) Readme?
 4 - Load credits into game
 5 - Game over screen pushes wave name off the bottom
+    - seems to have nothing to do with the menu itself
 6 - Boss tuning, art change?
-7 - Particle effects (sometimes?) become suspended on player death
+7 - Volume tuning

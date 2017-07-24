@@ -340,6 +340,7 @@ function GameManager() {
             if(this.player.keyHeld_Shield && this.player.shield > 0) {
                 drawCenteredBitmapWithRotation(playerShield, this.player.x, this.player.y, this.player.ang - (Math.PI/4));
             }
+            draw_particles(0,0);
         } else {
             if(this.player.health <= 0) {
                 this.renderGameOverMenu();
@@ -363,7 +364,6 @@ function GameManager() {
             this.renderWave();
         }
 
-        draw_particles(0,0);
 
         if ((USE_WEBGL_IF_SUPPORTED && window.webGL)==false) {
             canvasContext.restore();
@@ -420,20 +420,20 @@ function GameManager() {
     };
 
     this.renderPauseMenu = function() {
-        renderInGameMenu("Game Paused",this.pauseMenuItems);
+        renderMenu("Game Paused",this.pauseMenuItems);
         this.menuStatus[MENU_PAUSE] = true;
     };
 
     this.renderGameOverMenu = function() {
         this.endgameMenuItems[0] = "Final Score: " + this.score;
         var excludedIndices = [0];
-        renderInGameMenu("Game Over",this.endgameMenuItems,excludedIndices);
+        renderMenu("Game Over",this.endgameMenuItems,excludedIndices);
         this.menuStatus[MENU_END] = true;
     };
 
     this.renderControlList = function() {
         var excludedIndices = [0,1,2,3];
-        renderInGameMenu("Controls",this.controlsList,excludedIndices);
+        renderMenu("Controls",this.controlsList,excludedIndices);
     };
 }
 

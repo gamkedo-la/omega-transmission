@@ -32,10 +32,6 @@ function inputManager() {
         canvas.addEventListener('mousedown', this.mousePressed);
         canvas.addEventListener('mouseup', this.mouseReleased);
 
-        // commented out, broke Safari, can find another workaround -cdeleon
-        //canvas.addEventListener('contextmenu', event => event.preventDefault()); //blocks right click menu
-        //canvas.addEventListener('wheel', event => event.preventDefault());
-
         this.setupControls(KEY_LETTER_W, KEY_SPACEBAR, KEY_LETTER_A, KEY_LETTER_D, KEY_LETTER_S);
     };
 
@@ -124,6 +120,50 @@ function inputManager() {
         if (evt.button == 0) {
             gameManager.player.keyHeld_RapidFire = true;
         }
+
+        if(gameManager.menuStatus.includes(true)) {
+            switch(gameManager.menuStatus.indexOf(true)) {
+                case MENU_MAIN:
+                    var menu = gameManager.titleMenuItems;
+                    break;
+                case MENU_PAUSE:
+                    var menu = gameManager.pauseMenuItems;
+                    break;
+                case MENU_END:
+                    var menu = gameManager.endgameMenuItems;
+                    break;
+                case MENU_CTRL:
+                    var menu = gameManger.controlsList;
+                    break;
+            }
+
+            console.log("in here");
+            var fontSize = 20;
+            var height = 40 + menu.length * (2 * fontSize + 5);
+            var width = 280; // Yea...
+            fontSize = 12;
+
+            for(var i = 0; i < menu.length; i++) {
+                var xPos = virtualWidth/2;
+                var yPos = (virtualHeight/2 - height/2 + 5*fontSize) + i*(2*fontSize+5);
+
+                var optionWidth = canvasContext.measureText(menu[i]).width;
+
+                if(inputManager.mouse.x >= xPos - optionWidth/2 &&
+                    inputManager.mouse.x <= xPos + optionWidth/2 &&
+                    inputManager.mouse.y >= yPos && inputManager.mouse.y <= yPos + fontSize) {
+                    console.log("hi");
+                    break;
+                }
+            }
+
+            console.log("i: " + i);
+            switch(i) {
+                case 0:
+                    isGamePaused = false;
+            }
+        }
+
         evt.preventDefault(); // to block default middle mouse scroll interaction
     };
 
