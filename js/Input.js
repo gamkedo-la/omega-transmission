@@ -102,6 +102,10 @@ function inputManager() {
 
     this.keyReleased = function(evt) {
         inputManager.setKeyHoldState(evt.keyCode, gameManager.player, false);
+        if(evt.keyCode == KEY_LETTER_S) {
+            if(Sound.isPlaying("shieldup"))
+                Sound.stop("shieldup");//play("shieldup",false,BACKGROUND_VOL/5);
+        }
     };
 
     this.getMousePosition = function(evt) {
