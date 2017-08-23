@@ -13,6 +13,7 @@ var virtualWidth = 1280.0;
 var isGamePaused = false;
 
 window.onload = function() {
+    window.focus();
 
     console.log("Initializing game engine...");
 
