@@ -26,9 +26,8 @@ function inputManager() {
     };
 
     this.initializeInput = function() {
-        var realWindow = window.parent || window;
-        realWindow.addEventListener("keydown", this.keyPressed.bind(this),false);
-        realWindow.addEventListener("keyup", this.keyReleased.bind(this),false);
+        document.addEventListener("keydown", this.keyPressed);
+        document.addEventListener("keyup", this.keyReleased);
         canvas.addEventListener('mousemove', this.getMousePosition);
         canvas.addEventListener('mousedown', this.mousePressed);
         canvas.addEventListener('mouseup', this.mouseReleased);
